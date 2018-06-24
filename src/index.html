@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TV Melsbach - Tennis und Boule</title>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f8f8f8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="TV Melsbach">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico"> 
+    <link rel="manifest" href="manifest.json">   
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/application.css">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/pages.css">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/lightbox.css">
+    <script type="text/javascript" src="assets/javascripts/application.js"></script>
+    <script type="text/javascript" src="assets/javascripts/map.js" async defer></script>
+    <script type="text/javascript" src="assets/javascripts/lightbox.js" async defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="button icon icon-chevron-left standalone-only" onclick="window.history.back();"></div>
+      <div class="button" onclick="loadPage('startseite');">TV Melsbach</div>
+      <div id="top-menu" class="top-menu">
+        <div class="button icon" onclick="select('#top-menu').toggleClass('unfolded');"></div>
+        <div class="menu-items">
+          <div class="menu-item" onclick="loadPage('tennis', this);">Tennis</div>
+          <div class="menu-item" onclick="loadPage('boule', this);">Boule</div>
+          <div class="menu-item" onclick="loadPage('clubhaus-mieten', this);">Clubhaus mieten</div>
+          <div class="menu-item" onclick="loadPage('verein', this);">Unser Verein</div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <article>
+        <div class="start-screen"></div>
+      </article>
+    </main>
+    <footer class="links">
+      <div class="container">
+        <div class="link" onclick="loadPage('kontakt', this);">Kontakt</div>
+        <div class="link" onclick="loadPage('datenschutz', this);">Datenschutz</div>
+        <div class="link" onclick="loadPage('impressum', this);">Impressum</div>
+      </div>
+    </footer>
+    <footer class="copyright">
+      <div class="container">
+        © 2018 TV Melsbach. Alle Rechte vorbehalten
+      </div>
+    </footer>
+    <div id="alert" class="alert hidden">
+      <div class="box">
+        <div class="text"></div>
+        <div class="button" onclick="select('#alert').hide();">Ok</div>
+      </div>
+    </div>
+    <div id="glasspane" class="glasspane hidden"></div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "TV Melsbach",
+  "short_name": "TV Melsbach",
+  "start_url": "index.html",
+  "theme_color": "maroon",
+  "background_color": "maroon",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icons/webapp-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icons/webapp-icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
