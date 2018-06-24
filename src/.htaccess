@@ -1,0 +1,9 @@
+# Redirect HTTP requests to HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Caching
+<filesMatch "\.(jpg|png|ico|woff2)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
