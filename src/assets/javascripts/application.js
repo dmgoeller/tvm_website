@@ -76,7 +76,12 @@ window.addEventListener('load', function() {
   });
   // service worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      var serviceWorkerName = 'service-worker-standalone.js';
+    } else {
+      var serviceWorkerName = 'service-worker.js';
+    }
+    navigator.serviceWorker.register(serviceWorkerName)
       .then(function(registration) {
         console.log('Service worker registered for ' + registration.scope);
       })
