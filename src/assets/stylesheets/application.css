@@ -168,7 +168,7 @@ img[data-src] {
 }
 
 /**********************************************************************
- * progress bars
+ * progress indicators
  **********************************************************************/
 
 @keyframes progressbar {
@@ -256,8 +256,8 @@ body > header .button {
     position: fixed;
     left: 100vw;
     right: 0;
-    bottom: 0;
-    height: calc(100vh - 2.25rem - 1px);
+    top: 2.25rem;
+    height: calc(100vh - 2.25rem);
 
     /* viewport height (100vh) -
      * header height (2.25rem) -
