@@ -91,16 +91,17 @@ article .start-screen .background > img {
 
   article .start-screen .button {
     padding: .5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-row-gap: .5rem;
+    justify-items: center;
     color: var(--white);
     background: var(--primary);
     transition: .3s;
   }
 
   article .start-screen .button .label {
-    margin-top: .5rem;
+    place-self: center;
+    text-align: center;
   }
 
   @media (orientation: portrait) {
