@@ -4,6 +4,6 @@ RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Caching
-<filesMatch "\.(jpg|png|ico|woff2)$">
+<filesMatch "\.(jpg|png|ico|woff|woff2|ttf)$">
 Header set Cache-Control "max-age=2592000, public"
 </filesMatch>
