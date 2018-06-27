@@ -66,6 +66,7 @@
 
 html {
   height: 100%;
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
 }
 
 body {
@@ -74,7 +75,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Libre Franklin', sans-serif;
-  font-size: 12pt;
+  font-size: 12pt; /* = 16px */
   color: var(--dark-gray);
   background: var(--gray);
 }
