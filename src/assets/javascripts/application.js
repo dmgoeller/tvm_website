@@ -63,10 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  // mobile menu
-  if (window.matchMedia('(max-device-width: 1024px)').matches) {
-    initMobileMenu(select('#top-menu'));
-  }
   // alert box
   initAlertBox();
   
@@ -196,46 +192,6 @@ function execute(script) {
   } catch(e) {
     console.log(e);
   }
-}
-
-/**********************************************************************
- * mobile menu
- **********************************************************************/
-
-function initMobileMenu(menu) {
-  var menuItems = menu.querySelector('.menu-items');
-  var touchStartX = null;
-
-  menuItems.addEventListener('touchstart', function(event) {
-    if (event.touches.length == 1) {
-      touchStartX = event.touches[0].clientX;
-      menuItems.style.transition = 'none';
-    }
-  });
-
-  menuItems.addEventListener('touchmove', function(event) {
-    if (touchStartX) {
-      touchX = event.touches[0].clientX;
-      menuItems.style.left = Math.max(touchX - touchStartX, 0) + 'px';
-    }
-    event.preventDefault();
-  });
-
-  menuItems.addEventListener('touchend', function(event) {
-    if (touchStartX) {
-      var touchEndX = event.changedTouches[0].clientX;
-
-      if (touchEndX > touchStartX) {
-        menu.classList.remove('unfolded');
-        menuItems.style.transition = '.3s ease-out';
-
-        window.setTimeout(function() { menuItems.style.transition = null; }, 300);
-        event.preventDefault();
-      }
-      menuItems.style.left = null;
-      touchStartX = null;
-    }
-  });
 }
 
 /**********************************************************************
