@@ -441,7 +441,7 @@ img[data-src] {
 }
 
 /**********************************************************************
- * progress indicators
+ * loading indicators
  **********************************************************************/
 
 @keyframes progressbar {
@@ -449,11 +449,11 @@ img[data-src] {
   to   { width: 100%; }
 }
 
-.progress {
+.loading {
   position: relative;
 }
 
-.progress:after {
+.loading:after {
   position: absolute;
   left: 0;
   bottom: 0;

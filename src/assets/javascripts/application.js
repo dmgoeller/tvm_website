@@ -97,13 +97,13 @@ function loadPage(page, caller = null) {
   glasspane.show();
 
   caller = select(caller);
-  if (caller) caller.setClass('progress', true);
+  if (caller) caller.setClass('loading', true);
 
   fetch('pages/' + page + '.html', {timeout: 3000})
     .then(function(response) {
       var main = select('body > main');
 
-      if (caller) caller.setClass('progress', false);
+      if (caller) caller.setClass('loading', false);
       topMenu.setClass('unfolded', false);
       glasspane.hide();
 
@@ -134,7 +134,7 @@ function loadPage(page, caller = null) {
       loadImages(main);
     })
     .catch(function(error) {
-      if (caller) caller.setClass('progress', false);
+      if (caller) caller.setClass('loading', false);
       topMenu.setClass('unfolded', false);
       glasspane.hide();
       alert(error.message);
