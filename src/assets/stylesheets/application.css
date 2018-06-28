@@ -202,7 +202,7 @@ body > header .button {
   .top-menu .menu-items {
     position: absolute; 
     left: 100%;
-    top: calc(100% - -1px);
+    top: calc(100% - -2px);
     display: flex;
     flex-direction: column;
     transition: transform .5s;
@@ -219,7 +219,7 @@ body > header .button {
 
   @media (max-device-width: 1024px) {
     .top-menu .menu-items {
-      height: calc(100vh - 2.25rem - -1px);
+      height: calc(100vh - 2.25rem - -2px);
       background: rgba(0, 0, 0, .9);
     }
 
