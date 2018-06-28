@@ -8,7 +8,7 @@
   right: 0;
   display: flex;
   justify-content: space-around;
-  background: var(--lightbox-bg);
+  background: rgba(0, 0, 0, 0.9);
   box-shadow: var(--box-shadow);
 }
 
