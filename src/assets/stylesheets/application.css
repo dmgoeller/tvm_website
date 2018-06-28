@@ -85,22 +85,6 @@ body {
 }
 
 /**********************************************************************
- * hidden elements
- **********************************************************************/
-
-.hidden {
-  display: none !important;
-}
-
-/**********************************************************************
- * lazy image loading
- **********************************************************************/
-
-img[data-src] {
-  visibility: hidden;
-}
-
-/**********************************************************************
  * containers
  **********************************************************************/
 
@@ -160,33 +144,6 @@ img[data-src] {
 
 [onclick]:hover:not(.disabled) {
   cursor: pointer;
-}
-
-/**********************************************************************
- * progress indicators
- **********************************************************************/
-
-@keyframes progressbar {
-  from { width: 0% }
-  to   { width: 100%; }
-}
-
-.progress {
-  position: relative;
-}
-
-.progress:after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  content: '';
-  background: var(--white);
-  animation-name: progressbar;
-  animation-duration: 3s;
-  animation-delay: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
 }
 
 /**********************************************************************
@@ -465,4 +422,47 @@ body > footer.copyright {
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+/**********************************************************************
+ * hidden elements
+ **********************************************************************/
+
+.hidden {
+  display: none !important;
+}
+
+/**********************************************************************
+ * lazy image loading
+ **********************************************************************/
+
+img[data-src] {
+  visibility: hidden;
+}
+
+/**********************************************************************
+ * progress indicators
+ **********************************************************************/
+
+@keyframes progressbar {
+  from { width: 0% }
+  to   { width: 100%; }
+}
+
+.progress {
+  position: relative;
+}
+
+.progress:after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  content: '';
+  background: var(--white);
+  animation-name: progressbar;
+  animation-duration: 3s;
+  animation-delay: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
