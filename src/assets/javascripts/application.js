@@ -201,7 +201,7 @@ function execute(script) {
 function initAlertBox() {
   select('#alert').addEventListener('touchmove', function(event) {
     event.preventDefault();
-  });
+  }, {passive: false});
 }
 
 function alert(msg) {

@@ -45,7 +45,7 @@ function showLightbox(gallery, position = 0) {
       slides.style.transition = 'none';
     }
     event.preventDefault();
-  });
+  }, {passive: false});
 
   slides.addEventListener('touchmove', function(event) {
     if (touchStartX) {
@@ -55,7 +55,7 @@ function showLightbox(gallery, position = 0) {
       }
     }
     event.preventDefault();
-  });
+  }, {passive: false});
 
   slides.addEventListener('touchend', function(event) {
     if (touchStartX) {
@@ -66,7 +66,7 @@ function showLightbox(gallery, position = 0) {
       touchStartX = null;
     }
     event.preventDefault();
-  });
+  }, {passive: false});
 
   // initial position
   moveTo(position);
