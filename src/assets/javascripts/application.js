@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  // alert box
-  initAlertBox();
+  preventDefault('#top-menu .menu-items', 'touchmove');
+  preventDefault('#alert', 'touchmove');
   
   // browser history
   window.addEventListener('popstate', function(event) {
@@ -90,6 +90,12 @@ window.addEventListener('load', function() {
     });
   }
 });
+
+function preventDefault(element, eventType) {
+  select(element).addEventListener(eventType, function(event) {
+    event.preventDefault();
+  }, {passive: false});
+}
 
 /**********************************************************************
  * page loading
@@ -206,12 +212,6 @@ function execute(script) {
 /**********************************************************************
  * alerts
  **********************************************************************/
-
-function initAlertBox() {
-  select('#alert').addEventListener('touchmove', function(event) {
-    event.preventDefault();
-  }, {passive: false});
-}
 
 function alert(msg) {
   var container = select('#alert .text');
