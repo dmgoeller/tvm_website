@@ -71,7 +71,7 @@ window.addEventListener('load', function() {
   // browser history
   window.addEventListener('popstate', function(event) {
     if (event.state) {
-      loadPage(event.state['page'], null, event.state['ypos']);
+      loadPage(event.state['page'], {'ypos': event.state['ypos']});
     }
   });
   // service worker
@@ -101,13 +101,16 @@ function preventDefault(element, eventType) {
  * page loading
  **********************************************************************/
 
-function loadPage(page, caller = null, ypos = 0) {
+function loadPage(page, options = {}) {
   var topMenu = select('#top-menu');
   var glasspane = select('#glasspane');
-  glasspane.show();
+  var caller = select(options['caller']);
+  var ypos = options['ypos'] || 0;
 
-  caller = select(caller);
+  console.log('Caller', caller);
+
   if (caller) caller.setClass('loading', true);
+  glasspane.show();
 
   fetch('pages/' + page + '.html', {timeout: 3000})
     .then(function(response) {
