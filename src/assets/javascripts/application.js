@@ -59,7 +59,9 @@ function selectAll(elements) {
  **********************************************************************/
 
 document.addEventListener('DOMContentLoaded', function() {
-  loadPage('startseite');
+  var params = new URLSearchParams(window.location.search);
+  var page = params.get('page') || 'startseite';
+  loadPage(page);
 });
 
 window.addEventListener('load', function() {
@@ -104,37 +106,39 @@ function loadPage(page, caller = null, ypos = 0) {
   fetch('pages/' + page + '.html', {timeout: 3000})
     .then(function(response) {
       var main = select('body > main');
+      var pageTitle = null;
 
       if (caller) caller.setClass('loading', false);
       topMenu.setClass('unfolded', false);
       glasspane.hide();
 
       // unload old page
-      if (firstChild = main.querySelector('*:first-child')) {
-        if (pageonunload = firstChild.getAttribute('data-page-onunload')) {
+      if (article = main.querySelector('*:first-child')) {
+        if (pageonunload = article.getAttribute('data-page-onunload')) {
           execute(pageonunload);
         }
       }
       if (history.state != null) {
         var state = {'page': history.state['page'], 'ypos': window.pageYOffset};
-        history.replaceState(state, null, null);
+        var url = 'index.html?page=' + state['page'];
+        history.replaceState(state, null, url);
       }
-      // display new page
+      // display new page 
       main.innerHTML = response;
       window.scrollTo(0, ypos);
 
-      if (firstChild = main.querySelector('*:first-child')) {
-        if (pageonload = firstChild.getAttribute('data-page-onload')) {
+      if (article = main.querySelector('*:first-child')) {
+        if (pageonload = article.getAttribute('data-page-onload')) {
           execute(pageonload);
         }
+        pageTitle = article.getAttribute('data-page-title');
       }
+      document.title = 'TV Melsbach' + (pageTitle != null ? ' - ' + pageTitle : '');
+
       if (history.state == null || history.state['page'] != page) {
         var state = {'page': page, 'ypos': ypos};
-        if (history.state == null) {
-          history.replaceState(state, null, null);
-        } else  {
-          history.pushState(state, null, null);
-        }
+        var url = 'index.html?page=' + page;
+        history.pushState(state, null, url);
       }
       loadImages(main);
     })
