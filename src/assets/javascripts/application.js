@@ -107,8 +107,6 @@ function loadPage(page, options = {}) {
   var caller = select(options['caller']);
   var ypos = options['ypos'] || 0;
 
-  console.log('Caller', caller);
-
   if (caller) caller.setClass('loading', true);
   glasspane.show();
 
