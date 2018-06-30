@@ -68,7 +68,9 @@ window.addEventListener('load', function() {
   
   // browser history
   window.addEventListener('popstate', function(event) {
-    if (event.state != null) loadPage(event.state);
+    if (event.state) {
+      loadPage(event.state['page'], null, event.state['ypos']);
+    }
   });
   // service worker
   if ('serviceWorker' in navigator) {
@@ -91,7 +93,7 @@ window.addEventListener('load', function() {
  * page loading
  **********************************************************************/
 
-function loadPage(page, caller = null) {
+function loadPage(page, caller = null, ypos = 0) {
   var topMenu = select('#top-menu');
   var glasspane = select('#glasspane');
   glasspane.show();
@@ -113,24 +115,27 @@ function loadPage(page, caller = null) {
           execute(pageonunload);
         }
       }
+      if (history.state != null) {
+        var state = {'page': history.state['page'], 'ypos': window.pageYOffset};
+        history.replaceState(state, null, null);
+      }
       // display new page
       main.innerHTML = response;
-      window.scrollTo(0, 0);
+      window.scrollTo(0, ypos);
 
       if (firstChild = main.querySelector('*:first-child')) {
         if (pageonload = firstChild.getAttribute('data-page-onload')) {
           execute(pageonload);
         }
       }
-      // update browser history
-      if (history.state != page) {
+      if (history.state == null || history.state['page'] != page) {
+        var state = {'page': page, 'ypos': ypos};
         if (history.state == null) {
-          history.replaceState(page, null, null);
+          history.replaceState(state, null, null);
         } else  {
-          history.pushState(page, null, null);
+          history.pushState(state, null, null);
         }
       }
-      // load images
       loadImages(main);
     })
     .catch(function(error) {
