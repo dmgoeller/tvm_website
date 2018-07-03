@@ -155,8 +155,6 @@ function loadPage(page, options = {}) {
         }
         pageTitle = article.getAttribute('data-page-title');
       }
-      document.title = preferences['app-title'] + (pageTitle ? ' - ' + pageTitle : '');
-
       if (history.state == null || history.state['page'] != page) {
         var state = {'page': page, 'ypos': ypos};
         if (history.state == null) {
@@ -165,6 +163,7 @@ function loadPage(page, options = {}) {
           history.pushState(state, null, getPath(page));
         }
       }
+      document.title = preferences['app-title'] + (pageTitle ? ' - ' + pageTitle : '');
       loadImages(main);
     })
     .catch(function(error) {
