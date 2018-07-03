@@ -1,4 +1,6 @@
 
+var preferences = {};
+
 /**********************************************************************
  * custom methods
  **********************************************************************/
@@ -59,9 +61,23 @@ function selectAll(elements) {
  **********************************************************************/
 
 document.addEventListener('DOMContentLoaded', function() {
-  var params = new URLSearchParams(window.location.search);
-  var page = params.get('page') || 'startseite';
-  loadPage(page);
+  // read preferences
+  var attr = select('html').attributes;
+  for (i = 0; i < attr.length; i++) {
+    if (attr[i].name.startsWith('data-')) {
+      preferences[attr[i].name.slice(5)] = attr[i].value;
+    }
+  }
+  // load initial page
+  var path = window.location.pathname;
+
+  if (path.startsWith(preferences['base-path'])) {
+    path = path.slice(preferences['base-path'].length);
+  }
+  if (path.length == 0) {
+    path = preferences['index-page'];
+  }
+  loadPage(path);
 });
 
 window.addEventListener('load', function() {
@@ -127,8 +143,7 @@ function loadPage(page, options = {}) {
       }
       if (history.state != null) {
         var state = {'page': history.state['page'], 'ypos': window.pageYOffset};
-        var url = 'index.html?page=' + state['page'];
-        history.replaceState(state, null, url);
+        history.replaceState(state, null, getPath(state['page']));
       }
       // display new page 
       main.innerHTML = response;
@@ -140,12 +155,15 @@ function loadPage(page, options = {}) {
         }
         pageTitle = article.getAttribute('data-page-title');
       }
-      document.title = 'TV Melsbach' + (pageTitle != null ? ' - ' + pageTitle : '');
+      document.title = preferences['app-title'] + (pageTitle ? ' - ' + pageTitle : '');
 
       if (history.state == null || history.state['page'] != page) {
         var state = {'page': page, 'ypos': ypos};
-        var url = 'index.html?page=' + page;
-        history.pushState(state, null, url);
+        if (history.state == null) {
+          history.replaceState(state, null, getPath(page));
+        } else {
+          history.pushState(state, null, getPath(page));
+        }
       }
       loadImages(main);
     })
@@ -208,6 +226,10 @@ function execute(script) {
   } catch(e) {
     console.log(e);
   }
+}
+
+function getPath(page) {
+  return page == preferences['index-page'] ? '.' : page;
 }
 
 /**********************************************************************

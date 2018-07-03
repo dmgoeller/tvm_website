@@ -63,10 +63,15 @@ def copy(src, dest, options = {})
   end
 end
 
-def build_html(filename, icons, blur_svg)
+def build_html(filename, options = {})
   action "Build '#{filename}'" do
+    icons = options[:icons]
     html = File.read(filename)
 
+    # replace base path
+    html.gsub!(/data\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk| 
+      "data-base-path=\"#{options[:base_path]}\""
+    }
     # embed stylesheets
     html.gsub!(/\<link.*href\=\"assets\/stylesheets\/(\w|\-)*\.css\".*\>/) { |link|
       stylesheet = File.read(link.match(/(\w|\-|\/)*\.css/)[0])
@@ -92,21 +97,34 @@ def build_html(filename, icons, blur_svg)
     # embed thumbnails
     html.gsub!(/\<div\s*class\=\"background\"\s*data-image\=\"(\w|\-|\/)*\.jpg\"/) { |chunk|
       image = File.binread("../thumbs/#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}")
-      svg = blur_svg.gsub('#{base64}', [image].pack('m'))
+      svg = options[:blur_svg].gsub('#{base64}', [image].pack('m'))
       "#{chunk} style=\"background-image: url(data:image/svg+xml,#{uri_escape(svg)});\""
     }
     File.write(filename, html)
   end
 end
 
-def build_service_worker_standalone_js
+def build_service_worker_standalone_js(options = {})
   action "Build 'service-worker-standalone.js'" do
     service_worker = File.read('service-worker.js');
     service_worker.sub!(/var\s*PAGES_TO_CACHE\s*\=.*\;/) {
-      pages = Dir.glob('pages/*.html').collect() { |page| "'#{page}'" };
+      pages = Dir.glob("#{options[:pages_dir]}/*.html").collect() { |page| "'#{page}'" };
       "var PAGES_TO_CACHE = [#{pages.join(',')}];"
     }
     File.write('service-worker-standalone.js', service_worker);
+  end
+end
+
+def build_htaccess(filename, options = {})
+  action "Build '#{filename}'" do
+    base_path = options[:base_path]
+    htaccess = File.read(filename)
+    htaccess << "\n"
+    htaccess << "RewriteBase #{base_path[0..-2]}\n" if base_path.length > 1
+    Dir.glob("#{options[:pages_dir]}/*.html") { |page|
+      htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
+    } 
+    File.write(filename, htaccess)
   end
 end
 
@@ -129,8 +147,9 @@ def build_thumbs
 end
 
 def build_app
-  task 'Build App' do
+  task 'Build App' do |config|
     build_dir = "#{$build_dir}/app"
+    base_path = config['base_path'] || '/'
 
     create_or_clean(build_dir)
     copy($src_dir, build_dir, exclude: %w(media download))
@@ -139,14 +158,15 @@ def build_app
       icons = load_svg_icons('assets/icons')
       blur_svg = load_svg('assets/templates/blur.svg')
 
-      build_html('index.html', icons, blur_svg)
+      build_html('index.html', icons: icons, blur_svg: blur_svg, base_path: base_path)
 
       Dir.glob("pages/*.html") { |filename| 
         action "Build page \'#{filename}\'" do
-          build_html(filename, icons, blur_svg)
+          build_html(filename, icons: icons, blur_svg: blur_svg, base_path: base_path)
         end
       }
-      build_service_worker_standalone_js
+      build_service_worker_standalone_js(pages_dir: 'pages')
+      build_htaccess('.htaccess', pages_dir: 'pages', base_path: base_path)
     end
 
     copy(build_dir, $dist_dir, exclude: %w(assets))
@@ -176,8 +196,8 @@ begin
   build_thumbs if ARGV.include?('-media')
   build_app
   deploy if ARGV.include?('-deploy')
-rescue Exception => e
-  puts "\nError: #{e.message}"
+#rescue Exception => e
+#  puts "\nError: #{e.message}"
 end
 
 puts
