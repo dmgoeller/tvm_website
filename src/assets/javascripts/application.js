@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (path.startsWith(preferences['base-path'])) {
     path = path.slice(preferences['base-path'].length);
   }
-  if (path.length == 0) {
+  if (path == '' || path == '/') {
     path = preferences['index-page'];
   }
   loadPage(path);

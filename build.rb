@@ -117,10 +117,9 @@ end
 
 def build_htaccess(filename, options = {})
   action "Build '#{filename}'" do
-    base_path = options[:base_path]
     htaccess = File.read(filename)
     htaccess << "\n"
-    htaccess << "RewriteBase #{base_path[0..-2]}\n" if base_path.length > 1
+    htaccess << "RewriteBase #{options[:base_path]}\n" unless options[:base_path].empty?
     Dir.glob("#{options[:pages_dir]}/*.html") { |page|
       htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
     } 
@@ -149,7 +148,8 @@ end
 def build_app
   task 'Build App' do |config|
     build_dir = "#{$build_dir}/app"
-    base_path = config['base_path'] || '/'
+    base_path = config['base_path'] || ''
+    base_path = base_path[0..-2] if base_path.end_with?('/')
 
     create_or_clean(build_dir)
     copy($src_dir, build_dir, exclude: %w(media download))
