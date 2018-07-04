@@ -189,8 +189,8 @@ body > header .button {
   white-space: nowrap;
 }
 
-/* mobile devices, desktop devices (width < 640px) */
-@media (max-device-width: 1024px), (max-width: 639px) {
+/* small devices */
+@media (max-width: 767px) {
   .top-menu .icon {
     background-image: url('../icons/menu.svg');
   }
@@ -245,8 +245,8 @@ body > header .button {
   }
 }
 
-/* desktop devices (width >= 640px) */
-@media (min-device-width: 1025px) and (min-width: 640px) {
+/* medium and large devices */
+@media (min-width: 768px) {
   .top-menu {
     align-self: stretch;
     margin: 0 1rem;
