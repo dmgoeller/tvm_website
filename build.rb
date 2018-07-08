@@ -27,6 +27,10 @@ end
 
 # utility methods
 
+def index_page(html)
+  File.read(html).scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first
+end
+
 def load_svg(filename)
   File.readlines(filename)[1..-1].collect(&:strip).join
 end
@@ -121,6 +125,7 @@ def build_htaccess(filename, options = {})
     htaccess << "\n"
     htaccess << "RewriteBase #{options[:base_path]}\n" unless options[:base_path].empty?
     Dir.glob("#{options[:pages_dir]}/*.html") { |page|
+      next if page == options[:index_page]
       htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
     } 
     File.write(filename, htaccess)
@@ -155,6 +160,7 @@ def build_app
     copy($src_dir, build_dir, exclude: %w(media download))
 
     FileUtils.cd(build_dir) do
+      index_page = index_page('index.html')
       icons = load_svg_icons('assets/icons')
       blur_svg = load_svg('assets/templates/blur.svg')
 
@@ -166,7 +172,7 @@ def build_app
         end
       }
       build_service_worker_standalone_js(pages_dir: 'pages')
-      build_htaccess('.htaccess', pages_dir: 'pages', base_path: base_path)
+      build_htaccess('.htaccess', pages_dir: 'pages', base_path: base_path, index_page: index_page)
     end
 
     copy(build_dir, $dist_dir, exclude: %w(assets))
