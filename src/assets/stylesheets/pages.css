@@ -475,6 +475,8 @@ article .gallery .image > img {
  **********************************************************************/
 
 article .board {
+  margin-top: 0rem !important;
+  margin-bottom: 2rem !important;
   display: grid;
   grid-gap: 2rem;
 }
