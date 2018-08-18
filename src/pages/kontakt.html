@@ -1,4 +1,4 @@
-<article class="no-header" data-page-title="Kontakt" data-page-onload="restoreMap" data-page-onunload="storeMap">
+<article class="no-header" data-page-title="Kontakt">
   <section>
     <div class="container">
       <h1>Kontakt</h1>  
@@ -13,15 +13,17 @@
   </section>
 
   <section class="auto-height light-gray-bg">
-    <div id="show-map-button" class="container center">
+    <div class="container center">
       <div class="buttons">
-        <div class="button cta" onclick="showMap();">Unsere Adresse in Google Maps anzeigen</div>
+        <div class="button cta" onclick="window.open('https://www.google.com/maps/dir//Mittelstra%C3%9Fe,+56581+Melsbach/@50.4918396,7.4824281,15z');">
+          Wegbeschreibung in Google&nbsp;Maps öffnen
+        </div>
       </div>
       <p class="center">
-        Hinweis: Bitte beachte die <a class="link" target="_blank" href="https://policies.google.com/privacy?hl=de">
-        Datenschutz&shy;erklärung</a> von Google bevor du die Karte öffnest.
+        Hinweis: Bitte beachte die
+        <a class="link" target="_blank" href="https://policies.google.com/privacy?hl=de">Daten&shy;schutz&shy;erklärung</a>
+        von Google bevor du die Wegbeschreibung öffnest.
       </p>
     </div>
-    <div id="map" class="hidden"></div>
   </section>
 </article>
