@@ -1,21 +1,17 @@
+
 var mapNode = null;
 
-function loadMap() {
-  if (mapNode) {
-    select('#map').replaceWith(mapNode);
-  } else {
-    var script  = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src  = 'https://maps.googleapis.com/maps/api/js?' +
-                  'key={GOOGLE_MAPS_API_KEY}' +
-                  'callback=initMap';
+function showMap() {
+  var script  = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://maps.googleapis.com/maps/api/js?' +
+                'key={GOOGLE_MAPS_API_KEY}' +
+                'callback=initMap';
 
-    document.head.appendChild(script);
-  }
-}
+  document.head.appendChild(script);
 
-function unloadMap() {
-  mapNode = select('#map').cloneNode(true);
+  select('#map').classList.remove('hidden');
+  select('#show-map-button').classList.add('hidden');
 }
 
 function initMap() {
@@ -32,3 +28,19 @@ function initMap() {
     map: map
   });
 }
+
+function storeMap() {
+  var map = select('#map');
+
+  if (!map.classList.contains('hidden')) {
+    mapNode = map.cloneNode(true);
+  }
+}
+
+function restoreMap() {
+  if (mapNode) {
+    select('#show-map-button').classList.add('hidden')
+    select('#map').replaceWith(mapNode);
+  }
+}
+

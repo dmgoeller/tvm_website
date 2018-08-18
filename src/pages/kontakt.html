@@ -1,4 +1,4 @@
-<article class="no-header" data-page-title="Kontakt" data-page-onload="loadMap" data-page-onunload="unloadMap">
+<article class="no-header" data-page-title="Kontakt" data-page-onload="restoreMap" data-page-onunload="storeMap">
   <section>
     <div class="container">
       <h1>Kontakt</h1>  
@@ -12,7 +12,16 @@
     </div>
   </section>
 
-  <section class="auto-height">
-    <div id="map"></div>
+  <section class="auto-height light-gray-bg">
+    <div id="show-map-button" class="container center">
+      <div class="buttons">
+        <div class="button cta" onclick="showMap();">Unsere Adresse in Google Maps anzeigen</div>
+      </div>
+      <p class="center">
+        Hinweis: Bitte beachte die <a class="link" target="_blank" href="https://policies.google.com/privacy?hl=de">
+        Datenschutz&shy;erklärung</a> von Google bevor du die Karte öffnest.
+      </p>
+    </div>
+    <div id="map" class="hidden"></div>
   </section>
 </article>
