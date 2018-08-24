@@ -150,21 +150,7 @@ article .start-screen .background > img {
 article header {
   position: relative;
   width: 100%;
-  background: var(--gray);
-}
-
-article header .background {
-  width: 100%;
-  height: 100%;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-article header .background > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 160px;
 }
 
 article header .foreground {
@@ -178,23 +164,48 @@ article header .foreground {
   justify-content: space-around;
 }
 
+article header .background {
+  width: 100%;
+  height: 100%;
+}
+
 article header h1 {
   margin: 0;
+}
+
+/* headline and photo */
+
+article header.headline-and-photo {
+  background: var(--gray);
+}
+
+article header.headline-and-photo .background {
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+article header.headline-and-photo .background > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+article header.headline-and-photo h1 {
   color: var(--white);
   text-shadow: var(--text-shadow);
 }
 
-/* mobile */
 @media (max-device-width: 1024px) {
   @media (max-width: 767px) {
     @media (orientation: portrait) {
-      article header {
+      article header.headline-and-photo {
         height: 56.25vw; /*16:9*/
       }
     }
 
     @media (orientation: landscape) {
-      article header {
+      article header.headline-and-photo {
         height: 50vh;
       }
     }
@@ -202,27 +213,60 @@ article header h1 {
 
   @media (min-width: 768px) {
     @media (orientation: portrait) {
-      article header {
+      article header.headline-and-photo {
         height: 25vh;
       }
     }
 
     @media (orientation: landscape) {
-      article header {
+      article header.headline-and-photo {
        height: 33vh;
       }
     }
   }
 }
 
-/* desktop */
 @media (min-device-width: 1025px) {
-  article header {
+  article header.headline-and-photo {
     height: 240px;
   }
 
-  article header h1 {
+  article header.headline-and-photo h1 {
     font-size: 3rem;
+  }
+}
+
+/* headline and logo */
+
+article header.headline-and-logo {
+  background: var(--gradient-bg);
+}
+
+article header.headline-and-logo .background > img {
+  position: absolute;
+  height: 100%;
+  opacity: .33;
+}
+
+@media (max-device-width: 767px) {
+  article header.headline-and-logo {
+    height: 160px;
+  }
+
+  article header.headline-and-logo .background > img {
+    right: -24px;
+    bottom: -24px;
+  }
+}
+
+@media (min-device-width: 768px) {
+  article header.headline-and-logo {
+    height: 160px;
+  }
+
+  article header.headline-and-logo .background > img {
+    right: 1rem;
+    bottom: -24px;
   }
 }
 
