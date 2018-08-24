@@ -250,12 +250,16 @@ article header.headline-and-logo .background > img {
 
 @media (max-device-width: 767px) {
   article header.headline-and-logo {
-    height: 160px;
+    height: 120px;
   }
 
   article header.headline-and-logo .background > img {
-    right: -24px;
-    bottom: -24px;
+    right: -18px;
+    bottom: -18px;
+  }
+
+  article header.headline-and-logo h1 {
+    font-size: 1.5rem;
   }
 }
 
