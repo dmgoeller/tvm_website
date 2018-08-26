@@ -508,11 +508,6 @@ article td.align-right {
   text-align: right;
 }
 
-article th.nowrap,
-article td.nowrap {
-  white-space: nowrap;
-}
-
 /**********************************************************************
  * galleries
  **********************************************************************/
