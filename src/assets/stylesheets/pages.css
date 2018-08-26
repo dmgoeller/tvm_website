@@ -9,18 +9,57 @@ article {
   flex-direction: column;
 }
 
-article.no-header {
-  margin-top: 4rem;
+article .container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article .container.center {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 article h1 {
+  margin: 0;
   font-size: 2rem;
   font-weight: bold;
 }
 
 article h2 {
+  margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+article h2:not(:first-child) {
+  margin-top: 2rem;
+}
+
+article p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+article p:not(:first-child) {
+  margin-top: 1rem;
+}
+
+article p.center {
+  text-align: center;
+}
+
+article a.link {
+  color: var(--primary);
+}
+
+@media (max-width: 767px) {
+  article h1 {
+    font-size: 1.5rem;
+  }
+
+  article h2 {
+    font-size: 1.25rem;
+  }
 }
 
 /**********************************************************************
@@ -77,6 +116,18 @@ article .start-screen .background > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  article .start-screen h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  article .start-screen h1 {
+    font-size: 3rem;
+  }
 }
 
 /* mobile */
@@ -158,7 +209,7 @@ article header .foreground {
   z-index: 1;
   left: 0;
   right: 0;
-  bottom: 0.5rem;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -169,8 +220,9 @@ article header .background {
   height: 100%;
 }
 
-article header h1 {
-  margin: 0;
+article header .container {
+  margin-top: 0;
+  margin-bottom: .5rem;
 }
 
 /* headline and photo */
@@ -209,6 +261,10 @@ article header.headline-and-photo h1 {
         height: 50vh;
       }
     }
+
+    article header.headline-and-photo h1 {
+      font-size: 2rem;
+    }
   }
 
   @media (min-width: 768px) {
@@ -222,6 +278,10 @@ article header.headline-and-photo h1 {
       article header.headline-and-photo {
        height: 33vh;
       }
+    }
+
+    article header.headline-and-photo h1 {
+      font-size: 3rem;
     }
   }
 }
@@ -292,35 +352,8 @@ article section.light-gray-bg {
   background: var(--light-gray);
 }
 
-article section .container {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-article section .container.center {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
 article section h1 {
-  margin: .9rem 0 1rem 0;
-  color: var(--primary);
-}
-
-article section h2 {
-  margin: .9rem 0 1rem 0;
-}
-
-article section p {
-  margin: 1rem 0;
-  line-height: 1.5;
-}
-
-article section p.center {
-  text-align: center;
-}
-
-article section a.link {
+  margin-top: 4rem;
   color: var(--primary);
 }
 
@@ -354,8 +387,6 @@ article section .button.cta:hover {
  **********************************************************************/
 
 article section .menu {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
   display: grid;
   align-content: space-evenly;
   grid-row-gap: 1rem;
@@ -411,8 +442,12 @@ article section .menu-item.loading:after {
  **********************************************************************/
 
 article table {
-  margin: 1rem 0;
+  margin: 0;
   border-collapse: collapse;
+}
+
+article table:not(:first-child) {
+  margin-top: 1rem;
 }
 
 article th,
