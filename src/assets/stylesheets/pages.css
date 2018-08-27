@@ -45,16 +45,16 @@ article p:not(:first-child) {
   margin-top: 1rem;
 }
 
-article p.large-space:not(:first-child) {
+article p.center {
+  text-align: center;
+}
+
+article .large-space:not(:first-child) {
   margin-top: 2rem;
 }
 
-article p.large-space:not(:last-child) {
+article .large-space:not(:last-child) {
   margin-bottom: 2rem;
-}
-
-article p.center {
-  text-align: center;
 }
 
 article a.link {
