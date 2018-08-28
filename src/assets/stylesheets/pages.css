@@ -101,11 +101,6 @@ article .start-screen .headline {
   align-items: center;
 }
 
-article .start-screen .headline > img {
-  width: 96px;
-  height: 96px;
-}
-
 article .start-screen h1 {
   margin: 1rem 0 0 0;
   text-align: center;
@@ -131,11 +126,21 @@ article .start-screen .background > img {
   article .start-screen h1 {
     font-size: 2rem;
   }
+
+  article .start-screen img.logo {
+    width: 96px;
+    height: 96px;
+  }
 }
 
 @media (min-width: 768px) {
   article .start-screen h1 {
     font-size: 3rem;
+  }
+
+  article .start-screen img.logo {
+    width: 144px;
+    height: 144px;
   }
 }
 
