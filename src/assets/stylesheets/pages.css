@@ -85,10 +85,10 @@ article .start-screen {
 article .start-screen .foreground {
   position: absolute;
   z-index: 2;
-  left: 0;
-  right: 0;
-  top: 2.25rem; /* app header height */
-  bottom: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 2.25rem; /* = app header height */
   display: flex;
   flex-direction: column;
 }
@@ -151,7 +151,7 @@ article .start-screen .background > img {
   article .start-screen .buttons {
     flex: none;
     display: grid;
-    margin: .5rem;
+    margin: 0 .5rem .5rem .5rem;
     grid-gap: .25rem;
   }
 
@@ -195,7 +195,7 @@ article .start-screen .background > img {
 
 @media (min-device-width: 1025px) {
   article .start-screen .foreground {
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
     justify-content: flex-end;
   }
 
