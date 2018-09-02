@@ -14,11 +14,6 @@ article .container {
   margin-bottom: 2rem;
 }
 
-article .container.center {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
 article h1 {
   margin: 0;
   font-size: 2rem;
@@ -371,8 +366,27 @@ article section.auto-height {
   flex: 1 0 auto;
 }
 
+article section.center-content {
+  align-items: center;
+}
+
 article section.light-gray-bg {
   background: var(--light-gray);
+}
+
+article section.teaser {
+  background: var(--light-gray);
+  background-size: cover;
+  background-position: center;
+}
+
+article section.teaser p.note {
+  color: var(--white);
+  text-shadow: var(--text-shadow);
+}
+
+article section.teaser p.note a.link {
+  color: inherit;
 }
 
 /**********************************************************************
