@@ -1,17 +1,8 @@
 
-/**********************************************************************
- * articles
- **********************************************************************/
-
 article {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-}
-
-article .container {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 }
 
 article h1 {
@@ -27,29 +18,13 @@ article h2 {
   font-weight: bold;
 }
 
-article h2:not(:first-child) {
-  margin-top: 2rem;
-}
-
 article p {
   margin: 0;
   line-height: 1.5;
 }
 
-article p:not(:first-child) {
-  margin-top: 1rem;
-}
-
 article p.center {
   text-align: center;
-}
-
-article .large-space:not(:first-child) {
-  margin-top: 2rem;
-}
-
-article .large-space:not(:last-child) {
-  margin-bottom: 2rem;
 }
 
 article a.link {
@@ -64,6 +39,19 @@ article a.link {
   article h2 {
     font-size: 1.25rem;
   }
+}
+
+/**********************************************************************
+ * containers
+ **********************************************************************/
+
+article .container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article .container:not(.menu):not(.contacts) > *:nth-child(n + 2) {
+  margin-top: 1rem;
 }
 
 /**********************************************************************
@@ -473,10 +461,6 @@ article table {
   border-collapse: collapse;
 }
 
-article table:not(:first-child) {
-  margin-top: 1rem;
-}
-
 article th,
 article td {
   padding: .25rem .5rem;
@@ -649,7 +633,6 @@ article .contact .details {
  **********************************************************************/
 
 article .calendar {
-  margin-top: 1rem;
   display: grid;
 }
 
