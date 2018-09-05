@@ -175,7 +175,7 @@ function loadPage(page, options = {}) {
 }
 
 function loadImages(container) {
-  // expand background images
+  // create image tags
   container.querySelectorAll('.background[data-image]').forEach(function(element) {
     element.addElement('img').setAttribute('data-src', element.getAttribute('data-image'));
   });
@@ -191,6 +191,16 @@ function loadImages(container) {
       }
       img.removeAttribute('data-src');
     }
+  });
+  // load background images
+  container.querySelectorAll('[data-background-image]').forEach(function(element) {
+    var backgroundImage = new Image();
+
+    backgroundImage.onload = function() {
+      element.style.backgroundImage = 'url(' + backgroundImage.src + ')';
+      element.setAttribute('data-background-image-loaded', 'true');
+    }
+    backgroundImage.src = element.getAttribute('data-background-image');
   });
 }
 

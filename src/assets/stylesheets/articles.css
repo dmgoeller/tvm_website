@@ -382,16 +382,16 @@ article section.light-gray-bg {
 
 article section.teaser {
   background: var(--light-gray);
-  background-size: cover;
-  background-position: center;
 }
 
-article section.teaser p.note {
+article section.teaser[data-background-image-loaded] {
+  background-size: cover;
+  background-position: center;
   color: var(--white);
   text-shadow: var(--text-shadow);
 }
 
-article section.teaser p.note a.link {
+article section.teaser a.link {
   color: inherit;
 }
 
