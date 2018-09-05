@@ -537,6 +537,7 @@ article > footer a.button {
   background: var(--primary);
   text-align: center;
   text-decoration: none;
+  text-shadow: none;
   transition: .3s;
 }
 
