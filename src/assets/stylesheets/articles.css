@@ -58,8 +58,16 @@ article .container {
   margin-bottom: 2rem;
 }
 
-article .container:not(.menu):not(.contacts) > *:nth-child(n + 2) {
+article .container:not(.menu):not(.contacts) > *:not(:first-child) {
   margin-top: 1rem;
+}
+
+article .container .large-space-around:not(:first-child) {
+  margin-top: 2rem !important;
+}
+
+article .container .large-space-around:not(:last-child) {
+  margin-bottom: 2rem;
 }
 
 /**********************************************************************
