@@ -31,7 +31,14 @@ article li {
 }
 
 article a.link {
-  color: var(--primary);
+  color: inherit;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+article a.email {
+  color: inherit;
+  text-decoration: underline;
 }
 
 article sup {
