@@ -31,13 +31,7 @@ article li {
 }
 
 article a.link {
-  color: inherit;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-article a.email {
-  color: inherit;
+  color: var(--primary); /*inherit;*/
   text-decoration: underline;
 }
 
