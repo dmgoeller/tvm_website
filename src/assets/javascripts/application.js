@@ -177,19 +177,21 @@ function loadPage(page, options = {}) {
 function loadImages(container) {
   // create image tags
   container.querySelectorAll('.background[data-image]').forEach(function(element) {
-    element.addElement('img').setAttribute('data-src', element.getAttribute('data-image'));
+    var image = element.addElement('img');
+    image.setAttribute('data-src', element.getAttribute('data-image'));
+    image.setAttribute('alt', element.getAttribute('data-image-alt') || '');
   });
   // load images
-  container.querySelectorAll('img[data-src]').forEach(function(img) {
-    img.setAttribute('src', img.getAttribute('data-src'));
+  container.querySelectorAll('img[data-src]').forEach(function(image) {
+    image.setAttribute('src', image.getAttribute('data-src'));
 
-    img.onload = function() {
-      var parent = img.parentNode;
+    image.onload = function() {
+      var parent = image.parentNode;
       if (onClick = parent.getAttribute('data-onclick')) {
         parent.setAttribute('onclick', onClick);
         parent.removeAttribute('data-onclick');
       }
-      img.removeAttribute('data-src');
+      image.removeAttribute('data-src');
     }
   });
   // load background images
