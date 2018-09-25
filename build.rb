@@ -94,7 +94,7 @@ def build_html(filename, options = {})
       "<script type=\"text/javascript\">\n#{javascript}\n</script>"
     }
     # embed icons
-    html.gsub!(/\<img(\s*\w*\=\".*\"\s*)*\s*src\=\"(\w|\-|\/)*\.svg\"\>/) { |element|
+    html.gsub!(/\<img(\s*\w*\=\".*\"\s*)*\s*src\=\"(\w|\-|\/)*\.svg\"(\s*\w*\=\".*\"\s*)*\>/) { |element|
       icon = icons[element.match(/(\w|\-)*\.svg/)[0]]
       icon.nil? ? element : icon
     }
