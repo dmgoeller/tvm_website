@@ -30,7 +30,7 @@
     </div>
   </header>
   <main>
-    <section class="">
+    <section>
       <div class="container">
         <p>
           Mit unserem Sport- und Freizeitangebot tragen wir zur Lebensqualität in Melsbach bei.
@@ -45,6 +45,25 @@
           <a class="link" onclick="loadPage('boule');">Boule</a> ist als passende Er&shy;gän&shy;zung 
           zu unserem Tennis&shy;angebot besonders unter unseren älteren Mit&shy;gliedern beliebt.
         </p>
+      </div>
+    </section>
+    <section class="light-gray-bg">
+      <div class="container">
+        <div class="gallery">
+          <div class="image" data-onclick="showLightbox(this.parentNode, 0);">
+            <img data-src="media/anlage/tv-melsbach-anlage-1.jpg" alt="">
+          </div>
+          <div class="image" data-onclick="showLightbox(this.parentNode, 1);">
+            <img data-src="media/anlage/tv-melsbach-anlage-3.jpg" alt="">
+          </div>
+          <div class="image" data-onclick="showLightbox(this.parentNode, 2);">
+            <img data-src="media/anlage/tv-melsbach-anlage-2.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
         <p>
           Unsere Anlage mit vier Sand&shy;plätzen, Boulo&shy;drome und Club&shy;haus be&shy;findet 
           sich in einer wunder&shy;schönen natur&shy;nahen Um&shy;gebung am Orts&shy;rand von Melsbach.
@@ -52,16 +71,4 @@
       </div>
     </section>
   </main>
-  <!--
-  <footer>
-    <section>
-      <div class="container">
-        <strong>Unsere Sponsoren</strong>
-        <picture onclick="loadPage('sponsoren', {'caller': this});">
-          <img style="object-fit: cover;width:100%;" data-src="media/tv-melsbach-sponsoren-8.png">
-        </picture>
-      </div>
-    </section>
-  </footer>
-  -->
 </article>
