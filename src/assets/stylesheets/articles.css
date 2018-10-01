@@ -285,7 +285,7 @@ article > header.headline-and-photo .background > img {
 
   @media (orientation: portrait) {
     article > header.headline-and-photo {
-      height: 56.25vw; /*16:9*/
+      height: 66.67vw; /*3:2*/
     }
   }
 
