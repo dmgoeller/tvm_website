@@ -129,7 +129,7 @@ function loadArticle(page, options = {}) {
   fetch('pages/' + page + '.html', {timeout: 3000})
     .then(function(response) {
       var main = select('body > main');
-      var pageTitle = null;
+      var title = null;
 
       if (caller) caller.setClass('loading', false);
       topMenu.setClass('unfolded', false);
@@ -153,7 +153,7 @@ function loadArticle(page, options = {}) {
         if (pageonload = article.getAttribute('data-page-onload')) {
           execute(pageonload);
         }
-        pageTitle = article.getAttribute('data-page-title');
+        title = article.getAttribute('data-title');
       }
       if (history.state == null || history.state['page'] != page) {
         var state = {'page': page, 'ypos': ypos};
@@ -163,7 +163,7 @@ function loadArticle(page, options = {}) {
           history.pushState(state, null, getPath(page));
         }
       }
-      document.title = preferences['app-title'] + (pageTitle ? ' - ' + pageTitle : '');
+      document.title = preferences['app-title'] + (title ? ' - ' + title : '');
       loadImages(main);
     })
     .catch(function(error) {
