@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
       preferences[attr[i].name.slice(5)] = attr[i].value;
     }
   }
-  // load initial page
+  // load initial article
   var path = window.location.pathname;
 
   if (path.startsWith(preferences['base-path'])) {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (path == '' || path == '/' || path == '/index.html') {
     path = preferences['index-page'];
   }
-  loadPage(path);
+  loadArticle(path);
 });
 
 window.addEventListener('load', function() {
@@ -87,7 +87,7 @@ window.addEventListener('load', function() {
   // browser history
   window.addEventListener('popstate', function(event) {
     if (event.state) {
-      loadPage(event.state['page'], {'ypos': event.state['ypos']});
+      loadArticle(event.state['page'], {'ypos': event.state['ypos']});
     }
   });
   // service worker
@@ -117,7 +117,7 @@ function preventDefault(element, eventType) {
  * page loading
  **********************************************************************/
 
-function loadPage(page, options = {}) {
+function loadArticle(page, options = {}) {
   var topMenu = select('#top-menu');
   var glasspane = select('#glasspane');
   var caller = select(options['caller']);

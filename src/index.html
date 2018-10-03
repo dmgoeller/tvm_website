@@ -21,14 +21,14 @@
   <body>
     <header>
       <div class="button icon icon-chevron-left standalone-only" onclick="window.history.back();"></div>
-      <div class="button" onclick="loadPage('startseite');">TV Melsbach</div>
+      <div class="button" onclick="loadArticle('startseite');">TV Melsbach</div>
       <div id="top-menu" class="top-menu">
         <div class="button icon" onclick="select('#top-menu').toggleClass('unfolded');"></div>
         <div class="menu-items">
-          <div class="menu-item" onclick="loadPage('tennis', {'caller': this});">Tennis</div>
-          <div class="menu-item" onclick="loadPage('boule', {'caller': this});">Boule</div>
-          <div class="menu-item" onclick="loadPage('clubhaus-mieten', {'caller': this});">Clubhaus mieten</div>
-          <div class="menu-item" onclick="loadPage('verein', {'caller': this});">Unser Verein</div>
+          <div class="menu-item" onclick="loadArticle('tennis', {'caller': this});">Tennis</div>
+          <div class="menu-item" onclick="loadArticle('boule', {'caller': this});">Boule</div>
+          <div class="menu-item" onclick="loadArticle('clubhaus-mieten', {'caller': this});">Clubhaus mieten</div>
+          <div class="menu-item" onclick="loadArticle('verein', {'caller': this});">Unser Verein</div>
         </div>
       </div>
     </header>
@@ -39,9 +39,9 @@
     </main>
     <footer class="links">
       <div class="container">
-        <div class="link" onclick="loadPage('kontakt', {'caller': this});">Kontakt</div>
-        <div class="link" onclick="loadPage('datenschutz', {'caller': this});">Datenschutz</div>
-        <div class="link" onclick="loadPage('impressum', {'caller': this});">Impressum</div>
+        <div class="link" onclick="loadArticle('kontakt', {'caller': this});">Kontakt</div>
+        <div class="link" onclick="loadArticle('datenschutz', {'caller': this});">Datenschutz</div>
+        <div class="link" onclick="loadArticle('impressum', {'caller': this});">Impressum</div>
       </div>
     </footer>
     <footer class="copyright">
