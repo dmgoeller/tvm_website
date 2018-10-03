@@ -163,6 +163,10 @@ article > header.headline-and-logo h1 {
   color: inherit;
 }
 
+article > header.headline-and-logo .background {
+  overflow: hidden;
+}
+
 @media (max-device-width: 767px) {
   article > header.headline-and-logo {
     height: 120px;
