@@ -178,6 +178,7 @@ function loadImages(container) {
   // create image tags
   container.querySelectorAll('.background[data-image]').forEach(function(element) {
     var image = element.addElement('img');
+    image.setAttribute('class', 'background');
     image.setAttribute('data-src', element.getAttribute('data-image'));
     image.setAttribute('alt', element.getAttribute('data-image-alt') || '');
   });
