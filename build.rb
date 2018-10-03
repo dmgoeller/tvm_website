@@ -108,23 +108,12 @@ def build_html(filename, options = {})
   end
 end
 
-def build_service_worker_standalone_js(options = {})
-  action "Build 'service-worker-standalone.js'" do
-    service_worker = File.read('service-worker.js');
-    service_worker.sub!(/var\s*PAGES_TO_CACHE\s*\=.*\;/) {
-      pages = Dir.glob("#{options[:pages_dir]}/*.html").collect() { |page| "'#{page}'" };
-      "var PAGES_TO_CACHE = [#{pages.join(',')}];"
-    }
-    File.write('service-worker-standalone.js', service_worker);
-  end
-end
-
 def build_htaccess(filename, options = {})
   action "Build '#{filename}'" do
     htaccess = File.read(filename)
     htaccess << "\n"
     htaccess << "RewriteBase #{options[:base_path]}\n" unless options[:base_path].empty?
-    Dir.glob("#{options[:pages_dir]}/*.html") { |page|
+    Dir.glob("#{options[:articles_dir]}/*.html") { |page|
       next if page == options[:index_page]
       htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
     } 
@@ -166,13 +155,12 @@ def build_app
 
       build_html('index.html', icons: icons, blur_svg: blur_svg, base_path: base_path)
 
-      Dir.glob("pages/*.html") { |filename| 
-        action "Build page \'#{filename}\'" do
+      Dir.glob("articles/*.html") { |filename| 
+        action "Build article \'#{filename}\'" do
           build_html(filename, icons: icons, blur_svg: blur_svg, base_path: base_path)
         end
       }
-      build_service_worker_standalone_js(pages_dir: 'pages')
-      build_htaccess('.htaccess', pages_dir: 'pages', base_path: base_path, index_page: index_page)
+      build_htaccess('.htaccess', articles_dir: 'articles', base_path: base_path, index_page: index_page)
     end
 
     copy(build_dir, $dist_dir, exclude: %w(assets))

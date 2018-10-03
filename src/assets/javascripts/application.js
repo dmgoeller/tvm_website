@@ -92,12 +92,7 @@ window.addEventListener('load', function() {
   });
   // service worker
   if ('serviceWorker' in navigator) {
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      var serviceWorkerName = 'service-worker-standalone.js';
-    } else {
-      var serviceWorkerName = 'service-worker.js';
-    }
-    navigator.serviceWorker.register(serviceWorkerName)
+    navigator.serviceWorker.register('service-worker.js')
       .then(function(registration) {
         console.log('Service worker registered for ' + registration.scope);
       })
@@ -126,7 +121,7 @@ function loadArticle(page, options = {}) {
   if (caller) caller.setClass('loading', true);
   glasspane.show();
 
-  fetch('pages/' + page + '.html', {timeout: 3000})
+  fetch('articles/' + page + '.html', {timeout: 3000})
     .then(function(response) {
       var main = select('body > main');
       var title = null;
