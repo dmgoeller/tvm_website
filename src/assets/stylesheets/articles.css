@@ -7,18 +7,11 @@ article {
 
 article h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: var(--primary);
 }
 
 article h2 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
-article subline {
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
@@ -38,7 +31,7 @@ article li {
 }
 
 article a.link {
-  color: var(--primary); /*inherit;*/
+  color: var(--primary);
   text-decoration: underline;
 }
 
@@ -160,7 +153,6 @@ article > header.headline-and-logo {
 
 article > header.headline-and-logo h1 {
   font-size: 2rem;
-  color: inherit;
 }
 
 article > header.headline-and-logo .background {
@@ -367,44 +359,6 @@ article section.center-items {
 
 article section.light-gray-bg {
   background: var(--light-gray);
-}
-
-/**********************************************************************
- * headlines
- **********************************************************************/
-
-article .headline {
-  display: grid;
-}
-
-article .headline > img {
-  width: 4rem;
-  height: 4rem;
-}
-
-@media (max-device-width: 767px) and (orientation: portrait) {
-  article .headline {
-    grid-template-columns: auto;
-    grid-row-gap: 1rem;
-    justify-items: center;
-  }
-
-  article .headline h1, article .headline subline {
-    text-align: center;
-  }
-}
-
-@media (min-device-width: 768px), (orientation: landscape) {
-  article .headline {
-    grid-template-columns: auto auto;
-    grid-column-gap: 1rem;
-    grid-row-gap: 0.125rem;
-    justify-content: center;
-  }
-  
-  article .headline .logo {
-    grid-row: 1 / span 2;
-  }
 }
 
 /**********************************************************************
@@ -770,5 +724,54 @@ article .sponsors img {
 @media (min-width: 992px) {
   article .sponsors {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/**********************************************************************
+ * startpage
+ **********************************************************************/
+
+article.startpage .headline {
+  display: grid;
+}
+
+article.startpage .headline img {
+  width: 4rem;
+  height: 4rem;
+}
+
+article.startpage .headline h1 {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+article.startpage .headline subline {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media (max-device-width: 767px) and (orientation: portrait) {
+  article.startpage .headline {
+    grid-template-columns: auto;
+    grid-row-gap: 1rem;
+    justify-items: center;
+  }
+
+  article.startpage .headline h1,
+  article.startpage .headline subline {
+    text-align: center;
+  }
+}
+
+@media (min-device-width: 768px), (orientation: landscape) {
+  article.startpage .headline {
+    grid-template-columns: auto auto;
+    grid-column-gap: 1rem;
+    grid-row-gap: 0.125rem;
+    justify-content: center;
+  }
+  
+  article.startpage .headline .logo {
+    grid-row: 1 / span 2;
   }
 }
