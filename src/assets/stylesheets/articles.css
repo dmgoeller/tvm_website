@@ -47,7 +47,7 @@ article .gradient-bg {
   background: var(--gradient-bg);
 }
 
-article .auto-height {
+article .auto-size {
   flex: 1 0 auto;
 }
 
