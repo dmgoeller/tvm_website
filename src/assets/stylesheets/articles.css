@@ -186,6 +186,10 @@ article > main {
   flex-direction: column;
 }
 
+article > main.first-child {
+  margin-top:2.25rem;
+}
+
 /**********************************************************************
  * footers
  **********************************************************************/
@@ -404,19 +408,28 @@ article .gallery .image > img {
   object-fit: cover;
 }
 
-article .gallery.gallery-grid-2-2-2 {
-  grid-template-columns: 1fr 1fr;
-}
-
 @media (max-width: 767px) {
-  article .gallery.gallery-grid-2-3-3, {
+  article .gallery.gallery-layout-2-3-3,
+  article .gallery.gallery-layout-2-4-4 {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 768px) {
-  article .gallery.gallery-grid-2-3-3 {
+  article .gallery.gallery-layout-2-3-3 {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (orientation: portrait) {
+    article .gallery.gallery-layout-2-4-4 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (orientation: landscape) {
+    article .gallery.gallery-layout-2-4-4 {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
   }
 }
 
