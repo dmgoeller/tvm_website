@@ -384,8 +384,15 @@ article .gallery {
 
 article .gallery .image {
   position: relative;
-  padding-top: 66.66%; /*2:3*/
   background: var(--gray);
+}
+
+article .gallery.gallery-image-format-3-2 .image {
+  padding-top: 66.67%;
+}
+
+article .gallery.gallery-image-format-16-9 .image {
+  padding-top: 56.25%;
 }
 
 article .gallery .image > img {
@@ -397,14 +404,18 @@ article .gallery .image > img {
   object-fit: cover;
 }
 
+article .gallery.gallery-grid-2-2-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
 @media (max-width: 767px) {
-  article .gallery {
+  article .gallery.gallery-grid-2-3-3, {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 768px) {
-  article .gallery {
+  article .gallery.gallery-grid-2-3-3 {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
