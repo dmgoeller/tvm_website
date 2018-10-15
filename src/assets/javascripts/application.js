@@ -171,11 +171,17 @@ function loadArticle(page, options = {}) {
 
 function loadImages(container) {
   // create image tags
-  container.querySelectorAll('.background[data-image]').forEach(function(element) {
+  container.querySelectorAll('*[data-background-image]').forEach(function(element) {
     var image = element.addElement('img');
     image.setAttribute('class', 'background');
-    image.setAttribute('data-src', element.getAttribute('data-image'));
-    image.setAttribute('alt', element.getAttribute('data-image-alt') || '');
+    image.setAttribute('alt', '');
+    image.setAttribute('data-src', element.getAttribute('data-background-image'));
+  });
+  container.querySelectorAll('*[data-logo=true]').forEach(function(element) {
+    var image = element.addElement('img');
+    image.setAttribute('class', 'logo');
+    image.setAttribute('alt', '');
+    image.setAttribute('data-src', 'media/tv-melsbach-logo-weiss.png');
   });
   // load images
   container.querySelectorAll('img[data-src]').forEach(function(image) {
@@ -189,16 +195,6 @@ function loadImages(container) {
       }
       image.removeAttribute('data-src');
     }
-  });
-  // load background images
-  container.querySelectorAll('[data-background-image]').forEach(function(element) {
-    var backgroundImage = new Image();
-
-    backgroundImage.onload = function() {
-      element.style.backgroundImage = 'url(' + backgroundImage.src + ')';
-      element.setAttribute('data-background-image-loaded', 'true');
-    }
-    backgroundImage.src = element.getAttribute('data-background-image');
   });
 }
 

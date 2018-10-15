@@ -5,6 +5,30 @@ article {
   flex-direction: column;
 }
 
+article.no-header {
+  margin-top:2.25rem; /* = app header height */
+}
+
+article .flex-auto {
+  flex: 1 0 auto;
+}
+
+article .flex-center-items {
+  align-items: center;
+}
+
+article .text-align-center {
+  text-align: center;
+}
+
+article .text-align-right {
+  text-align: right;
+}
+
+/**********************************************************************
+ * text elements
+ **********************************************************************/
+
 article h1 {
   margin: 0;
   font-size: 2rem;
@@ -22,10 +46,6 @@ article p {
   line-height: 1.5;
 }
 
-article p.center {
-  text-align: center;
-}
-
 article li {
   line-height: 1.5rem;
 }
@@ -39,86 +59,50 @@ article sup {
   font-size: 0.66rem;
 }
 
-article .light-gray-bg {
-  background: var(--light-gray);
-}
-
-article .gradient-bg {
-  background: var(--gradient-bg);
-}
-
-article .auto-size {
-  flex: 1 0 auto;
-}
-
 /**********************************************************************
- * containers
- **********************************************************************/
-
-article .container {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-article .container:not(.menu):not(.contacts) > *:not(:first-child) {
-  margin-top: 1rem;
-}
-
-article .container .large-space-around:not(:first-child) {
-  margin-top: 2rem !important;
-}
-
-article .container .large-space-around:not(:last-child) {
-  margin-bottom: 2rem;
-}
-
-/**********************************************************************
- * headers
+ * article header
  **********************************************************************/
 
 article > header {
   position: relative;
-  width: 100%;
   height: 10rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-end;
+  width: 100%;
 }
 
-article > header.lead-photo {
-  background: var(--gray);
+article > header[data-logo=true] {
+  background: var(--gradient-bg);
+}
+
+article > header[data-background-image] {
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: var(--white);
   text-shadow: var(--text-shadow);
 }
 
-article > header .foreground {
+article > header > .foreground {
   position: absolute;
-  z-index: 2;
-  width: 100%;
+  z-index: 1;
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: flex-end;
 }
 
-article > header .background {
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-
-article > header .container {
+article > header > .foreground > .container {
   margin-top: 2.25rem; /* = app header height */
   margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+}
+
+article > header > img.logo {
+  position: absolute;
+  right: 1rem;
+  bottom: -15%;
+  height: 100%;
+  opacity: .33;
 }
 
 article > header img.background {
@@ -127,78 +111,65 @@ article > header img.background {
   object-fit: cover;
 }
 
-article > header img.logo {
-  position: absolute;
-  right: 1rem;
-  bottom: -15%;
-  height: 100%;
-  opacity: .33;
-}
-
 @media (max-device-width: 767px) {
   @media (orientation: portrait) {
-    article > header.lead-photo {
-      height: 56.25vw; /*16:9*/
+    article > header[data-background-image] {
+      height: 56.25vw; /* 16:9 */
     }
   }
 
   @media (orientation: landscape) {
-    article > header.lead-photo {
-      height: 50vh;
+    article > header[data-background-image] {
+      height: 50vh; /* 50% */
     }
   }
 }
 
 @media (min-device-width: 768px) and (max-device-width: 1024px) {
-  article > header.lead-photo h1 {
-    font-size: 3rem;
-  }
-
   @media (orientation: portrait) {
-    article > header.lead-photo {
-      height: 33.33vw;
+    article > header[data-background-image] {
+      height: 33.33vw; /* 3:1 */
     }
   }
 
   @media (orientation: landscape) {
-    article > header.lead-photo {
-     height: 25vw;
+    article > header[data-background-image] {
+     height: 25vw; /* 4:1 */
     }
   }
 }
 
 @media (min-device-width: 1025px) {
-  article > header.lead-photo {
-    height: 15rem;
+  article > header[data-background-image] {
+    height: 15rem; /* 240px */
   }
+}
 
-  article > header.lead-photo h1 {
+@media (min-device-width: 768px) {
+  article > header[data-background-image] h1 {
     font-size: 3rem;
   }
 }
 
 /**********************************************************************
- * main
+ * main area
  **********************************************************************/
 
 article > main {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-article > main.first-child {
-  margin-top:2.25rem;
-}
-
 /**********************************************************************
- * footers
+ * article footer
  **********************************************************************/
 
- article > footer {
-   display: flex;
-   flex-direction: column;
-   background: var(--light-gray);
- }
+article > footer {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+}
 
 /**********************************************************************
  * sections
@@ -210,8 +181,27 @@ article section {
   justify-content: space-around;
 }
 
-article section.center-items {
-  align-items: center;
+article > main.accentuate_even_sections section:nth-child(even),
+article > main.accentuate_odd_sections section:nth-child(odd),
+article > footer > section:nth-child(odd) {
+  background: var(--light-gray);
+}
+
+article section .container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article section .container > *:not(:first-child) {
+  margin-top: 1rem;
+}
+
+article section .container .large-space-around:not(:first-child) {
+  margin-top: 2rem !important;
+}
+
+article section .container .large-space-around:not(:last-child) {
+  margin-bottom: 2rem;
 }
 
 /**********************************************************************
@@ -219,6 +209,7 @@ article section.center-items {
  **********************************************************************/
 
 article .menu {
+  flex: 1 0 auto;
   display: grid;
   align-content: space-evenly;
   grid-row-gap: 1rem;
@@ -272,10 +263,6 @@ article .menu-item.loading:after {
  **********************************************************************/
 
 article .teaser {
-  background: var(--light-gray);
-}
-
-article .teaser[data-background-image-loaded] {
   background-size: cover;
   background-position: center;
   color: var(--white);
@@ -358,23 +345,15 @@ article td {
   border-color: var(--white);
 }
 
-article section.light-gray-bg th  {
+article > main.accentuate_even_sections section:nth-child(even) th,
+article > main.accentuate_odd_sections section:nth-child(odd) th {
   border-color: var(--light-gray);
 }
 
-article section.light-gray-bg td  {
+article > main.accentuate_even_sections section:nth-child(even) td,
+article > main.accentuate_odd_sections section:nth-child(odd) td {
   background: var(--white);
   border-color: var(--light-gray);
-}
-
-article th.align-center,
-article td.align-center {
-  text-align: center;
-}
-
-article th.align-right,
-article td.align-right {
-  text-align: right;
 }
 
 /**********************************************************************
@@ -571,16 +550,29 @@ article.startpage > header {
   background: var(--gray);
 }
 
+article.startpage > header .background-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 @media (max-device-width: 767px) {
   article.startpage > header {
     height: 100vh;
   }
 
   article.startpage > header .buttons {
-    padding: 0 .25rem .25rem .25rem;
-    flex: 1 1 auto;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: grid;
     grid-gap: .25rem;
+    padding: 0 .25rem .25rem .25rem;
   }
 
   article.startpage > header .button {
@@ -605,7 +597,7 @@ article.startpage > header {
       grid-template-columns: 1fr 1fr;
     }
 
-    article.startpage > header .background.landscape {
+    article.startpage > header .background-image.mobile-landscape-tablet-desktop {
       display: none;
     }
   }
@@ -615,14 +607,14 @@ article.startpage > header {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
-    article.startpage > header .background.portrait {
+    article.startpage > header .background-image.mobile-portrait {
       display: none;
     }
   }
 
   @media (orientation: portrait) and (display-mode: browser) {
     article.startpage > header .buttons {
-      margin-bottom: 0px;
+      margin-bottom: 64px;
 
       /* avoids that the buttons are hidden by the browser's
        * navigation bar
@@ -636,7 +628,7 @@ article.startpage > header {
     display: none;
   }
 
-  article.startpage > header .background.portrait {
+  article.startpage > header .background-image.mobile-portrait {
     display: none;
   }
 }
@@ -660,6 +652,10 @@ article.startpage > header {
     min-height: 192px;
     max-height: 25vw;
     flex: 1 0 auto;
+  }
+
+  article.startpage > main {
+    flex: none;
   }
 }
 

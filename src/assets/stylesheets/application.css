@@ -1,7 +1,7 @@
 
 /* Layer            Z-Index
  * ===============  =======
- * page content       0 - 2
+ * page content       0 - 1
  * header and menu       10
  * lightboxes            20
  * alert boxes           30
@@ -76,78 +76,6 @@ body {
 }
 
 /**********************************************************************
- * standalone mode
- **********************************************************************/
-
-@media not all and (display-mode: standalone) {
-  .standalone-only {
-    display: none !important;
-  }
-}
-
-/**********************************************************************
- * containers
- **********************************************************************/
-
-/* small devices */
-@media (max-width: 767px) {
-  .container {
-    width: 100%;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-}
-
-/* medium devices */
-@media (min-width: 768px) {
-  .container {
-    width: 720px;
-  }
-}
-
-/* large devices */
-@media (min-width: 992px)  {
-  .container {
-    width: 960px;
-  }
-}
-
-/**********************************************************************
- * icons
- **********************************************************************/
-
-.icon {
-  height: 16px;
-  width: 16px;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.icon.icon-close {
-  background-image: url('../icons/close.svg');
-}
-
-.icon.icon-chevron-left {
-  background-image: url('../icons/chevron-left.svg');
-}
-
-.icon.icon-chevron-right {
-  background-image: url('../icons/chevron-right.svg');
-}
-
-/**********************************************************************
- * interactive elements
- **********************************************************************/
-  
-[onclick]:not(.disabled) {
-  user-select: none;
-}
-
-[onclick]:hover:not(.disabled) {
-  cursor: pointer;
-}
-
-/**********************************************************************
  * app header
  **********************************************************************/
 
@@ -190,7 +118,6 @@ body > header .button {
   white-space: nowrap;
 }
 
-/* small devices */
 @media (max-width: 767px) {
   .top-menu .icon {
     background-image: url('../icons/menu.svg');
@@ -246,7 +173,6 @@ body > header .button {
   }
 }
 
-/* medium and large devices */
 @media (min-width: 768px) {
   .top-menu {
     align-self: stretch;
@@ -269,7 +195,7 @@ body > header .button {
 }
 
 /**********************************************************************
- * main
+ * main area
  **********************************************************************/
 
 body > main {
@@ -308,7 +234,6 @@ body > footer.copyright {
   font-size: .8rem;
 }
 
-/* small devices */
 @media (max-width: 767px) { 
   body > footer.links .container {
     grid-template-columns: 1fr;
@@ -321,7 +246,6 @@ body > footer.copyright {
   }
 }
 
-/* medium (and large) devices */
 @media (min-width: 768px) {
   body > footer {
     justify-content: space-around;
@@ -343,6 +267,70 @@ body > footer.copyright {
   body > footer.links .container > *:last-child {
     justify-self: end;
   }
+}
+
+/**********************************************************************
+ * containers
+ **********************************************************************/
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px)  {
+  .container {
+    width: 960px;
+  }
+}
+
+/**********************************************************************
+ * icons
+ **********************************************************************/
+
+.icon {
+  height: 16px;
+  width: 16px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.icon.icon-close {
+  background-image: url('../icons/close.svg');
+}
+
+.icon.icon-chevron-left {
+  background-image: url('../icons/chevron-left.svg');
+}
+
+.icon.icon-chevron-right {
+  background-image: url('../icons/chevron-right.svg');
+}
+
+/**********************************************************************
+ * interactive elements
+ **********************************************************************/
+  
+[onclick]:not(.disabled) {
+  user-select: none;
+}
+
+[onclick]:hover:not(.disabled) {
+  cursor: pointer;
 }
 
  /**********************************************************************
@@ -391,21 +379,18 @@ body > footer.copyright {
   font-weight: bold;
 }
 
-/* small devices */
 @media (max-width: 767px) {
   .alert .box {
     max-width: 80%;
   }
 }
 
-/* medium devices */
 @media (min-width: 768px) {
   .alert .box {
     max-width: 480px;
   }
 }
 
-/* large devices */
 @media (min-width: 992px)  {
   .alert .box {
     max-width: 640px;
@@ -431,6 +416,16 @@ body > footer.copyright {
 
 .hidden {
   display: none !important;
+}
+
+/**********************************************************************
+ * standalone mode
+ **********************************************************************/
+
+@media not all and (display-mode: standalone) {
+  .standalone-only {
+    display: none !important;
+  }
 }
 
 /**********************************************************************
