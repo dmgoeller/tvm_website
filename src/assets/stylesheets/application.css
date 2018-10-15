@@ -432,7 +432,7 @@ body > footer.copyright {
  * lazy image loading
  **********************************************************************/
 
-img[data-src] {
+img[src=""] {
   visibility: hidden;
 }
 
