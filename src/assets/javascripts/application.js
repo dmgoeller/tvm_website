@@ -171,17 +171,10 @@ function loadArticle(page, options = {}) {
 
 function loadImages(container) {
   // create image tags
-  container.querySelectorAll('*[data-background-image]').forEach(function(element) {
+  container.querySelectorAll('*[data-image]').forEach(function(element) {
     var image = element.addElement('img');
-    image.setAttribute('class', 'background');
+    image.setAttribute('data-src', element.getAttribute('data-image'));
     image.setAttribute('alt', '');
-    image.setAttribute('data-src', element.getAttribute('data-background-image'));
-  });
-  container.querySelectorAll('*[data-logo=true]').forEach(function(element) {
-    var image = element.addElement('img');
-    image.setAttribute('class', 'logo');
-    image.setAttribute('alt', '');
-    image.setAttribute('data-src', 'media/tv-melsbach-logo-weiss.png');
   });
   // load images
   container.querySelectorAll('img[data-src]').forEach(function(image) {

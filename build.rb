@@ -99,7 +99,7 @@ def build_html(filename, options = {})
       icon.nil? ? element : icon
     }
     # embed thumbnail images
-    html.gsub!(/data-background-image\=\"(\w|\-|\/)*\.jpg\"/) { |chunk|
+    html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"/) { |chunk|
       image = File.binread("../thumbs/#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}")
       svg = options[:blur_svg].gsub('#{base64}', [image].pack('m'))
       "#{chunk} style=\"background-image: url(data:image/svg+xml,#{uri_escape(svg)});\""

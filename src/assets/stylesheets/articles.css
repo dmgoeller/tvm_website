@@ -69,19 +69,7 @@ article > header {
   width: 100%;
 }
 
-article > header[data-logo=true] {
-  background: var(--gradient-bg);
-}
-
-article > header[data-background-image] {
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: var(--white);
-  text-shadow: var(--text-shadow);
-}
-
-article > header > .foreground {
+article > header > .headline {
   position: absolute;
   z-index: 1;
   height: 100%;
@@ -91,13 +79,17 @@ article > header > .foreground {
   justify-content: space-around;
 }
 
-article > header > .foreground > .container {
+article > header > .headline > .container {
   margin-top: 2.25rem; /* = app header height */
   margin-bottom: 1rem;
   justify-content: flex-end;
 }
 
-article > header > img.logo {
+article > header.headline-and-logo {
+  background: var(--gradient-bg);
+}
+
+article > header.headline-and-logo > img {
   position: absolute;
   right: 1rem;
   bottom: -15%;
@@ -105,7 +97,22 @@ article > header > img.logo {
   opacity: .33;
 }
 
-article > header img.background {
+article > header.headline-and-background-image {
+  color: var(--white);
+  text-shadow: var(--text-shadow);
+  background: var(-gray);
+}
+
+article > header > .background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+article > header > .background-image > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -113,41 +120,53 @@ article > header img.background {
 
 @media (max-device-width: 767px) {
   @media (orientation: portrait) {
-    article > header[data-background-image] {
+    article > header.headline-and-background-image {
       height: 56.25vw; /* 16:9 */
     }
+
+    article > header > .background-image.mobile-landscape-tablet-desktop {
+      display: none;
+    }
   }
 
   @media (orientation: landscape) {
-    article > header[data-background-image] {
+    article > header.headline-and-background-image {
       height: 50vh; /* 50% */
     }
-  }
-}
 
-@media (min-device-width: 768px) and (max-device-width: 1024px) {
-  @media (orientation: portrait) {
-    article > header[data-background-image] {
-      height: 33.33vw; /* 3:1 */
+    article > header > .background-image.mobile-portrait {
+      display: none;
     }
-  }
-
-  @media (orientation: landscape) {
-    article > header[data-background-image] {
-     height: 25vw; /* 4:1 */
-    }
-  }
-}
-
-@media (min-device-width: 1025px) {
-  article > header[data-background-image] {
-    height: 15rem; /* 240px */
   }
 }
 
 @media (min-device-width: 768px) {
-  article > header[data-background-image] h1 {
+  article > header.headline-and-background-image h1 {
     font-size: 3rem;
+  }
+
+  article > header > .background-image.mobile-portrait {
+    display: none;
+  }
+
+  @media (max-device-width: 1024px) {
+    @media (orientation: portrait) {
+      article > header.headline-and-background-image {
+        height: 33.33vw; /* 3:1 */
+      }
+    }
+
+    @media (orientation: landscape) {
+      article > header.headline-and-background-image {
+       height: 25vw; /* 4:1 */
+      }
+    }
+  }
+
+  @media (min-device-width: 1025px) {
+    article > header.headline-and-background-image {
+      height: 15rem; /* 240px */
+    }
   }
 }
 
@@ -550,15 +569,6 @@ article.startpage > header {
   background: var(--gray);
 }
 
-article.startpage > header .background-image {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 @media (max-device-width: 767px) {
   article.startpage > header {
     height: 100vh;
@@ -596,19 +606,11 @@ article.startpage > header .background-image {
     article.startpage > header .buttons {
       grid-template-columns: 1fr 1fr;
     }
-
-    article.startpage > header .background-image.mobile-landscape-tablet-desktop {
-      display: none;
-    }
   }
 
   @media (orientation: landscape) {
     article.startpage > header .buttons {
       grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-
-    article.startpage > header .background-image.mobile-portrait {
-      display: none;
     }
   }
 
@@ -625,10 +627,6 @@ article.startpage > header .background-image {
 
 @media (min-device-width: 768px) {
   article.startpage > header .buttons {
-    display: none;
-  }
-
-  article.startpage > header .background-image.mobile-portrait {
     display: none;
   }
 }
