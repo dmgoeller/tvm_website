@@ -87,7 +87,7 @@ window.addEventListener('load', function() {
   // browser history
   window.addEventListener('popstate', function(event) {
     if (event.state) {
-      loadArticle(event.state['page'], {'ypos': event.state['ypos']});
+      loadArticle(event.state['article'], {'ypos': event.state['ypos']});
     }
   });
   // service worker
@@ -112,7 +112,7 @@ function preventDefault(element, eventType) {
  * page loading
  **********************************************************************/
 
-function loadArticle(page, options = {}) {
+function loadArticle(name, options = {}) {
   var topMenu = select('#top-menu');
   var glasspane = select('#glasspane');
   var caller = select(options['caller']);
@@ -121,45 +121,42 @@ function loadArticle(page, options = {}) {
   if (caller) caller.setClass('loading', true);
   glasspane.show();
 
-  fetch('articles/' + page + '.html', {timeout: 3000})
+  fetch('articles/' + name + '.html', {timeout: 3000})
     .then(function(response) {
       var main = select('body > main');
+      var article = null;
       var title = null;
 
       if (caller) caller.setClass('loading', false);
       topMenu.setClass('unfolded', false);
       glasspane.hide();
 
-      // unload old page
-      if (article = main.querySelector('*:first-child')) {
-        if (pageonunload = article.getAttribute('data-page-onunload')) {
-          execute(pageonunload);
-        }
-      }
       if (history.state != null) {
-        var state = {'page': history.state['page'], 'ypos': window.pageYOffset};
-        history.replaceState(state, null, getPath(state['page']));
+        var state = {'article': history.state['article'], 'ypos': window.pageYOffset};
+        history.replaceState(state, null, getPath(state['article']));
       }
-      // display new page 
+      // display new article 
       main.innerHTML = response;
-      window.scrollTo(0, ypos);
+      article = main.querySelector('article');
 
-      if (article = main.querySelector('*:first-child')) {
-        if (pageonload = article.getAttribute('data-page-onload')) {
-          execute(pageonload);
+      if (history.state == null || history.state['article'] != name) {
+        var state = {'article': name, 'ypos': ypos};
+        if (history.state == null) {
+          history.replaceState(state, null, getPath(name));
+        } else {
+          history.pushState(state, null, getPath(name));
         }
+      }
+      if (article) {
         title = article.getAttribute('data-title');
       }
-      if (history.state == null || history.state['page'] != page) {
-        var state = {'page': page, 'ypos': ypos};
-        if (history.state == null) {
-          history.replaceState(state, null, getPath(page));
-        } else {
-          history.pushState(state, null, getPath(page));
-        }
-      }
       document.title = preferences['app-title'] + (title ? ' - ' + title : '');
-      loadImages(main);
+      window.scrollTo(0, ypos);
+
+      if (article) {
+        buildImages(article);
+        loadImages(Array.from(article.children));
+      }
     })
     .catch(function(error) {
       if (caller) caller.setClass('loading', false);
@@ -169,26 +166,45 @@ function loadArticle(page, options = {}) {
     });
 }
 
-function loadImages(container) {
-  // create image tags
-  container.querySelectorAll('*[data-image]').forEach(function(element) {
+function buildImages(article) {
+  article.querySelectorAll('*[data-image]').forEach(function(element) {
     var image = element.addElement('img');
     image.setAttribute('data-src', element.getAttribute('data-image'));
     image.setAttribute('alt', '');
   });
-  // load images
-  container.querySelectorAll('img[data-src]').forEach(function(image) {
-    image.setAttribute('src', image.getAttribute('data-src'));
+}
 
-    image.onload = function() {
-      var parent = image.parentNode;
-      if (onClick = parent.getAttribute('data-onclick')) {
-        parent.setAttribute('onclick', onClick);
-        parent.removeAttribute('data-onclick');
-      }
-      image.removeAttribute('data-src');
+function loadImages(containers) {
+  if (containers.length > 0) {
+    var container = containers[0];
+    var images = container.querySelectorAll('img[data-src]');
+
+    if (images.length > 0) {
+      var loaded = 0;
+
+      images.forEach(function(image) {
+        image.onload = function() {
+          if (++loaded >= images.length) {
+            container.setAttribute('data-images-loaded', '');
+
+            images.forEach(function(image) {
+              var parent = image.parentNode;
+
+              if (onClick = parent.getAttribute('data-onclick')) {
+                parent.setAttribute('onclick', onClick);
+                parent.removeAttribute('data-onclick');
+              }
+            });
+            loadImages(containers.slice(1));
+          }
+        }
+        image.setAttribute('src', image.getAttribute('data-src'));
+        image.removeAttribute('data-src');
+      });
+    } else {
+      loadImages(containers.slice(1));
     }
-  });
+  }
 }
 
 function fetch(url, options = {}) {

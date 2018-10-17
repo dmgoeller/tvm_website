@@ -60,6 +60,24 @@ article sup {
 }
 
 /**********************************************************************
+ * pictures
+ **********************************************************************/
+
+article .picture {
+  background: var(--gray);
+}
+
+article .picture > img {
+  height: 100%;
+  width: 100%;
+  transition: opacity .3s linear;
+}
+
+article > :not([data-images-loaded]) .picture > img {
+  opacity: 0;
+}
+
+/**********************************************************************
  * article header
  **********************************************************************/
 
@@ -384,26 +402,23 @@ article .gallery {
   grid-gap: .125rem;
 }
 
-article .gallery .image {
+article .gallery .picture {
   position: relative;
-  background: var(--gray);
 }
 
-article .gallery.gallery-image-format-3-2 .image {
+article .gallery .picture > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+article .gallery.gallery-image-format-3-2 .picture {
   padding-top: 66.67%;
 }
 
-article .gallery.gallery-image-format-16-9 .image {
+article .gallery.gallery-image-format-16-9 .picture {
   padding-top: 56.25%;
-}
-
-article .gallery .image > img {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 @media (max-width: 767px) {
@@ -501,10 +516,14 @@ article .contact {
   line-height: 1.5;
 }
 
-article .contact .avatar {
+article .contact .picture {
   flex: none;
   width: 6rem;
   height: 6rem;
+  border-radius: 50%;
+}
+
+article .contact .picture > img {
   border-radius: 50%;
 }
 
@@ -539,7 +558,7 @@ article .contact .details {
     flex-direction: column;
   }
 
-  article .contact .avatar {
+  article .contact .picture {
     margin-bottom: 1rem;
   }
 
@@ -554,7 +573,7 @@ article .contact .details {
     flex-direction: row;
   }
 
-  article .contact .avatar {
+  article .contact .picture {
     margin-right: 1rem;
   }
 }
@@ -663,9 +682,14 @@ article.startpage .headline {
   display: grid;
 }
 
-article.startpage .headline img {
-  width: 4rem;
+article.startpage .headline .logo {
   height: 4rem;
+  width: 4rem;
+}
+
+article.startpage .headline .logo > img {
+  height: 100%;
+  width: 100%;
 }
 
 article.startpage .headline h1 {
