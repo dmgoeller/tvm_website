@@ -154,6 +154,7 @@ function loadArticle(name, options = {}) {
       window.scrollTo(0, ypos);
 
       if (article) {
+        buildGalleries(article);
         buildImages(article);
         loadImages(Array.from(article.children));
       }
@@ -166,9 +167,20 @@ function loadArticle(name, options = {}) {
     });
 }
 
+function buildGalleries(article) {
+  article.querySelectorAll('.gallery').forEach(function(gallery) {
+    var index = 0;
+
+    gallery.querySelectorAll('.picture').forEach(function(picture) {
+      picture.setAttribute('data-onclick', 'showLightbox(this.parentNode, ' + index++ + ');');
+    });
+  });
+}
+
 function buildImages(article) {
   article.querySelectorAll('*[data-image]').forEach(function(element) {
     var image = element.addElement('img');
+    image.setAttribute('class', 'lazy-loading');
     image.setAttribute('data-src', element.getAttribute('data-image'));
     image.setAttribute('alt', '');
   });

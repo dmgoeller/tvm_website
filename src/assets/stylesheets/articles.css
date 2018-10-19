@@ -6,7 +6,7 @@ article {
 }
 
 article.no-header {
-  margin-top:2.25rem; /* = app header height */
+  margin-top: 2.25rem; /* = app header height */
 }
 
 article .flex-auto {
@@ -43,7 +43,7 @@ article h2 {
 
 article p {
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.5rem;
 }
 
 article li {
@@ -67,14 +67,36 @@ article .picture {
   background: var(--gray);
 }
 
+article .picture[data-placeholder-image="true"] {
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 article .picture > img {
   height: 100%;
   width: 100%;
+  object-fit: cover;
+}
+
+article img.lazy-loading {
   transition: opacity .3s linear;
 }
 
-article > :not([data-images-loaded]) .picture > img {
+article > :not([data-images-loaded]) img.lazy-loading {
   opacity: 0;
+}
+
+@media (max-device-width: 767px) and (orientation: portrait) {
+  article .picture.mobile-landscape-tablet-desktop {
+    display: none;
+  }
+}
+
+@media (min-device-width: 768px), (orientation: landscape) {
+  article > header > .picture.mobile-portrait {
+    display: none;
+  }
 }
 
 /**********************************************************************
@@ -85,6 +107,15 @@ article > header {
   position: relative;
   height: 10rem;
   width: 100%;
+}
+
+article > header.logo-and-headline {
+  background: var(--gradient-bg);
+}
+
+article > header.picture-and-headline {
+  color: var(--white);
+  text-shadow: var(--text-shadow);
 }
 
 article > header > .headline {
@@ -103,11 +134,7 @@ article > header > .headline > .container {
   justify-content: flex-end;
 }
 
-article > header.headline-and-logo {
-  background: var(--gradient-bg);
-}
-
-article > header.headline-and-logo > img {
+article > header > .logo {
   position: absolute;
   right: 1rem;
   bottom: -15%;
@@ -115,74 +142,47 @@ article > header.headline-and-logo > img {
   opacity: .33;
 }
 
-article > header.headline-and-background-image {
-  color: var(--white);
-  text-shadow: var(--text-shadow);
-  background: var(-gray);
-}
-
-article > header > .background-image {
+article > header > .picture {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-article > header > .background-image > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 @media (max-device-width: 767px) {
   @media (orientation: portrait) {
-    article > header.headline-and-background-image {
+    article > header.picture-and-headline {
       height: 56.25vw; /* 16:9 */
-    }
-
-    article > header > .background-image.mobile-landscape-tablet-desktop {
-      display: none;
     }
   }
 
   @media (orientation: landscape) {
-    article > header.headline-and-background-image {
+    article > header.picture-and-headline {
       height: 50vh; /* 50% */
-    }
-
-    article > header > .background-image.mobile-portrait {
-      display: none;
     }
   }
 }
 
 @media (min-device-width: 768px) {
-  article > header.headline-and-background-image h1 {
+  article > header.picture-and-headline h1 {
     font-size: 3rem;
-  }
-
-  article > header > .background-image.mobile-portrait {
-    display: none;
   }
 
   @media (max-device-width: 1024px) {
     @media (orientation: portrait) {
-      article > header.headline-and-background-image {
+      article > header.picture-and-headline {
         height: 33.33vw; /* 3:1 */
       }
     }
 
     @media (orientation: landscape) {
-      article > header.headline-and-background-image {
+      article > header.picture-and-headline {
        height: 25vw; /* 4:1 */
       }
     }
   }
 
   @media (min-device-width: 1025px) {
-    article > header.headline-and-background-image {
+    article > header.picture-and-headline {
       height: 15rem; /* 240px */
     }
   }
@@ -316,8 +316,8 @@ article .teaser a.link {
 
 article > main a.button,
 article > footer a.button {
-  padding: .5rem 1rem;
   border-radius: .5rem;
+  padding: .5rem 1rem;
   display: inline-grid;
   grid-auto-flow: column;
   grid-column-gap: .5rem;
@@ -468,7 +468,7 @@ article .calendar .text {
   background: var(--light-gray);
 }
 
-article .calendar .past {
+article .calendar .grayed {
   opacity: .5;
 }
 
