@@ -67,23 +67,25 @@ article .picture {
   background: var(--gray);
 }
 
-article .picture[data-placeholder-image="true"] {
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 article .picture > img {
   height: 100%;
   width: 100%;
   object-fit: cover;
 }
 
-article img.lazy-loading {
+/* lazy loading */
+
+article .picture[data-placeholder-image="true"] {
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+article .picture img.lazy-loading {
   transition: opacity .3s linear;
 }
 
-article > :not([data-images-loaded]) img.lazy-loading {
+article > :not([data-images-loaded]) .picture img.lazy-loading {
   opacity: 0;
 }
 
@@ -683,13 +685,24 @@ article.startpage .headline {
 }
 
 article.startpage .headline .logo {
+  position: relative;
   height: 4rem;
   width: 4rem;
 }
 
-article.startpage .headline .logo > img {
+article.startpage .headline .logo > img,
+article.startpage .headline .logo .placeholder-image {
+  position: absolute;
   height: 100%;
   width: 100%;
+}
+
+article.startpage > :not([data-images-loaded]) .headline .logo > img {
+  opacity: 0;
+}
+
+article.startpage > [data-images-loaded] .headline .logo .placeholder-image {
+  display: none;
 }
 
 article.startpage .headline h1 {
