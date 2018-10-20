@@ -223,7 +223,7 @@ article section {
 article > main.accentuate_even_sections section:nth-child(even),
 article > main.accentuate_odd_sections section:nth-child(odd),
 article > footer > section:nth-child(odd) {
-  background: var(--light-gray);
+  background: rgba(0, 0, 0, 0.0275);
 }
 
 article section .container {
