@@ -582,16 +582,16 @@ article .contact .details {
 
 /* header */
 
-article.startpage > header {
+article#startpage > header {
   background: var(--gray);
 }
 
 @media (max-device-width: 767px) {
-  article.startpage > header {
+  article#startpage > header {
     height: 100vh;
   }
 
-  article.startpage > header .buttons {
+  article#startpage > header .buttons {
     position: absolute;
     z-index: 1;
     left: 0;
@@ -602,7 +602,7 @@ article.startpage > header {
     padding: 0 .25rem .25rem .25rem;
   }
 
-  article.startpage > header .button {
+  article#startpage > header .button {
     padding: .5rem .25rem;
     display: grid;
     grid-row-gap: .5rem;
@@ -613,26 +613,26 @@ article.startpage > header {
     border-radius: .25rem;
   }
 
-  article.startpage > header .button .label {
+  article#startpage > header .button .label {
     align-self: center;
     justify-self: stretch;
     text-align: center;
   }
 
   @media (orientation: portrait) {
-    article.startpage > header .buttons {
+    article#startpage > header .buttons {
       grid-template-columns: 1fr 1fr;
     }
   }
 
   @media (orientation: landscape) {
-    article.startpage > header .buttons {
+    article#startpage > header .buttons {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
   }
 
   @media (orientation: portrait) and (display-mode: browser) {
-    article.startpage > header .buttons {
+    article#startpage > header .buttons {
       margin-bottom: 64px;
 
       /* avoids that the buttons are hidden by the browser's
@@ -643,96 +643,96 @@ article.startpage > header {
 }
 
 @media (min-device-width: 768px) {
-  article.startpage > header .buttons {
+  article#startpage > header .buttons {
     display: none;
   }
 }
 
 @media (min-device-width: 768px) and (max-device-width: 1024px) {
   @media (orientation: portrait) {
-    article.startpage > header {
+    article#startpage > header {
       height: 33.33vw;
     }
   }
 
   @media (orientation: landscape) {
-    article.startpage > header {
+    article#startpage > header {
      height: 25vw;
     }
   }
 }
 
 @media (min-device-width: 1025px) {
-  article.startpage > header {
+  article#startpage > header {
     min-height: 192px;
     max-height: 25vw;
     flex: 1 0 auto;
   }
 
-  article.startpage > main {
+  article#startpage > main {
     flex: none;
   }
 }
 
 /* headline */
 
-article.startpage .headline {
+article#startpage .headline {
   display: grid;
 }
 
-article.startpage .headline .logo {
+article#startpage .headline .logo {
   position: relative;
   height: 4rem;
   width: 4rem;
 }
 
-article.startpage .headline .logo > img,
-article.startpage .headline .logo .placeholder-image {
+article#startpage .headline .logo > img,
+article#startpage .headline .logo .placeholder-image {
   position: absolute;
   height: 100%;
   width: 100%;
 }
 
-article.startpage > :not([data-images-loaded]) .headline .logo > img {
+article#startpage > :not([data-images-loaded]) .headline .logo > img {
   opacity: 0;
 }
 
-article.startpage > [data-images-loaded] .headline .logo .placeholder-image {
+article#startpage > [data-images-loaded] .headline .logo .placeholder-image {
   display: none;
 }
 
-article.startpage .headline h1 {
+article#startpage .headline h1 {
   color: var(--primary);
   font-size: 1.5rem;
 }
 
-article.startpage .headline subline {
+article#startpage .headline subline {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
 @media (max-device-width: 767px) and (orientation: portrait) {
-  article.startpage .headline {
+  article#startpage .headline {
     grid-template-columns: auto;
     grid-row-gap: 1rem;
     justify-items: center;
   }
 
-  article.startpage .headline h1,
-  article.startpage .headline subline {
+  article#startpage .headline h1,
+  article#startpage .headline subline {
     text-align: center;
   }
 }
 
 @media (min-device-width: 768px), (orientation: landscape) {
-  article.startpage .headline {
+  article#startpage .headline {
     grid-template-columns: auto auto;
     grid-column-gap: 1rem;
     grid-row-gap: 0.125rem;
     justify-content: center;
   }
   
-  article.startpage .headline .logo {
+  article#startpage .headline .logo {
     grid-row: 1 / span 2;
   }
 }
