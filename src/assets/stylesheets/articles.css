@@ -5,10 +5,6 @@ article {
   flex-direction: column;
 }
 
-article.no-header {
-  margin-top: 2.25rem; /* = app header height */
-}
-
 article .flex-auto {
   flex: 1 0 auto;
 }
@@ -223,7 +219,7 @@ article section {
 article > main.accentuate_even_sections section:nth-child(even),
 article > main.accentuate_odd_sections section:nth-child(odd),
 article > footer > section:nth-child(odd) {
-  background: rgba(0, 0, 0, 0.0275);
+  background: var(--light-gray);
 }
 
 article section .container {
@@ -739,6 +735,21 @@ article.startpage .headline subline {
   article.startpage .headline .logo {
     grid-row: 1 / span 2;
   }
+}
+
+/**********************************************************************
+ * teams
+ **********************************************************************/
+
+article#teams {
+  margin-top: 2.25rem; /* = app header height */
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+article#teams > main > section:nth-child(even) {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /**********************************************************************
