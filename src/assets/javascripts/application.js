@@ -180,9 +180,8 @@ function buildGalleries(article) {
 function buildImages(article) {
   article.querySelectorAll('*[data-image]').forEach(function(element) {
     var image = element.addElement('img');
-    image.setAttribute('class', 'lazy-loading');
     image.setAttribute('data-src', element.getAttribute('data-image'));
-    image.setAttribute('alt', '');
+    image.setAttribute('alt', element.getAttribute('data-alt') || '');
   });
 }
 
@@ -192,13 +191,15 @@ function loadImages(containers) {
     var images = container.querySelectorAll('img[data-src]');
 
     if (images.length > 0) {
+      var displayImagesAtOnce = container.getAttribute('data-display-images-at-once');
       var loaded = 0;
 
       images.forEach(function(image) {
         image.onload = function() {
+          if (displayImagesAtOnce != 'true') {
+            image.removeAttribute('data-src');
+          }
           if (++loaded >= images.length) {
-            container.setAttribute('data-images-loaded', '');
-
             images.forEach(function(image) {
               var parent = image.parentNode;
 
@@ -206,12 +207,14 @@ function loadImages(containers) {
                 parent.setAttribute('onclick', onClick);
                 parent.removeAttribute('data-onclick');
               }
+              if (displayImagesAtOnce == 'true') {
+                image.removeAttribute('data-src');
+              }
             });
             loadImages(containers.slice(1));
           }
         }
         image.setAttribute('src', image.getAttribute('data-src'));
-        image.removeAttribute('data-src');
       });
     } else {
       loadImages(containers.slice(1));
