@@ -179,47 +179,17 @@ function buildGalleries(article) {
 
 function buildImages(article) {
   article.querySelectorAll('*[data-image]').forEach(function(element) {
+    // create image tag
     var image = element.addElement('img');
     image.setAttribute('data-src', element.getAttribute('data-image'));
     image.setAttribute('alt', element.getAttribute('data-alt') || '');
-  });
-}
 
-function loadImages(containers) {
-  if (containers.length > 0) {
-    var container = containers[0];
-    var images = container.querySelectorAll('img[data-src]');
-
-    if (images.length > 0) {
-      var displayImagesAtOnce = container.getAttribute('data-display-images-at-once');
-      var loaded = 0;
-
-      images.forEach(function(image) {
-        image.onload = function() {
-          if (displayImagesAtOnce != 'true') {
-            image.removeAttribute('data-src');
-          }
-          if (++loaded >= images.length) {
-            images.forEach(function(image) {
-              var parent = image.parentNode;
-
-              if (onClick = parent.getAttribute('data-onclick')) {
-                parent.setAttribute('onclick', onClick);
-                parent.removeAttribute('data-onclick');
-              }
-              if (displayImagesAtOnce == 'true') {
-                image.removeAttribute('data-src');
-              }
-            });
-            loadImages(containers.slice(1));
-          }
-        }
-        image.setAttribute('src', image.getAttribute('data-src'));
-      });
-    } else {
-      loadImages(containers.slice(1));
+    // create loading indicator
+    if (element.getAttribute('data-loading-indicator') == 'true') {
+      element.addElement('div', 'loading-indicator delayed-fade-in')
+        .addElement('div', 'spinner spinner-circle');
     }
-  }
+  });
 }
 
 function fetch(url, options = {}) {
@@ -255,8 +225,59 @@ function execute(script) {
   }
 }
 
-function getPath(page) {
-  return page == preferences['index-page'] ? '.' : page;
+function getPath(article) {
+  return article == preferences['index-page'] ? '.' : article;
+}
+
+/**********************************************************************
+ * lazy image loading
+ **********************************************************************/
+
+function loadImages(containers) {
+  if (containers.length > 0) {
+    var container = containers[0];
+    var images = container.querySelectorAll('img[data-src]');
+    var displayImagesAtOnce = container.getAttribute('data-display-images-at-once') == 'true';
+
+    if (images.length > 0) {
+      // load images in the current container
+      var counter = 0;
+
+      images.forEach(function(image) {
+        image.onload = function() {
+          if (!displayImagesAtOnce) imageLoaded(image);
+          
+          if (++counter >= images.length) {
+            if (displayImagesAtOnce) images.forEach(imageLoaded);
+
+            // load images in the next containers
+            loadImages(containers.slice(1));
+          }
+        }
+        image.setAttribute('src', image.getAttribute('data-src'));
+      });
+    } else {
+      // load images in the next containers
+      loadImages(containers.slice(1));
+    }
+  }
+}
+
+function imageLoaded(image) {
+  var parent = image.parentNode;
+
+  // remove the loading indicator for the image
+  if (loadingIndicator = parent.querySelector('.loading-indicator')) {
+    loadingIndicator.remove();
+  }
+  // remove the data-src attribute to display the image
+  image.removeAttribute('data-src');
+
+  // enable the parent's onclick function
+  if (onClick = parent.getAttribute('data-onclick')) {
+    parent.setAttribute('onclick', onClick);
+    parent.removeAttribute('data-onclick');
+  }
 }
 
 /**********************************************************************

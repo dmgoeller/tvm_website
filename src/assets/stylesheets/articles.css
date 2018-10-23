@@ -77,6 +77,18 @@ article .picture > img[data-src] {
   opacity: 0;
 }
 
+article .picture > .loading-indicator {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-device-width: 767px) and (orientation: portrait) {
   article .picture.mobile-landscape-tablet-desktop {
     display: none;
@@ -605,6 +617,10 @@ article#startpage > header {
     border-radius: .25rem;
   }
 
+  article#startpage > header .button > img {
+    height: 24px;
+  }
+
   article#startpage > header .button .label {
     align-self: center;
     justify-self: stretch;
@@ -748,16 +764,18 @@ article#teams > main > section:nth-child(even) {
  * sponsors
  **********************************************************************/
 
-article#sponsors .picture {
-  display: block;
-  background: inherit;
-}
-
 article#sponsors .sponsors {
   display: grid;
   align-items: center;
   justify-items: center;
   grid-gap: 4rem;
+}
+
+article#sponsors .picture {
+  position: relative;
+  min-height: 40px;
+  min-width: 40px;
+  background: inherit;
 }
 
 @media (max-width: 767px) {
