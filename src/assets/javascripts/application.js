@@ -16,6 +16,12 @@ Element.prototype.addText = function(text) {
   return this.appendChild(textNode);
 }
 
+Element.prototype.clear = function() {
+  while (this.firstChild) {
+    this.removeChild(this.firstChild);
+  }
+}
+
 Element.prototype.setClass = function(className, condition) {
   if (condition) {
     this.classList.add(className);
@@ -148,13 +154,15 @@ function loadArticle(name, options = {}) {
         }
       }
       if (article) {
+        if (articleonload = article.getAttribute('data-onload')) {
+          execute(articleonload);
+        }
         title = article.getAttribute('data-title');
       }
       document.title = preferences['app-title'] + (title ? ' - ' + title : '');
       window.scrollTo(0, ypos);
 
       if (article) {
-        buildGalleries(article);
         buildImages(article);
         loadImages(Array.from(article.children));
       }
@@ -165,31 +173,6 @@ function loadArticle(name, options = {}) {
       glasspane.hide();
       alert(error.message);
     });
-}
-
-function buildGalleries(article) {
-  article.querySelectorAll('.gallery').forEach(function(gallery) {
-    var index = 0;
-
-    gallery.querySelectorAll('.picture').forEach(function(picture) {
-      picture.setAttribute('data-onclick', 'showLightbox(this.parentNode, ' + index++ + ');');
-    });
-  });
-}
-
-function buildImages(article) {
-  article.querySelectorAll('*[data-image]').forEach(function(element) {
-    // create image tag
-    var image = element.addElement('img');
-    image.setAttribute('data-src', element.getAttribute('data-image'));
-    image.setAttribute('alt', element.getAttribute('data-alt') || '');
-
-    // create loading indicator
-    if (element.getAttribute('data-loading-indicator') == 'true') {
-      element.addElement('div', 'loading-indicator delayed-fade-in')
-        .addElement('div', 'spinner spinner-circle');
-    }
-  });
 }
 
 function fetch(url, options = {}) {
@@ -217,11 +200,17 @@ function fetch(url, options = {}) {
   });
 }
 
-function execute(script) {
-  try {
-    window[script]();
-  } catch(e) {
-    console.log(e);
+function execute(call) {
+  var a = call.split(" ");
+
+  if (a.length >= 1) {
+    var func = a[0];
+    var args = a.slice(1);
+    try {
+      window[func](args);
+    } catch(e) {
+      console.log(e);
+    }
   }
 }
 
@@ -232,6 +221,21 @@ function getPath(article) {
 /**********************************************************************
  * lazy image loading
  **********************************************************************/
+
+function buildImages(article) {
+  article.querySelectorAll('*[data-image]').forEach(function(element) {
+    // create image tag
+    var image = element.addElement('img');
+    image.setAttribute('data-src', element.getAttribute('data-image'));
+    image.setAttribute('alt', element.getAttribute('data-alt') || '');
+
+    // create loading indicator
+    if (element.getAttribute('data-loading-indicator') == 'true') {
+      element.addElement('div', 'loading-indicator delayed-fade-in')
+        .addElement('div', 'spinner spinner-circle');
+    }
+  });
+}
 
 function loadImages(containers) {
   if (containers.length > 0) {
@@ -278,6 +282,50 @@ function imageLoaded(image) {
     parent.setAttribute('onclick', onClick);
     parent.removeAttribute('data-onclick');
   }
+}
+
+/**********************************************************************
+ * build galleries
+ **********************************************************************/
+
+function buildGalleries() {
+  selectAll('.gallery').forEach(function(gallery) {
+    var index = 0;
+
+    gallery.querySelectorAll('.picture').forEach(function(picture) {
+      var onclick = 'showLightbox(this.parentNode, ' + index++ + ');';
+      picture.setAttribute('data-onclick', onclick);
+    });
+  });
+}
+
+/**********************************************************************
+ * shuffle children
+ **********************************************************************/
+
+Array.prototype.shuffle = function() {
+  for (var i = this.length - 1; i > 0; i++) {
+    var j = Math.floor(Math.random() * (i + 1));
+
+    // swap the elements at the i-th and j-th position
+    var element = this[i];
+    this[i] = this[j];
+    this[j] = element;
+  }
+  return this;
+}
+
+function shuffleChildren(element) {
+  element = select(element);
+
+  children = Array.from(element.children);
+  children.shuffle();
+
+  element.clear();
+
+  children.forEach(function(child) {
+    element.appendChild(child);
+  });
 }
 
 /**********************************************************************
