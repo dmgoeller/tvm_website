@@ -461,7 +461,7 @@ body > footer.copyright {
   border-radius: 50%;
   border-width: 4px;
   border-style: solid;
-  border-color: transparent rgba(0, 0, 0, 0.1) transparent rgba(0, 0, 0, 0.1);
+  border-color: var(--primary) var(--primary) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
 }
 
 /**********************************************************************
