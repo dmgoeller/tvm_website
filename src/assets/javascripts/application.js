@@ -200,14 +200,14 @@ function fetch(url, options = {}) {
   });
 }
 
-function execute(call) {
-  var a = call.split(" ");
+function execute(expression) {
+  var tokens = expression.split(" ");
 
-  if (a.length >= 1) {
-    var func = a[0];
-    var args = a.slice(1);
+  if (tokens.length > 0) {
+    var func = window[tokens[0]];
+    var args = tokens.slice(1);
     try {
-      window[func](args);
+      func.apply(null, args);
     } catch(e) {
       console.log(e);
     }
@@ -304,7 +304,7 @@ function buildGalleries() {
  **********************************************************************/
 
 Array.prototype.shuffle = function() {
-  for (var i = this.length - 1; i > 0; i++) {
+  for (var i = this.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
 
     // swap the elements at the i-th and j-th position
