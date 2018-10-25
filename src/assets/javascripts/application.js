@@ -71,12 +71,16 @@ function selectAll(elements) {
  **********************************************************************/
 
 document.addEventListener('DOMContentLoaded', function() {
-  // read preferences
+  // read app properties
   var attr = select('html').attributes;
   for (i = 0; i < attr.length; i++) {
     if (attr[i].name.startsWith('data-')) {
       preferences[attr[i].name.slice(5)] = attr[i].value;
     }
+  }
+  // set copyright year
+  if (copyrightYear = select('#copyright-year')) {
+    copyrightYear.addText((new Date()).getFullYear());
   }
   // load initial article
   var path = window.location.pathname;

@@ -227,8 +227,12 @@ body > footer.links .link.progress:after {
 }
 
 body > footer.copyright {
-  padding: .5rem 0;
   background: var(--light-gray);
+}
+
+body > footer.copyright p {
+  margin-top: .6rem;
+  margin-bottom: .6rem;
   color: var(--dark-gray);
   font-weight: 300; /* light */
   font-size: .8rem;
