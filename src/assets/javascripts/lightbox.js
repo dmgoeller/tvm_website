@@ -15,8 +15,16 @@ function showLightbox(gallery, position = 0) {
 
   var moveTo = function(newPosition, transition = 'none') {
     position = Math.max(0, Math.min(slideCount - 1, newPosition));
-    prevButton.setClass('disabled', position == 0);
-    nextButton.setClass('disabled', position == slideCount - 1);
+    if (position == 0) {
+      prevButton.classList.add('disabled');
+    } else {
+      prevButton.classList.remove('disabled');
+    }
+    if (position == slideCount - 1) {
+      nextButton.classList.add('disabled');
+    } else {
+      nextButton.classList.remove('disabled');
+    }
     slides.style.transition = transition;
     slides.style.transform = 'translate(-' + posToPx(position) + 'px, 0)';
   }

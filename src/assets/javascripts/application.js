@@ -2,8 +2,24 @@
 var preferences = {};
 
 /**********************************************************************
- * custom methods
+ * prototypes
  **********************************************************************/
+
+Array.prototype.first = function() {
+  return this.length > 0 ? this[0] : null; 
+}
+
+Array.prototype.shuffle = function() {
+  for (var i = this.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+
+    // swap the elements at the i-th and j-th position
+    var element = this[i];
+    this[i] = this[j];
+    this[j] = element;
+  }
+  return this;
+}
 
 Element.prototype.addElement = function(name, classes) {
   var element = document.createElement(name);
@@ -16,22 +32,10 @@ Element.prototype.addText = function(text) {
   return this.appendChild(textNode);
 }
 
-Element.prototype.clear = function() {
+Element.prototype.removeChildren = function() {
   while (this.firstChild) {
     this.removeChild(this.firstChild);
   }
-}
-
-Element.prototype.setClass = function(className, condition) {
-  if (condition) {
-    this.classList.add(className);
-  } else {
-    this.classList.remove(className);
-  }
-}
-
-Element.prototype.toggleClass = function(className) {
-  this.classList.toggle(className);
 }
 
 Element.prototype.show = function() {
@@ -124,7 +128,7 @@ function loadArticle(name, options = {}) {
   var caller = select(options['caller']);
   var ypos = options['ypos'] || 0;
 
-  if (caller) caller.setClass('loading', true);
+  if (caller) caller.classList.add('loading');
   glasspane.show();
 
   fetch('articles/' + name + '.html', {timeout: 3000})
@@ -133,8 +137,8 @@ function loadArticle(name, options = {}) {
       var article = null;
       var title = null;
 
-      if (caller) caller.setClass('loading', false);
-      topMenu.setClass('unfolded', false);
+      if (caller) caller.classList.remove('loading');
+      topMenu.classList.remove('unfolded');
       glasspane.hide();
 
       if (history.state != null) {
@@ -168,8 +172,8 @@ function loadArticle(name, options = {}) {
       }
     })
     .catch(function(error) {
-      if (caller) caller.setClass('loading', false);
-      topMenu.setClass('unfolded', false);
+      if (caller) caller.classList.remove('loading');
+      topMenu.classList.remove('unfolded');
       glasspane.hide();
       alert(error.message);
     });
@@ -204,7 +208,7 @@ function execute(expression) {
   var tokens = expression.split(" ");
 
   if (tokens.length > 0) {
-    var func = window[tokens[0]];
+    var func = window[tokens.first()];
     var args = tokens.slice(1);
     try {
       func.apply(null, args);
@@ -239,7 +243,7 @@ function buildImages(article) {
 
 function loadImages(containers) {
   if (containers.length > 0) {
-    var container = containers[0];
+    var container = containers.first();
     var images = container.querySelectorAll('img[data-src]');
     var displayImagesAtOnce = container.getAttribute('data-display-images-at-once') == 'true';
 
@@ -285,34 +289,18 @@ function imageLoaded(image) {
 }
 
 /**********************************************************************
- * build galleries
+ * onload handlers
  **********************************************************************/
 
 function buildGalleries() {
   selectAll('.gallery').forEach(function(gallery) {
-    var index = 0;
+    var pictures = gallery.querySelectorAll('.picture');
 
-    gallery.querySelectorAll('.picture').forEach(function(picture) {
-      var onclick = 'showLightbox(this.parentNode, ' + index++ + ');';
-      picture.setAttribute('data-onclick', onclick);
-    });
+    for (var i = 0; i < pictures.length; i++) {
+      var onclick = 'showLightbox(this.parentNode, ' + i + ');';
+      pictures[i].setAttribute('data-onclick', onclick);
+    }
   });
-}
-
-/**********************************************************************
- * shuffle children
- **********************************************************************/
-
-Array.prototype.shuffle = function() {
-  for (var i = this.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-
-    // swap the elements at the i-th and j-th position
-    var element = this[i];
-    this[i] = this[j];
-    this[j] = element;
-  }
-  return this;
 }
 
 function shuffleChildren(element) {
@@ -321,7 +309,7 @@ function shuffleChildren(element) {
   children = Array.from(element.children);
   children.shuffle();
 
-  element.clear();
+  element.removeChildren();
 
   children.forEach(function(child) {
     element.appendChild(child);
