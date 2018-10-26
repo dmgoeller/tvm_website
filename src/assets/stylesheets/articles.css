@@ -470,7 +470,7 @@ article .calendar .text {
   background: var(--light-gray);
 }
 
-article .calendar .grayed {
+article .calendar .expired {
   opacity: .5;
 }
 

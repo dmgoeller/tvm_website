@@ -47,6 +47,24 @@ Element.prototype.hide = function() {
 }
 
 /**********************************************************************
+ * date functions
+ **********************************************************************/
+
+function midnight(date) {
+  var midnight = new Date(date.valueOf());
+  midnight.setHours(0, 0, 0, 0);
+  return midnight;
+}
+
+function parseDate(s) {
+  return midnight(new Date(       // dd.mm.yyyy
+    parseInt(s.substr(6, 4)),     // year
+    parseInt(s.substr(3, 2)) - 1, // month (0-based)
+    parseInt(s.substr(0, 2))      // day of month
+  ));
+}
+
+/**********************************************************************
  * query selectors
  **********************************************************************/
 
@@ -303,6 +321,23 @@ function initGalleries() {
     for (var i = 0; i < pictures.length; i++) {
       var onclick = 'showLightbox(this.parentNode, ' + i + ');';
       pictures[i].setAttribute('data-onclick', onclick);
+    }
+  });
+}
+
+function initCalendar() {
+  var today = midnight(new Date());
+
+  selectAll('.calendar .date').forEach(function(dateElement) {
+    if (parseDate(dateElement.innerText) < today) {
+      [
+        dateElement.previousElementSibling,               // day-of-week
+        dateElement,                                      // date
+        dateElement.nextElementSibling,                   // time
+        dateElement.nextElementSibling.nextElementSibling // text
+      ].forEach(function(element) {
+        element.classList.add('expired');
+      });
     }
   });
 }
