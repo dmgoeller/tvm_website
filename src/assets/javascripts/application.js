@@ -296,7 +296,7 @@ function imageLoaded(image) {
  * onload handlers
  **********************************************************************/
 
-function buildGalleries() {
+function initGalleries() {
   selectAll('.gallery').forEach(function(gallery) {
     var pictures = gallery.querySelectorAll('.picture');
 
