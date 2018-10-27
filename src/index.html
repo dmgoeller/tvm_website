@@ -23,7 +23,7 @@
       <div class="button icon icon-chevron-left standalone-only" onclick="window.history.back();"></div>
       <div class="button" onclick="loadArticle('startseite');">TV Melsbach</div>
       <div id="top-menu" class="top-menu">
-        <div class="button icon" onclick="select('#top-menu').toggleClass('unfolded');"></div>
+        <div class="button icon" onclick="select('#top-menu').classList.toggle('unfolded');"></div>
         <div class="menu-items">
           <div class="menu-item" onclick="loadArticle('tennis', {'caller': this});">Tennis</div>
           <div class="menu-item" onclick="loadArticle('boule', {'caller': this});">Boule</div>
