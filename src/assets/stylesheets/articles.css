@@ -107,7 +107,7 @@ article .picture > .loading-indicator {
 
 article > header {
   position: relative;
-  height: 10rem;
+  height: 8rem;
   width: 100%;
 }
 
@@ -131,7 +131,6 @@ article > header > .headline {
 }
 
 article > header > .headline > .container {
-  margin-top: 2.25rem; /* = app header height */
   margin-bottom: 1rem;
   justify-content: flex-end;
 }
@@ -139,8 +138,8 @@ article > header > .headline > .container {
 article > header > .logo {
   position: absolute;
   right: 1rem;
-  bottom: -15%;
-  height: 100%;
+  bottom: -10%;
+  height: 120%;
   opacity: .33;
 }
 
@@ -154,6 +153,14 @@ article > header > .picture {
   @media (orientation: portrait) {
     article > header.picture-and-headline {
       height: 56.25vw; /* 16:9 */
+    }
+
+    article > header > .picture:not(.mobile-portrait) {
+      overflow: hidden;
+    }
+
+    article > header > .picture:not(.mobile-portrait) > img {
+      transform: scale(1.25);
     }
   }
 
@@ -185,7 +192,7 @@ article > header > .picture {
 
   @media (min-device-width: 1025px) {
     article > header.picture-and-headline {
-      height: 15rem; /* 240px */
+      height: 12rem; /* 196px */
     }
   }
 }
@@ -735,7 +742,6 @@ article#startpage .headline subline {
  **********************************************************************/
 
 article#teams {
-  margin-top: 2.25rem; /* = app header height */
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
