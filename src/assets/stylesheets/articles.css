@@ -298,21 +298,6 @@ article .menu-item.loading:after {
 }
 
 /**********************************************************************
- * teasers
- **********************************************************************/
-
-article .teaser {
-  background-size: cover;
-  background-position: center;
-  color: var(--white);
-  text-shadow: var(--text-shadow);
-}
-
-article .teaser a.link {
-  color: inherit;
-}
-
-/**********************************************************************
  * buttons
  **********************************************************************/
 
@@ -794,4 +779,19 @@ article#sponsors .picture {
   article#sponsors .sponsors {
     grid-template-columns: 1fr 1fr 1fr;
   }
+}
+
+/**********************************************************************
+ * contact
+ **********************************************************************/
+
+article#contact .how-to-find-us {
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  text-shadow: var(--text-shadow);
+}
+
+article#contact .how-to-find-us a.link {
+  color: inherit;
 }
