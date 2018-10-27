@@ -59,25 +59,25 @@ article sup {
  * pictures
  **********************************************************************/
 
-article .picture {
+article picture {
   background: var(--gray);
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-article .picture > img {
+article picture > img {
   height: 100%;
   width: 100%;
   object-fit: cover;
   transition: opacity .3s linear;
 }
 
-article .picture > img[data-src] {
+article picture > img[data-src] {
   opacity: 0;
 }
 
-article .picture > .loading-indicator {
+article picture > .loading-indicator {
   position: absolute;
   z-index: 1;
   top: 0;
@@ -90,13 +90,13 @@ article .picture > .loading-indicator {
 }
 
 @media (max-device-width: 767px) and (orientation: portrait) {
-  article .picture.mobile-landscape-tablet-desktop {
+  article picture.mobile-landscape-tablet-desktop {
     display: none;
   }
 }
 
 @media (min-device-width: 768px), (orientation: landscape) {
-  article > header > .picture.mobile-portrait {
+  article > header > picture.mobile-portrait {
     display: none;
   }
 }
@@ -143,7 +143,7 @@ article > header > .logo {
   opacity: .33;
 }
 
-article > header > .picture {
+article > header > picture {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -396,22 +396,22 @@ article .gallery {
   grid-gap: .125rem;
 }
 
-article .gallery .picture {
+article .gallery picture {
   position: relative;
 }
 
-article .gallery .picture > img {
+article .gallery picture > img {
   position: absolute;
   top: 0;
   left: 0;
   object-fit: cover;
 }
 
-article .gallery.gallery-image-format-3-2 .picture {
+article .gallery.gallery-image-format-3-2 picture {
   padding-top: 66.67%;
 }
 
-article .gallery.gallery-image-format-16-9 .picture {
+article .gallery.gallery-image-format-16-9 picture {
   padding-top: 56.25%;
 }
 
@@ -510,14 +510,14 @@ article .contact {
   line-height: 1.5;
 }
 
-article .contact .picture {
+article .contact picture {
   flex: none;
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
 }
 
-article .contact .picture > img {
+article .contact picture > img {
   border-radius: 50%;
 }
 
@@ -552,7 +552,7 @@ article .contact .details {
     flex-direction: column;
   }
 
-  article .contact .picture {
+  article .contact picture {
     margin-bottom: 1rem;
   }
 
@@ -567,7 +567,7 @@ article .contact .details {
     flex-direction: row;
   }
 
-  article .contact .picture {
+  article .contact picture {
     margin-right: 1rem;
   }
 }
@@ -757,16 +757,25 @@ article#teams > main > section:nth-child(even) {
 
 article#sponsors .sponsors {
   display: grid;
-  align-items: center;
-  justify-items: center;
   grid-gap: 4rem;
 }
 
-article#sponsors .picture {
+article#sponsors a {
   position: relative;
-  min-height: 40px;
-  min-width: 40px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+article#sponsors picture {
   background: inherit;
+}
+
+article#sponsors .loading-indicator {
+  height: 100%;
+  width: 100%;
 }
 
 @media (max-width: 767px) {

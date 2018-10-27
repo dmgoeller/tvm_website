@@ -316,7 +316,7 @@ function imageLoaded(image) {
 
 function initGalleries() {
   selectAll('.gallery').forEach(function(gallery) {
-    var pictures = gallery.querySelectorAll('.picture');
+    var pictures = gallery.querySelectorAll('picture');
 
     for (var i = 0; i < pictures.length; i++) {
       var onclick = 'showLightbox(this.parentNode, ' + i + ');';
