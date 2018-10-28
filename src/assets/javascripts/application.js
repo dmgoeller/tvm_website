@@ -267,7 +267,7 @@ function loadImages(containers) {
   if (containers.length > 0) {
     var container = containers.first();
     var images = container.querySelectorAll('img[data-src]');
-    var displayImagesAtOnce = container.getAttribute('data-display-images-at-once') == 'true';
+    var displayImagesImmediately = container.getAttribute('data-display-images-immediately') == 'true';
 
     if (images.length > 0) {
       // load images in the current container
@@ -275,10 +275,10 @@ function loadImages(containers) {
 
       images.forEach(function(image) {
         image.onload = function() {
-          if (!displayImagesAtOnce) imageLoaded(image);
+          if (displayImagesImmediately) imageLoaded(image);
           
           if (++counter >= images.length) {
-            if (displayImagesAtOnce) images.forEach(imageLoaded);
+            if (!displayImagesImmediately) images.forEach(imageLoaded);
 
             // load images in the next containers
             loadImages(containers.slice(1));
