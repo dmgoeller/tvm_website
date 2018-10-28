@@ -1,5 +1,5 @@
 
-function showLightbox(gallery, position = 0) {
+function showLightbox(gallery, initialPosition = 0) {
   gallery         = select(gallery);
   var lightbox    = document.body.addElement('div', 'lightbox');
   var container   = lightbox.addElement('div', 'lb-container');
@@ -9,9 +9,29 @@ function showLightbox(gallery, position = 0) {
   var prevButton  = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
   var nextButton  = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
 
+  // pictures
+
+  var pictureCount = 0;
+  var position = null;
+
+  gallery.querySelectorAll('picture').forEach(function(original) {
+    var copy = pictures.addElement('picture');
+    
+    Array.from(original.children).forEach(function(child) {
+      var nodeName = child.nodeName.toLowerCase(); 
+
+      if (nodeName == 'source' || nodeName == 'img') {
+        copy.appendChild(child.cloneNode(true));
+      }
+    });
+    pictureCount++;
+  });
+
+  // functions
+
   var posToPx = function(pos) {
     return pos * (viewport.offsetWidth + 8);
-  }
+  };
 
   var moveTo = function(newPosition, transition = 'none') {
     position = Math.max(0, Math.min(pictureCount - 1, newPosition));
@@ -27,28 +47,22 @@ function showLightbox(gallery, position = 0) {
     }
     pictures.style.transition = transition;
     pictures.style.transform = 'translate(-' + posToPx(position) + 'px, 0)';
-  }
+  };
 
-  // pcitures
-  var pictureCount  = 0;
+  var onResize = function(event) {
+    console.log('resize');
+    moveTo(position);
+  };
 
-  gallery.querySelectorAll('picture').forEach(function(original) {
-    var copy = pictures.addElement('picture');
-    
-    Array.from(original.children).forEach(function(child) {
-      var nodeName = child.nodeName.toLowerCase(); 
-
-      if (nodeName == 'source' || nodeName == 'img') {
-        copy.appendChild(child.cloneNode(true));
-      }
-    });
-    pictureCount++;
-  });
+  var closeLightbox = function() {
+    lightbox.remove();
+    window.removeEventListener('resize', onResize);
+  };
 
   // button actions
-  closeButton.onclick = function() { lightbox.remove(); }  
-  prevButton.onclick  = function() { moveTo(position - 1, '.6s'); } 
-  nextButton.onclick  = function() { moveTo(position + 1, '.6s'); }
+  closeButton.onclick = closeLightbox;
+  prevButton.onclick  = function() { moveTo(position - 1, '.6s'); };
+  nextButton.onclick  = function() { moveTo(position + 1, '.6s'); };
 
   // touch events
   var touchStartX = null;
@@ -82,6 +96,9 @@ function showLightbox(gallery, position = 0) {
     event.preventDefault();
   }, {passive: false});
 
-  // initial position
-  moveTo(position);
+  // resize events
+  window.addEventListener('resize', onResize);
+
+  // move to initialize position
+  moveTo(initialPosition);
 }
