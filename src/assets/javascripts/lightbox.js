@@ -32,8 +32,16 @@ function showLightbox(gallery, position = 0) {
   // pcitures
   var pictureCount  = 0;
 
-  gallery.querySelectorAll('picture').forEach(function(picture) {
-    pictures.appendChild(picture.cloneNode(true)).removeAttribute('onclick');
+  gallery.querySelectorAll('picture').forEach(function(original) {
+    var copy = pictures.addElement('picture');
+    
+    Array.from(original.children).forEach(function(child) {
+      var nodeName = child.nodeName.toLowerCase(); 
+
+      if (nodeName == 'source' || nodeName == 'img') {
+        copy.appendChild(child.cloneNode(true));
+      }
+    });
     pictureCount++;
   });
 

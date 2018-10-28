@@ -189,7 +189,7 @@ function loadArticle(name, options = {}) {
       window.scrollTo(0, ypos);
 
       if (article) {
-        buildImages(article);
+        buildPictures(article);
         loadImages(Array.from(article.children));
       }
     })
@@ -248,8 +248,16 @@ function getPath(article) {
  * lazy image loading
  **********************************************************************/
 
-function buildImages(article) {
-  article.querySelectorAll('*[data-image]').forEach(function(element) {
+function buildPictures(article) {
+  article.querySelectorAll('picture[data-image]').forEach(function(element) {
+    var filename = element.getAttribute('data-image');
+
+    // create source tag for mobile devices
+    if (filename.endsWith('-1920x1080.jpg')) {
+      var source = element.addElement('source');
+      source.setAttribute('media', '(max-device-width: 767px)');
+      source.setAttribute('srcset', filename.slice(0, -14) + '-960x540.jpg');
+    }
     // create image tag
     var image = element.addElement('img');
     image.setAttribute('data-src', element.getAttribute('data-image'));

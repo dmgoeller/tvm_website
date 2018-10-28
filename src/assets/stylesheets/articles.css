@@ -584,7 +584,7 @@ article#startpage > header {
 
 @media (max-device-width: 767px) {
   article#startpage > header {
-    height: 100vh;
+    height: calc(100vh - 2.25rem);
   }
 
   article#startpage > header .buttons {
