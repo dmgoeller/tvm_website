@@ -1,6 +1,4 @@
 
-var preferences = {};
-
 /**********************************************************************
  * prototypes
  **********************************************************************/
@@ -88,12 +86,14 @@ function selectAll(elements) {
  * event listeners
  **********************************************************************/
 
+var applicationProperties = {}; // base path, title etc.
+
 document.addEventListener('DOMContentLoaded', function() {
-  // read app properties
+  // read application properties
   var attr = select('html').attributes;
   for (i = 0; i < attr.length; i++) {
     if (attr[i].name.startsWith('data-')) {
-      preferences[attr[i].name.slice(5)] = attr[i].value;
+      applicationProperties[attr[i].name.slice(5)] = attr[i].value;
     }
   }
   // set copyright year
@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // load initial article
   var path = window.location.pathname;
 
-  if (path.startsWith(preferences['base-path'])) {
-    path = path.slice(preferences['base-path'].length);
+  if (path.startsWith(applicationProperties['base-path'])) {
+    path = path.slice(applicationProperties['base-path'].length);
   }
   if (path == '' || path == '/' || path == '/index.html') {
-    path = preferences['index-page'];
+    path = applicationProperties['index-page'];
   }
   loadArticle(path);
 });
@@ -185,7 +185,7 @@ function loadArticle(name, options = {}) {
         }
         title = article.getAttribute('data-title');
       }
-      document.title = preferences['app-title'] + (title ? ' - ' + title : '');
+      document.title = applicationProperties['app-title'] + (title ? ' - ' + title : '');
       window.scrollTo(0, ypos);
 
       if (article) {
@@ -241,7 +241,7 @@ function execute(expression) {
 }
 
 function getPath(article) {
-  return article == preferences['index-page'] ? '.' : article;
+  return article == applicationProperties['index-page'] ? '.' : article;
 }
 
 /**********************************************************************
