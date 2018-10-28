@@ -100,7 +100,7 @@ def build_html(filename, options = {})
     }
     # embed thumbnail images
     html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image\=\"true\"/) { |chunk|
-      image = File.binread("../thumbs/#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}")
+      image = File.binread("#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs'))
       svg = options[:blur_svg].gsub('#{base64}', [image].pack('m'))
       "#{chunk} style=\"background-image: url(data:image/svg+xml,#{uri_escape(svg)});\""
     }
@@ -131,7 +131,7 @@ end
 
 def build_thumbs
   task 'Build Media' do
-    build_dir = "#{$build_dir}/thumbs/media"
+    build_dir = "#{$build_dir}/media/thumbs"
 
     create_or_clean(build_dir)
     copy("#{$src_dir}/media", build_dir)
