@@ -308,25 +308,26 @@ article .menu-item.loading:after {
  * buttons
  **********************************************************************/
 
-article > main a.button,
-article > footer a.button {
+article .button {
+  color: var(--white);
+  background: var(--primary-transparent);
+  transition: background .3s;
+}
+
+article .button:hover {
+  background: var(--primary-light-transparent);
+}
+
+article > main .button, article > footer .button {
   border-radius: .5rem;
   padding: .5rem 1rem;
   display: inline-grid;
   grid-auto-flow: column;
   grid-column-gap: .5rem;
   align-items: center;
-  color: var(--white);
-  background: var(--primary);
   text-align: center;
   text-decoration: none;
   text-shadow: none;
-  transition: .3s;
-}
-
-article > main a.button:hover,
-article > footer a.button:hover {
-  filter: brightness(90%);
 }
 
 /**********************************************************************
@@ -604,8 +605,6 @@ article#startpage > header {
     grid-row-gap: .5rem;
     grid-template-rows: auto 1fr;
     justify-items: center;
-    color: var(--white);
-    background: var(--primary);
     border-radius: .25rem;
   }
 

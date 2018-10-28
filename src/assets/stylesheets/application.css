@@ -10,7 +10,9 @@
 
 :root {
   --primary: #800000;
-  --dark-primary: #600000;
+  --primary-dark: #600000;
+  --primary-transparent: rgba(128,0,0,0.9);
+  --primary-light-transparent: rgba(144,0,0,0.9);
   --white: #fff;
   --light-gray: #f8f8f8;
   --gray: #e8e8e8;
@@ -91,7 +93,7 @@ body > header {
   justify-content: space-between;
   color: var(--white);
   background: var(--primary);
-  border-bottom: 1px solid var(--dark-primary);
+  border-bottom: 1px solid var(--primary-dark);
 }
 
 body > header .button {
