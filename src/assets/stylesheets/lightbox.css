@@ -22,13 +22,13 @@
   display: flex;
 }
 
-.lb-slides {
+.lb-pictures {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 8px;
 }
 
-.lb-slide > img {
+.lb-pictures > picture > img {
   height: 100%;
   width: 100%;
   object-fit: scale-down;
@@ -71,7 +71,7 @@
     padding: 48px 0;
   }
 
-  .lb-viewport, .lb-slide {
+  .lb-viewport, .lb-pictures > picture {
     height: 75vw; /* 4:3 */
     width: 100vw;
   }
@@ -90,7 +90,7 @@
     padding: 0 48px;
   }
 
-  .lb-viewport, .lb-slide {
+  .lb-viewport, .lb-pictures > picture {
     height: 100vh;
     width: calc(100vw - 96px);
   }
