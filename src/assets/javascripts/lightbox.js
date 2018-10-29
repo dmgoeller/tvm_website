@@ -1,16 +1,17 @@
 
 function showLightbox(gallery, initialPosition = 0) {
-  gallery         = select(gallery);
-  var lightbox    = document.body.addElement('div', 'lightbox');
-  var container   = lightbox.addElement('div', 'lb-container');
-  var viewport    = container.addElement('div', 'lb-viewport');
-  var pictures    = viewport.addElement('div', 'lb-pictures');
+  gallery = select(gallery);
+
+  // elements
+  var lightbox = document.body.addElement('div', 'lightbox');
+  var container = lightbox.addElement('div', 'lb-container');
+  var viewport = container.addElement('div', 'lb-viewport');
+  var pictures = viewport.addElement('div', 'lb-pictures');
   var closeButton = container.addElement('div', 'lb-button lb-close-button icon icon-close');
-  var prevButton  = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
-  var nextButton  = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
+  var prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
+  var nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
 
   // pictures
-
   var pictureCount = 0;
   var position = null;
 
@@ -28,12 +29,11 @@ function showLightbox(gallery, initialPosition = 0) {
   });
 
   // functions
-
   var posToPx = function(pos) {
     return pos * (viewport.offsetWidth + 8);
   };
 
-  var moveTo = function(newPosition, transition = 'none') {
+  var moveToPicture = function(newPosition, transition = 'none') {
     position = Math.max(0, Math.min(pictureCount - 1, newPosition));
     if (position == 0) {
       prevButton.classList.add('disabled');
@@ -49,20 +49,40 @@ function showLightbox(gallery, initialPosition = 0) {
     pictures.style.transform = 'translate(-' + posToPx(position) + 'px, 0)';
   };
 
-  var onResize = function(event) {
-    console.log('resize');
-    moveTo(position);
-  };
+  var moveToPreviousPicture = function() {
+    moveToPicture(position - 1, '.6s');
+  }
+
+  var moveToNextPicture = function() {
+    moveToPicture(position + 1, '.6s');
+  }
 
   var closeLightbox = function() {
     lightbox.remove();
+    window.removeEventListener('keyup', onKeyup);
     window.removeEventListener('resize', onResize);
   };
 
-  // button actions
+  // resize events
+  var onResize = function(event) {
+    moveToPicture(position);
+  };
+  window.addEventListener('resize', onResize);
+
+  // key events
+  var onKeyup = function(event) {
+    switch (event.keyCode) {
+      case 27: closeLightbox(); break;
+      case 37: moveToPreviousPicture(); break;
+      case 39: moveToNextPicture(); break;
+    }
+  };
+  window.addEventListener('keyup', onKeyup);
+
+  // click events
   closeButton.onclick = closeLightbox;
-  prevButton.onclick  = function() { moveTo(position - 1, '.6s'); };
-  nextButton.onclick  = function() { moveTo(position + 1, '.6s'); };
+  prevButton.onclick = moveToPreviousPicture;
+  nextButton.onclick = moveToNextPicture;
 
   // touch events
   var touchStartX = null;
@@ -89,16 +109,13 @@ function showLightbox(gallery, initialPosition = 0) {
     if (touchStartX) {
       var touchDeltaX = event.changedTouches[0].clientX - touchStartX;
       pictures.style.transition = '.5s';
-      if (touchDeltaX < 0) moveTo(position + 1, '.3s ease-out');
-      if (touchDeltaX > 0) moveTo(position - 1, '.3s ease-out');
+      if (touchDeltaX < 0) moveToPicture(position + 1, '.3s ease-out');
+      if (touchDeltaX > 0) moveToPicture(position - 1, '.3s ease-out');
       touchStartX = null;
     }
     event.preventDefault();
   }, {passive: false});
 
-  // resize events
-  window.addEventListener('resize', onResize);
-
   // move to initialize position
-  moveTo(initialPosition);
+  moveToPicture(initialPosition);
 }
