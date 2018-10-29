@@ -533,21 +533,6 @@ article .contact .details {
   grid-column-gap: .5rem;
 }
 
-@media (min-width: 991px)  {
-  article .contacts {
-    align-self: flex-start;
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 992px)  {
-  article .contacts {
-    align-self: stretch;
-    grid-template-columns: 1fr 1fr;
-    align-content: space-evenly;
-  }
-}
-
 @media (max-width: 767px) {
   article .contact {
     flex-direction: column;
@@ -570,6 +555,14 @@ article .contact .details {
 
   article .contact picture {
     margin-right: 1rem;
+  }
+}
+
+@media (min-width: 992px)  {
+  article .contacts {
+    align-self: stretch;
+    grid-template-columns: 1fr 1fr;
+    align-content: space-evenly;
   }
 }
 
