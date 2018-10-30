@@ -793,6 +793,8 @@ article#sponsors .loading-indicator {
  **********************************************************************/
 
 article#contact .how-to-find-us {
+  flex: 1 0 auto;
+  align-items: center;
   background-size: cover;
   background-position: center;
   color: var(--white);
@@ -801,4 +803,10 @@ article#contact .how-to-find-us {
 
 article#contact .how-to-find-us a.link {
   color: inherit;
+}
+
+@media (min-device-width: 768px) and (max-device-width: 1024px) {
+  article#contact .how-to-find-us {
+    max-height: 56.25vw; /* 16:9 */;
+  }
 }
