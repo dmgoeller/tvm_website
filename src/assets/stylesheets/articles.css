@@ -533,7 +533,7 @@ article .contact .details {
   grid-column-gap: .5rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 480px) {
   article .contact {
     flex-direction: column;
   }
@@ -548,7 +548,7 @@ article .contact .details {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 481px) {
   article .contact {
     flex-direction: row;
   }
