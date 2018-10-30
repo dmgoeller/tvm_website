@@ -121,6 +121,13 @@ def build_htaccess(filename, options = {})
   end
 end
 
+def build_thumbnail_images(src, dest)
+  action 'Build thumbnail images' do
+    FileUtils.copy_entry(src, dest)
+    system("find #{dest} -type f -name '*.jpg' -exec sips -Z 40 {} \\;", out: :close, err: :close)
+  end
+end
+
 # tasks
 
 def prepare
@@ -129,13 +136,12 @@ def prepare
   end
 end
 
-def build_thumbs
+def build_media
   task 'Build Media' do
-    build_dir = "#{$build_dir}/media/thumbs"
+    build_dir = "#{$build_dir}/media"
 
     create_or_clean(build_dir)
-    copy("#{$src_dir}/media", build_dir)
-    system("find #{build_dir} -type f -name '*.jpg' -exec sips -Z 40 {} \\;")
+    build_thumbnail_images("#{$src_dir}/media", "#{build_dir}/thumbs")
   end
 end
 
@@ -187,7 +193,7 @@ end
 
 begin
   prepare
-  build_thumbs if ARGV.include?('-media')
+  build_media if ARGV.include?('-media')
   build_app
   deploy if ARGV.include?('-deploy')
 #rescue Exception => e
