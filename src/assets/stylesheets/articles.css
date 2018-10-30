@@ -506,13 +506,12 @@ article .contacts {
 }
 
 article .contact {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-gap: 1rem;
   line-height: 1.5;
 }
 
 article .contact picture {
-  flex: none;
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
@@ -526,35 +525,39 @@ article .contact .name {
   font-weight: bold;
 }
 
-article .contact .details {
-  margin-top: .5rem;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-column-gap: .5rem;
+article .contact .phone-number:before {
+  content: 'Telefon: ';
+}
+
+article .contact .mobile-number:before {
+  content: 'Mobil: ';
+}
+
+article .contact .email-address:before {
+  content: 'E-Mail: ';
 }
 
 @media (max-width: 480px) {
   article .contact {
-    flex-direction: column;
+    grid-template-columns: auto;
+    text-align: center;
   }
 
   article .contact picture {
-    margin-bottom: 1rem;
-  }
-
-  article .contact .name,
-  article .contact .function {
-    text-align: center;
+    justify-self: center;
   }
 }
 
 @media (min-width: 481px) {
   article .contact {
-    flex-direction: row;
+    grid-template-columns: auto 1fr;
   }
 
-  article .contact picture {
-    margin-right: 1rem;
+  article .contact .phone-number:before,
+  article .contact .mobile-number:before,
+  article .contact .email-address:before {
+    float: left;
+    width: 4rem;
   }
 }
 
@@ -752,7 +755,7 @@ article#sponsors .sponsors {
   grid-gap: 4rem;
 }
 
-article#sponsors a {
+article#sponsors .sponsors a {
   position: relative;
   height: 100%;
   width: 100%;
@@ -761,11 +764,11 @@ article#sponsors a {
   justify-content: center;
 }
 
-article#sponsors picture {
+article#sponsors .sponsors picture {
   background: inherit;
 }
 
-article#sponsors .loading-indicator {
+article#sponsors .sponsors .loading-indicator {
   height: 100%;
   width: 100%;
 }
