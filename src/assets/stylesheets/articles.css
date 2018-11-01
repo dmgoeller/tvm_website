@@ -37,6 +37,11 @@ article h2 {
   font-weight: bold;
 }
 
+article subline {
+  display: block;
+  font-weight: bold;
+}
+
 article p {
   margin: 0;
   line-height: 1.5rem;
@@ -247,7 +252,7 @@ article section .container .large-space-around:not(:first-child) {
 }
 
 article section .container .large-space-around:not(:last-child) {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 /**********************************************************************
@@ -702,11 +707,11 @@ article#startpage .headline h1 {
 }
 
 article#startpage .headline subline {
+  margin-top: .25rem;
   font-size: 1.5rem;
-  font-weight: bold;
 }
 
-@media (max-device-width: 767px) and (orientation: portrait) {
+@media (max-width:480px) {
   article#startpage .headline {
     grid-template-columns: auto;
     grid-row-gap: 1rem;
@@ -719,16 +724,12 @@ article#startpage .headline subline {
   }
 }
 
-@media (min-device-width: 768px), (orientation: landscape) {
+@media (min-width: 481px) {
   article#startpage .headline {
     grid-template-columns: auto auto;
     grid-column-gap: 1rem;
-    grid-row-gap: 0.125rem;
     justify-content: center;
-  }
-  
-  article#startpage .headline .logo {
-    grid-row: 1 / span 2;
+    align-items: center;
   }
 }
 
