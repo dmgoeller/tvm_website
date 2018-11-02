@@ -76,7 +76,7 @@ body {
   font-family: 'Libre Franklin', sans-serif;
   font-size: 12pt; /* = 16px */
   color: var(--dark-gray);
-  background: var(--gray);
+  background: var(--white);
 }
 
 /**********************************************************************

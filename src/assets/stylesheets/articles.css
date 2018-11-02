@@ -113,6 +113,7 @@ article picture > .loading-indicator {
 article > .background {
   position: fixed;
   z-index: -1;
+  width: 100%;
 }
 
 article > .background.logo {
@@ -127,6 +128,12 @@ article > .background.logo > img {
   bottom: -10%;
   height: 120%;
   opacity: .33;
+}
+
+article > .background.picture > picture {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 article > header {
@@ -601,12 +608,6 @@ article .contact .email-address:before {
   article#startpage > .picture {
     position: relative;
     z-index: unset;
-  }
-
-  article#startpage > .picture > picture {
-    position: absolute;
-    height: 100%;
-    width: 100%;
   }
 
   article#startpage > nav {
