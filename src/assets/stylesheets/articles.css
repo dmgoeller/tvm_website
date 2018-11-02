@@ -101,46 +101,27 @@ article picture > .loading-indicator {
 }
 
 @media (min-device-width: 768px), (orientation: landscape) {
-  article > header > picture.mobile-portrait {
+  article picture.mobile-portrait {
     display: none;
   }
 }
 
 /**********************************************************************
- * article header
+ * background and article header
  **********************************************************************/
 
-article > header {
-  position: relative;
-  height: 8rem;
-  width: 100%;
+article > .background {
+  position: fixed;
+  z-index: -1;
 }
 
-article > header.logo-and-headline {
+article > .background.logo {
+  height: 8rem;
+  width: 100%;
   background: var(--gradient-bg);
 }
 
-article > header.picture-and-headline {
-  color: var(--white);
-  text-shadow: var(--text-shadow);
-}
-
-article > header > .headline {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-article > header > .headline > .container {
-  margin-bottom: 1rem;
-  justify-content: flex-end;
-}
-
-article > header > .logo {
+article > .background.logo > img {
   position: absolute;
   right: 1rem;
   bottom: -10%;
@@ -148,57 +129,78 @@ article > header > .logo {
   opacity: .33;
 }
 
-article > header > picture {
-  position: absolute;
+article > header {
+  height: 8rem;
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+article > header:first-child {
+  background: var(--white);
+}
+
+article > .background.picture + header {
+  color: var(--white);
+  text-shadow: var(--text-shadow);
+}
+
+article > header > .container {
+  margin-bottom: 1rem;
+  justify-content: flex-end;
 }
 
 @media (max-device-width: 767px) {
   @media (orientation: portrait) {
-    article > header.picture-and-headline {
+    article > .background.picture,
+    article > .background.picture + header {
       height: 56.25vw; /* 16:9 */
     }
 
-    article > header > .picture:not(.mobile-portrait) {
+    article > .background.picture > picture:not(.mobile-portrait) {
       overflow: hidden;
     }
 
-    article > header > .picture:not(.mobile-portrait) > img {
+    article > .background.picture > picture:not(.mobile-portrait) > img {
       transform: scale(1.25);
     }
   }
 
   @media (orientation: landscape) {
-    article > header.picture-and-headline {
+    article > .background.picture,
+    article > .background.picture + header {
       height: 50vh; /* 50% */
     }
   }
 }
 
+@media (min-device-width: 768px) and (max-device-width: 1024px) {
+  @media (orientation: portrait) {
+    article > .background.picture,
+    article > .background.picture + header {
+      height: 33.33vw; /* 3:1 */
+    }
+  }
+
+  @media (orientation: landscape) {
+    article > .background.picture,
+    article > .background.picture + header {
+     height: 25vw; /* 4:1 */
+    }
+  }
+}
+
+@media (min-device-width: 1025px) {
+  article > .background.picture,
+  article > .background.picture + header {
+    height: 12rem; /* 196px */
+  }
+}
+
 @media (min-device-width: 768px) {
-  article > header.picture-and-headline h1 {
+  article > .background.picture + header h1 {
     font-size: 3rem;
-  }
-
-  @media (max-device-width: 1024px) {
-    @media (orientation: portrait) {
-      article > header.picture-and-headline {
-        height: 33.33vw; /* 3:1 */
-      }
-    }
-
-    @media (orientation: landscape) {
-      article > header.picture-and-headline {
-       height: 25vw; /* 4:1 */
-      }
-    }
-  }
-
-  @media (min-device-width: 1025px) {
-    article > header.picture-and-headline {
-      height: 12rem; /* 196px */
-    }
   }
 }
 
@@ -210,6 +212,7 @@ article > main {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  background: var(--white);
 }
 
 /**********************************************************************
@@ -220,6 +223,7 @@ article > footer {
   flex: none;
   display: flex;
   flex-direction: column;
+  background: var(--white);
 }
 
 /**********************************************************************
@@ -578,100 +582,115 @@ article .contact .email-address:before {
  * startpage
  **********************************************************************/
 
-/* header */
-
-article#startpage > header {
-  background: var(--gray);
-}
+/* mobile layout */
 
 @media (max-device-width: 767px) {
-  article#startpage > header {
+  article#startpage > .picture,
+  article#startpage > nav {
     height: calc(100vh - 2.25rem);
   }
-
-  article#startpage > header .buttons {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: grid;
-    grid-gap: .25rem;
-    padding: 0 .25rem .25rem .25rem;
-  }
-
-  article#startpage > header .button {
-    padding: .5rem .25rem;
-    display: grid;
-    grid-row-gap: .5rem;
-    grid-template-rows: auto 1fr;
-    justify-items: center;
-    border-radius: .25rem;
-  }
-
-  article#startpage > header .button > img {
-    height: 24px;
-  }
-
-  article#startpage > header .button .label {
-    align-self: center;
-    justify-self: stretch;
-    text-align: center;
-  }
-
-  @media (orientation: portrait) {
-    article#startpage > header .buttons {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  @media (orientation: landscape) {
-    article#startpage > header .buttons {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-  }
-
-  @media (orientation: portrait) and (display-mode: browser) {
-    article#startpage > header .buttons {
-      margin-bottom: 64px;
-
-      /* avoids that the buttons are hidden by the browser's
-       * navigation bar
-       */
-    } 
-  }
 }
+
+/* tablet and desktop layout */
 
 @media (min-device-width: 768px) {
-  article#startpage > header .buttons {
+  article#startpage {
+    background: var(--white);
+  }
+
+  article#startpage > .picture {
+    position: relative;
+    z-index: unset;
+  }
+
+  article#startpage > .picture > picture {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  article#startpage > nav {
     display: none;
-  }
-}
-
-@media (min-device-width: 768px) and (max-device-width: 1024px) {
-  @media (orientation: portrait) {
-    article#startpage > header {
-      height: 33.33vw;
-    }
-  }
-
-  @media (orientation: landscape) {
-    article#startpage > header {
-     height: 25vw;
-    }
-  }
-}
-
-@media (min-device-width: 1025px) {
-  article#startpage > header {
-    min-height: 192px;
-    max-height: 25vw;
-    flex: 1 0 auto;
   }
 
   article#startpage > main {
     flex: none;
   }
+
+  @media (max-device-width: 1024px) and (orientation: portrait) {
+    article#startpage > .picture {
+      height: 33.33vw;
+    }
+  }
+
+  @media (max-device-width: 1024px) and (orientation: landscape) {
+    article#startpage > .picture {
+     height: 25vw;
+    }
+  }
+
+  @media (min-device-width: 1025px) {
+    article#startpage > .picture {
+      flex: 1 0 auto;
+      height: unset;
+      min-height: 192px;
+      max-height: 25vw;
+    }
+  }
+}
+
+/* navigation */
+
+article#startpage > nav .buttons {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-gap: .25rem;
+  padding: 0 .25rem .25rem .25rem;
+}
+
+article#startpage > nav .button {
+  padding: .5rem .25rem;
+  display: grid;
+  grid-row-gap: .5rem;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  border-radius: .25rem;
+}
+
+article#startpage > nav .button > img {
+  height: 24px;
+}
+
+article#startpage > nav .button .label {
+  align-self: center;
+  justify-self: stretch;
+  text-align: center;
+}
+
+@media (orientation: portrait) {
+  article#startpage > nav .buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (orientation: landscape) {
+  article#startpage > nav .buttons {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (orientation: portrait) and (display-mode: browser) {
+  article#startpage > nav .buttons {
+    margin-bottom: 64px;
+
+    /* avoids that the buttons are hidden by the browser's
+     * navigation bar
+     */
+  } 
 }
 
 /* headline */

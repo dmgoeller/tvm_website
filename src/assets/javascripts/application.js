@@ -87,6 +87,7 @@ function selectAll(elements) {
  **********************************************************************/
 
 var applicationProperties = {}; // base path, title etc.
+var background = null;
 
 document.addEventListener('DOMContentLoaded', function() {
   // read application properties
@@ -131,6 +132,13 @@ window.addEventListener('load', function() {
       .catch(function(error) {
         console.log('Service worker registration failed:', error);
     });
+  }
+});
+
+window.addEventListener('scroll', function(event) {
+  if (background) {
+    var offset = 0.5 * window.pageYOffset;
+    background.style.top = 'calc(2.25rem - ' + offset + 'px)';
   }
 });
 
@@ -184,12 +192,13 @@ function loadArticle(name, options = {}) {
           execute(articleonload);
         }
         title = article.getAttribute('data-title');
+        background = article.querySelector('.background');
       }
       document.title = applicationProperties['app-title'] + (title ? ' - ' + title : '');
       window.scrollTo(0, ypos);
 
       if (article) {
-        buildPictures(article);
+        buildImages(article);
         loadImages(Array.from(article.children));
       }
     })
@@ -248,12 +257,12 @@ function getPath(article) {
  * lazy image loading
  **********************************************************************/
 
-function buildPictures(article) {
-  article.querySelectorAll('picture[data-image]').forEach(function(element) {
+function buildImages(article) {
+  article.querySelectorAll('[data-image]').forEach(function(element) {
     var filename = element.getAttribute('data-image');
 
     // create source tag for mobile devices
-    if (filename.endsWith('-1920x1080.jpg')) {
+    if (element.tagName = 'PICTURE' && filename.endsWith('-1920x1080.jpg')) {
       var source = element.addElement('source');
       source.setAttribute('media', '(max-device-width: 767px)');
       source.setAttribute('srcset', filename.slice(0, -14) + '-960x540.jpg');
