@@ -5,6 +5,7 @@ require 'net/sftp'
 require 'uglifier'
 require 'uri'
 require 'yaml'
+require 'fastimage'
 
 $config = YAML.load_file('./build.yml')
 $src_dir = $config.dig('directories', 'src') || 'src'
@@ -98,10 +99,14 @@ def build_html(filename, options = {})
       icon = icons[element.match(/(\w|\-)*\.svg/)[0]]
       icon.nil? ? element : icon
     }
-    # embed thumbnail images
+    # embed placeholder images
     html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image\=\"true\"/) { |chunk|
-      image = File.binread("#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs'))
-      svg = options[:blur_svg].gsub('#{base64}', [image].pack('m'))
+      image = "#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs')
+      size = FastImage.size(image)
+      svg = String.new(options[:blur_svg])
+      svg.sub!('#{height}', !size.nil? ? size[1].to_s : '27')
+      svg.sub!('#{width}', !size.nil? ? size[0].to_s : '48')
+      svg.sub!('#{base64}', [File.binread(image)].pack('m'))
       "#{chunk} style=\"background-image: url(data:image/svg+xml,#{uri_escape(svg)});\""
     }
     File.write(filename, html)
@@ -124,7 +129,7 @@ end
 def build_thumbnail_images(src, dest)
   action 'Build thumbnail images' do
     FileUtils.copy_entry(src, dest)
-    system("find #{dest} -type f -name '*.jpg' -exec sips -Z 40 {} \\;", out: :close, err: :close)
+    system("find #{dest} -type f -name '*.jpg' -exec sips -Z 48 {} \\;", out: :close, err: :close)
   end
 end
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="9">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="#{height}" width="#{width}">
   <filter id="blur" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
     <feGaussianBlur stdDeviation="20 20" edgeMode="duplicate"/>
     <feComponentTransfer>
