@@ -768,6 +768,23 @@ article#teams {
   background-size: cover;
 }
 
+article#teams > .background {
+  position: fixed;
+  z-index: -1;
+  height: 100vh;
+  width: 100%;
+}
+
+article#teams >.background > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+} 
+
+article#teams > main {
+  background: transparent;
+}
+
 article#teams > main > section:nth-child(even) {
   background: rgba(0, 0, 0, 0.1);
 }
