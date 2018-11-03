@@ -79,7 +79,7 @@ article picture > img {
   transition: opacity .3s linear;
 }
 
-article picture > img[data-src] {
+article picture > img[data-lazy-loading] {
   opacity: 0;
 }
 
@@ -717,11 +717,11 @@ article#startpage .headline .logo .placeholder-image {
   width: 100%;
 }
 
-article#startpage .headline .logo > img[data-src] {
+article#startpage .headline .logo > img[data-lazy-loading] {
   opacity: 0;
 }
 
-article#startpage .headline .logo > img:not([data-src]) ~ .placeholder-image {
+article#startpage .headline .logo > img:not([data-lazy-loading]) ~ .placeholder-image {
   display: none;
 }
 

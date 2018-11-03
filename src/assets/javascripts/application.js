@@ -248,6 +248,8 @@ function getPath(article) {
  * lazy image loading
  **********************************************************************/
 
+var loadedImages = [];
+
 function buildImages(article) {
   article.querySelectorAll('[data-image]').forEach(function(element) {
     var filename = element.getAttribute('data-image');
@@ -260,13 +262,17 @@ function buildImages(article) {
     }
     // create image tag
     var image = element.addElement('img');
-    image.setAttribute('data-src', element.getAttribute('data-image'));
+    image.setAttribute('data-src', filename);
     image.setAttribute('alt', element.getAttribute('data-alt') || '');
 
-    // create loading indicator
-    if (element.getAttribute('data-loading-indicator') == 'true') {
-      element.addElement('div', 'loading-indicator delayed-fade-in')
-        .addElement('div', 'spinner spinner-circle');
+    if (!loadedImages.includes(filename)) {
+      image.setAttribute('data-lazy-loading', '');
+
+      // create loading indicator
+      if (element.getAttribute('data-loading-indicator') == 'true') {
+        element.addElement('div', 'loading-indicator delayed-fade-in')
+          .addElement('div', 'spinner spinner-circle');
+      }
     }
   });
 }
@@ -302,19 +308,24 @@ function loadImages(containers) {
 }
 
 function imageLoaded(image) {
+  var src = image.getAttribute('data-src');
   var parent = image.parentNode;
 
   // remove the loading indicator for the image
   if (loadingIndicator = parent.querySelector('.loading-indicator')) {
     loadingIndicator.remove();
   }
-  // remove the data-src attribute to display the image
-  image.removeAttribute('data-src');
+  // remove the data-lazy-loading attribute to display the image
+  image.removeAttribute('data-lazy-loading');
 
   // enable the parent's onclick function
   if (onClick = parent.getAttribute('data-onclick')) {
     parent.setAttribute('onclick', onClick);
     parent.removeAttribute('data-onclick');
+  }
+  // remember that the image has been loaded
+  if (!loadedImages.includes(src)) {
+    loadedImages.push(src);  
   }
 }
 
