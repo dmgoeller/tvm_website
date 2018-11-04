@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'cssminify'
 require 'net/sftp'
 require 'uglifier'
@@ -7,26 +8,27 @@ require 'uri'
 require 'yaml'
 require 'fastimage'
 
-$config = YAML.load_file('./build.yml')
-$src_dir = $config.dig('directories', 'src') || 'src'
-$build_dir = $config.dig('directories', 'build') || 'build'
-$dist_dir = $config.dig('directories', 'dist') || 'dist'
+$options = {}
 
-def task(name, &block)
-  puts
-  puts "#{'-' * 40}"
-  puts name
-  puts "#{'-' * 40}"
-  puts
-  yield $config[name.downcase.gsub(' ', '_')] || {}
-end
+OptionParser.new do |opt|
+  opt.banner = 'Usage: ruby build.rb [options]'
+
+  opt.on('-e ENVIRONMENT') { |env| $options[:env] = env }
+  opt.on('-d', '--deploy') { $options[:deploy] = true }
+  opt.on('-m', '--build-media') { $options[:build_media] = true }
+end.parse!
+
+# utility methods
 
 def action(name, &block)
   puts "#{name}"
   yield
 end
 
-# utility methods
+def task(name, &block)
+  puts ['', "#{'-' * 40}", name, "#{'-' * 40}", '']
+  yield $config[name.downcase.gsub(' ', '_')] || {}
+end
 
 def index_page(html)
   File.read(html).scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first
@@ -43,6 +45,27 @@ end
 def uri_escape(s) 
   URI.escape(s.gsub('(', '%28').gsub(')', '%29'))
 end
+
+def deep_merge(h1, h2)
+  h1.dup.tap { |merged|
+    h2.each_pair do |key, value|
+      if (merged[key].is_a?(Hash) && value.is_a?(Hash))
+        merged[key] = deep_merge(merged[key], value)
+      else
+        merged[key] = value
+      end
+    end
+  }
+end
+
+# configuration
+
+build_yaml = YAML.load_file('./build.yml')
+
+$config = deep_merge(build_yaml['defaults'], build_yaml[$options[:env] || 'test'])
+$src_dir = $config.dig('directories', 'src') || 'src'
+$build_dir = $config.dig('directories', 'build') || 'build'
+$dist_dir = $config.dig('directories', 'dist') || 'dist'
 
 # actions
 
@@ -77,6 +100,10 @@ def build_html(filename, options = {})
     html.gsub!(/data\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk| 
       "data-base-path=\"#{options[:base_path]}\""
     }
+    # replace robots meta property
+    html.gsub!(/\<meta\s+name\=\"robots\"\s+content\=\"(\w|\s)*\"\>/) {
+      "<meta name=\"robots\" content=\"#{options[:meta_robots]}\">"
+    } unless options[:meta_robots].nil?
     # embed stylesheets
     html.gsub!(/\<link.*href\=\"assets\/stylesheets\/(\w|\-)*\.css\".*\>/) { |link|
       stylesheet = File.read(link.match(/(\w|\-|\/)*\.css/)[0])
@@ -164,7 +191,7 @@ def build_app
       icons = load_svg_icons('assets/icons')
       blur_svg = load_svg('assets/templates/blur.svg')
 
-      build_html('index.html', icons: icons, blur_svg: blur_svg, base_path: base_path)
+      build_html('index.html', icons: icons, base_path: base_path, meta_robots: config['meta_robots'])
 
       Dir.glob("articles/*.html") { |filename| 
         action "Build article \'#{filename}\'" do
@@ -198,9 +225,9 @@ end
 
 begin
   prepare
-  build_media if ARGV.include?('-media')
+  build_media if $options[:build_media] == true
   build_app
-  deploy if ARGV.include?('-deploy')
+  deploy if $options[:deploy] == true
 #rescue Exception => e
 #  puts "\nError: #{e.message}"
 end
