@@ -30,16 +30,8 @@ def task(name, &block)
   yield $config[name.downcase.gsub(' ', '_')] || {}
 end
 
-def index_page(html)
-  File.read(html).scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first
-end
-
 def load_svg(filename)
   File.readlines(filename)[1..-1].collect(&:strip).join
-end
-
-def load_svg_icons(dir)
-  (Dir.glob("#{dir}/*.svg").collect { |f| [File.basename(f), load_svg(f)] }).to_h
 end
 
 def uri_escape(s) 
@@ -93,7 +85,6 @@ end
 
 def build_html(filename, options = {})
   action "Build '#{filename}'" do
-    icons = options[:icons]
     html = File.read(filename)
 
     # replace base path
@@ -102,13 +93,13 @@ def build_html(filename, options = {})
     }
     # replace robots meta property
     html.gsub!(/\<meta\s+name\=\"robots\"\s+content\=\"(\w|\s)*\"\>/) {
-      "<meta name=\"robots\" content=\"#{options[:meta_robots]}\">"
-    } unless options[:meta_robots].nil?
+      "<meta name=\"robots\" content=\"#{options[:meta][:robots]}\">"
+    } unless options[:meta][:robots].nil?
     # embed stylesheets
     html.gsub!(/\<link.*href\=\"assets\/stylesheets\/(\w|\-)*\.css\".*\>/) { |link|
       stylesheet = File.read(link.match(/(\w|\-|\/)*\.css/)[0])
       stylesheet.gsub!(/url\(\'(\w|\-|\/|\.)*\.svg\'\)/) { |chunk|
-        icon = icons[chunk.match(/(\w|\-)*\.svg/)[0]]
+        icon = options[:icons][chunk.match(/(\w|\-)*\.svg/)[0]]
         "url(data:image/svg+xml,#{uri_escape(icon)})"
       }
       stylesheet.gsub!('url(../../fonts/', 'url(fonts/')
@@ -123,29 +114,29 @@ def build_html(filename, options = {})
     }
     # embed icons
     html.gsub!(/\<img(\s*\w*\=\".*\"\s*)*\s*src\=\"(\w|\-|\/)*\.svg\"(\s*\w*\=\".*\"\s*)*\>/) { |element|
-      icon = icons[element.match(/(\w|\-)*\.svg/)[0]]
+      icon = options[:icons][element.match(/(\w|\-)*\.svg/)[0]]
       icon.nil? ? element : icon
     }
     # embed placeholder images
     html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image\=\"true\"/) { |chunk|
-      image = "#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs')
-      size = FastImage.size(image)
-      svg = String.new(options[:blur_svg])
-      svg.sub!('#{height}', !size.nil? ? size[1].to_s : '27')
-      svg.sub!('#{width}', !size.nil? ? size[0].to_s : '48')
-      svg.sub!('#{base64}', [File.binread(image)].pack('m'))
+      placeholder_image = "#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs')
+      image_size = FastImage.size(placeholder_image)
+      svg = String.new(options[:placeholder_image_template])
+      svg.sub!('#{height}', !image_size.nil? ? image_size[1].to_s : '27')
+      svg.sub!('#{width}', !image_size.nil? ? image_size[0].to_s : '48')
+      svg.sub!('#{base64}', [File.binread(placeholder_image)].pack('m'))
       "#{chunk} style=\"background-image: url(data:image/svg+xml,#{uri_escape(svg)});\""
     }
     File.write(filename, html)
   end
 end
 
-def build_htaccess(filename, options = {})
+def build_htaccess(filename, articles_dir, options = {})
   action "Build '#{filename}'" do
     htaccess = File.read(filename)
     htaccess << "\n"
     htaccess << "RewriteBase #{options[:base_path]}\n" unless options[:base_path].empty?
-    Dir.glob("#{options[:articles_dir]}/*.html") { |page|
+    Dir.glob("#{articles_dir}/*.html") { |page|
       next if page == options[:index_page]
       htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
     } 
@@ -187,18 +178,16 @@ def build_app
     copy($src_dir, build_dir, exclude: %w(media download))
 
     FileUtils.cd(build_dir) do
-      index_page = index_page('index.html')
-      icons = load_svg_icons('assets/icons')
-      blur_svg = load_svg('assets/templates/blur.svg')
-
-      build_html('index.html', icons: icons, base_path: base_path, meta_robots: config['meta_robots'])
-
-      Dir.glob("articles/*.html") { |filename| 
-        action "Build article \'#{filename}\'" do
-          build_html(filename, icons: icons, blur_svg: blur_svg, base_path: base_path)
-        end
+      options = {
+        base_path: base_path,
+        icons: (Dir.glob("assets/icons/*.svg").collect { |f| [File.basename(f), load_svg(f)] }).to_h,
+        index_page: File.read('index.html').scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
+        meta: { robots: config['meta_robots'] },
+        placeholder_image_template: load_svg('assets/templates/placeholder.svg')
       }
-      build_htaccess('.htaccess', articles_dir: 'articles', base_path: base_path, index_page: index_page)
+      build_html('index.html', options)
+      Dir.glob("articles/*.html") { |filename| build_html(filename, options) }
+      build_htaccess('.htaccess', 'articles', options)
     end
 
     copy(build_dir, $dist_dir, exclude: %w(assets))
