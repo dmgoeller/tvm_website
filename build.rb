@@ -50,6 +50,29 @@ def deep_merge(h1, h2)
   }
 end
 
+def upload_entries(sftp, local_path, remote_path)
+  remote_entries = {}
+  sftp.dir.foreach(remote_path) { |entry| remote_entries[entry.name] = entry }
+  
+  Dir.chdir(local_path) do
+    Dir.entries('.').each do |filename|
+      next if %w(. .. .DS_Store).include?(filename)
+      remote_filename = "#{remote_path}/#{filename}"
+
+      if File.directory?(filename)
+        sftp.mkdir!(remote_filename) unless remote_entries.include?(filename)
+        upload_entries(sftp, filename, remote_filename)
+      else
+        remote_entry = remote_entries[filename]
+        if remote_entry.nil? || remote_entry.attributes.mtime < File.mtime(filename).to_i
+          puts "Upload #{remote_filename}"
+          sftp.upload!(filename, remote_filename)
+        end
+      end
+    end
+  end
+end
+
 # configuration
 
 build_yaml = YAML.load_file('./build.yml')
@@ -175,7 +198,7 @@ def build_app
     base_path = base_path[0..-2] if base_path.end_with?('/')
 
     create_or_clean(build_dir)
-    copy($src_dir, build_dir, exclude: %w(media download))
+    copy($src_dir, build_dir, exclude: %w(fonts icons media download))
 
     FileUtils.cd(build_dir) do
       options = {
@@ -197,17 +220,12 @@ end
 def deploy
   task 'Deploy' do |config|
     Net::SFTP.start(config['host'], config['username'], password: config['password']) do |sftp|
-      Dir.chdir($dist_dir) do
-        Dir.glob('**/*').each do |filename|
-          next if File.directory?(filename)
-          action "Upload '#{filename}'" do
-            sftp.upload!(filename, "#{config['path']}/#{filename}")
-          end
-        end
-        action "Upload '.htaccess'" do
-          sftp.upload!('.htaccess', "#{config['path']}/.htaccess")
-        end
-      end
+      remote_path = config['path']
+      upload_entries(sftp, "#{$dist_dir}", remote_path)
+      upload_entries(sftp, "#{$src_dir}/download", "#{remote_path}/download")
+      upload_entries(sftp, "#{$src_dir}/fonts", "#{remote_path}/fonts")
+      upload_entries(sftp, "#{$src_dir}/icons", "#{remote_path}/icons")
+      upload_entries(sftp, "#{$src_dir}/media", "#{remote_path}/media")
     end
   end
 end
@@ -217,7 +235,7 @@ begin
   build_media if $options[:build_media] == true
   build_app
   deploy if $options[:deploy] == true
-#rescue Exception => e
+#rescue StandardError => e
 #  puts "\nError: #{e.message}"
 end
 
