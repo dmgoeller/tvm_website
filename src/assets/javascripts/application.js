@@ -106,7 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (path.startsWith(applicationProperties['base-path'])) {
     path = path.slice(applicationProperties['base-path'].length);
   }
-  if (path == '' || path == '/' || path == '/index.html') {
+  if (path.startsWith('/')) {
+    path = path.slice(1);
+  }
+  if (path == '' || path == 'index.html') {
     path = applicationProperties['index-page'];
   }
   loadArticle(path);
