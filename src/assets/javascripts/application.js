@@ -257,26 +257,38 @@ function buildImages(article) {
   article.querySelectorAll('[data-image]').forEach(function(element) {
     var filename = element.getAttribute('data-image');
 
-    // create source tag for mobile devices
-    if (element.tagName = 'PICTURE' && filename.endsWith('-1920x1080.jpg')) {
+    // create nested source tags
+    if (element.tagName.toLowerCase() == 'picture' && filename.endsWith('-1920x1080.jpg')) {
+
+      // Note: Firefox ignores the image tag's src attribute if a source tag is present.
+      // Thus, the source for large devices must be defined by an additional source tag.
+
       var source = element.addElement('source');
+      source.setAttribute('media', '(min-device-width: 768px)');
+      source.setAttribute('srcset', filename);
+
+      source = element.addElement('source');
       source.setAttribute('media', '(max-device-width: 767px)');
       source.setAttribute('srcset', filename.slice(0, -14) + '-960x540.jpg');
     }
-    // create image tag
+    // create a nested image tag
     var image = element.addElement('img');
     image.setAttribute('data-src', filename);
     image.setAttribute('alt', element.getAttribute('data-alt') || '');
 
+    // add data-lazy-loading attribute if the image hasn't been loaded yet
     if (!loadedImages.includes(filename)) {
       image.setAttribute('data-lazy-loading', '');
 
-      // create loading indicator
-      if (element.getAttribute('data-loading-indicator') == 'true') {
-        element.addElement('div', 'loading-indicator delayed-fade-in')
-          .addElement('div', 'spinner spinner-circle');
+      // add loading indicator
+      if (element.hasAttribute('data-loading-indicator')) {
+        var loadingIndicator = element.addElement('div', 'loading-indicator delayed-fade-in');
+        loadingIndicator.addElement('div', 'spinner spinner-circle');
+        element.removeAttribute('data-lazy-loading');
       }
     }
+    // remove the data-image attribute
+    element.removeAttribute('data-image');
   });
 }
 
@@ -284,10 +296,9 @@ function loadImages(containers) {
   if (containers.length > 0) {
     var container = containers.first();
     var images = container.querySelectorAll('img[data-src]');
-    var displayImagesImmediately = container.getAttribute('data-display-images-immediately') == 'true';
+    var displayImagesImmediately = container.hasAttribute('data-display-images-immediately');
 
     if (images.length > 0) {
-      // load images in the current container
       var counter = 0;
 
       images.forEach(function(image) {
@@ -307,6 +318,8 @@ function loadImages(containers) {
       // load images in the next containers
       loadImages(containers.slice(1));
     }
+    // remove the data-display-images-immediately attribute
+    container.removeAttribute('data-display-images-immediately');
   }
 }
 
@@ -330,6 +343,8 @@ function imageLoaded(image) {
   if (!loadedImages.includes(src)) {
     loadedImages.push(src);  
   }
+  // remove the data-src attribute
+  image.removeAttribute('data-src');
 }
 
 /**********************************************************************

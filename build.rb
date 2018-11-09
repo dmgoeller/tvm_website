@@ -141,7 +141,7 @@ def build_html(filename, options = {})
       icon.nil? ? element : icon
     }
     # embed placeholder images
-    html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image\=\"true\"/) { |chunk|
+    html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image/) { |chunk|
       placeholder_image = "#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs')
       image_size = FastImage.size(placeholder_image)
       svg = String.new(options[:placeholder_image_template])
