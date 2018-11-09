@@ -414,7 +414,7 @@ body > footer.copyright p {
  * standalone mode
  **********************************************************************/
 
-@media not all and (display-mode: standalone) {
+@media (min-device-width: 1024px), not all and (display-mode: standalone) {
   .standalone-only {
     display: none !important;
   }
