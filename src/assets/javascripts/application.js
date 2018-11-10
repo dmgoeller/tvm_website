@@ -36,6 +36,10 @@ Element.prototype.removeChildren = function() {
   }
 }
 
+Element.prototype.getComputedStyle = function() {
+  return window.getComputedStyle(this);
+}
+
 Element.prototype.show = function() {
   this.classList.remove('hidden');
 }
@@ -253,16 +257,16 @@ function getPath(article) {
 
 var loadedImages = [];
 
-function buildImages(article) {
-  article.querySelectorAll('[data-image]').forEach(function(element) {
+function buildImages(container) {
+  container.querySelectorAll('[data-image]').forEach(function(element) {
     var filename = element.getAttribute('data-image');
-
-    // create nested source tags
+    
+    // create nested source tags for full HD images
     if (element.tagName.toLowerCase() == 'picture' && filename.endsWith('-1920x1080.jpg')) {
 
       // Note: Firefox ignores the image tag's src attribute if a source tag is present.
       // Thus, the source for large devices must be defined by an additional source tag.
-
+      
       var source = element.addElement('source');
       source.setAttribute('media', '(min-device-width: 768px)');
       source.setAttribute('srcset', filename);
@@ -312,7 +316,8 @@ function loadImages(containers) {
             loadImages(containers.slice(1));
           }
         }
-        image.setAttribute('src', image.getAttribute('data-src'));
+        // load image
+        image.src = image.getAttribute('data-src');
       });
     } else {
       // load images in the next containers
@@ -327,7 +332,18 @@ function imageLoaded(image) {
   var src = image.getAttribute('data-src');
   var parent = image.parentNode;
 
-  // remove the loading indicator for the image
+  // Edge: Paint scaled images on a canvas element to use bicubic (high quality) interpolation
+  if (navigator.userAgent.indexOf('Edge') >= 0 && image.getComputedStyle().objectFit == 'cover') {          
+    var canvas = document.createElement('canvas');
+    canvas.height = image.naturalHeight;
+    canvas.width = image.naturalWidth;
+
+    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    image.onload = null;
+    image.src = canvas.toDataURL('image/jpg');
+  }
+  // remove the image's loading indicator
   if (loadingIndicator = parent.querySelector('.loading-indicator')) {
     loadingIndicator.remove();
   }
