@@ -326,6 +326,7 @@ article .button {
   color: var(--white);
   background: var(--primary-transparent);
   transition: background .3s;
+  -webkit-backdrop-filter: blur(4px);
 }
 
 article .button:hover {
@@ -787,6 +788,7 @@ article#teams > main {
 
 article#teams > main > section:nth-child(even) {
   background: rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 /**********************************************************************

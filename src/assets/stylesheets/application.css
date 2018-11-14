@@ -140,6 +140,7 @@ body > header .button {
     flex-direction: column;
     background: rgba(0, 0, 0, .9);
     transition: transform .5s;
+    -webkit-backdrop-filter: blur(4px);
   }
 
   .top-menu.unfolded .menu-items {
