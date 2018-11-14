@@ -23,6 +23,7 @@
   --text-shadow: 1px 1px #606060;
   --box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
   --gradient-bg: linear-gradient(45deg, #e8e8e8, #c0c0c0);
+  --backdrop-filter: blur(4px);
 }
 
 /**********************************************************************
