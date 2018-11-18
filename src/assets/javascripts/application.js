@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  preventDefault('#nav', 'touchmove');
-  preventDefault('#alert', 'touchmove');
+  preventDefault('#nav', ['touchmove', 'mousewheel']);
+  preventDefault('#alert', ['touchmove', 'mousewheel']);
   
   // browser history
   window.addEventListener('popstate', function(event) {
@@ -141,10 +141,14 @@ window.addEventListener('load', function() {
   }
 });
 
-function preventDefault(element, eventType) {
-  select(element).addEventListener(eventType, function(event) {
-    event.preventDefault();
-  }, {passive: false});
+function preventDefault(element, eventTypes) {
+  element = select(element);
+
+  eventTypes.forEach(function(eventType) {
+    element.addEventListener(eventType, function(event) {
+      event.preventDefault();
+    }, {passive: false});
+  });
 }
 
 /**********************************************************************
