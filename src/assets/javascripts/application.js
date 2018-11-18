@@ -152,7 +152,7 @@ function preventDefault(element, eventType) {
  **********************************************************************/
 
 function loadArticle(name, options = {}) {
-  var topMenu = select('#top-menu');
+  var nav = select('#nav');
   var glasspane = select('#glasspane');
   var caller = select(options['caller']);
   var ypos = options['ypos'] || 0;
@@ -167,7 +167,7 @@ function loadArticle(name, options = {}) {
       var title = null;
 
       if (caller) caller.classList.remove('loading');
-      topMenu.classList.remove('unfolded');
+      nav.classList.remove('top-menu-unfolded');
       glasspane.hide();
 
       if (history.state != null) {
@@ -202,7 +202,7 @@ function loadArticle(name, options = {}) {
     })
     .catch(function(error) {
       if (caller) caller.classList.remove('loading');
-      topMenu.classList.remove('unfolded');
+      nav.classList.remove('top-menu-unfolded');
       glasspane.hide();
       alert(error.message);
     });

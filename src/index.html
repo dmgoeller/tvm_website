@@ -20,17 +20,27 @@
   </head>
   <body>
     <header>
-      <div class="button icon icon-chevron-left standalone-only" onclick="window.history.back();"></div>
-      <div class="button" onclick="loadArticle('startseite');">TV Melsbach</div>
-      <div id="top-menu" class="top-menu">
-        <div class="button icon" onclick="select('#top-menu').classList.toggle('unfolded');"></div>
-        <div class="menu-items">
-          <div class="menu-item" onclick="loadArticle('tennis', {'caller': this});">Tennis</div>
-          <div class="menu-item" onclick="loadArticle('boule', {'caller': this});">Boule</div>
-          <div class="menu-item" onclick="loadArticle('clubhaus-mieten', {'caller': this});">Clubhaus mieten</div>
-          <div class="menu-item" onclick="loadArticle('verein', {'caller': this});">Unser Verein</div>
+      <nav id="nav">
+        <div class="menu-container top-navigation">
+          <div class="menu">
+            <ul>
+              <li class="icon icon-chevron-left" onclick="window.history.back();"></li>
+              <li onclick="loadArticle('startseite');">TV Melsbach</li>
+              <li class="icon" onclick="select('#nav').classList.toggle('top-menu-unfolded');"></li>
+            </ul>
+          </div>
         </div>
-      </div>
+        <div class="menu-container top-menu">
+          <div class="menu">
+            <ul>
+              <li onclick="loadArticle('tennis', {'caller': this});">Tennis</li>
+              <li onclick="loadArticle('boule', {'caller': this});">Boule</li>
+              <li onclick="loadArticle('clubhaus-mieten', {'caller': this});">Clubhaus mieten</li>
+              <li onclick="loadArticle('verein', {'caller': this});">Unser Verein</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
     <main>
       <noscript>
