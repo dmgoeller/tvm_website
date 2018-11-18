@@ -148,10 +148,6 @@ body > header {
     transition: visibility .5s;
   }
 
-  #nav .top-menu:hover {
-    cursor: default;
-  }
-
   #nav.top-menu-unfolded .top-menu {
     visibility: visible;
   }
@@ -365,7 +361,7 @@ body > footer.copyright p {
   user-select: none;
 }
 
-[onclick]:hover:not(.disabled) {
+[onclick]:hover:not(.disabled):not(.cursor-default) {
   cursor: pointer;
 }
 
