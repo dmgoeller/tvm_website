@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  preventDefault('#top-menu .menu-items', 'touchmove');
+  preventDefault('#nav .top-menu ul', 'touchmove');
   preventDefault('#alert', 'touchmove');
   
   // browser history
