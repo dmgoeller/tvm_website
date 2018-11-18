@@ -21,7 +21,7 @@
   <body>
     <header>
       <nav id="nav">
-        <div class="menu-container top-navigation">
+        <div class="top-navigation">
           <div class="menu">
             <ul>
               <li class="icon icon-chevron-left" onclick="window.history.back();"></li>
@@ -30,7 +30,7 @@
             </ul>
           </div>
         </div>
-        <div class="menu-container top-menu">
+        <div class="top-menu" onclick="select('#nav').classList.remove('top-menu-unfolded');">
           <div class="menu">
             <ul>
               <li onclick="loadArticle('tennis', {'caller': this});">Tennis</li>
