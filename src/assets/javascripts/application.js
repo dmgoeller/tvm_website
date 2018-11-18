@@ -48,6 +48,14 @@ Element.prototype.hide = function() {
   this.classList.add('hidden');
 }
 
+Element.prototype.preventDefault = function() {
+  for (var i = 0; i < arguments.length; i++) {
+    this.addEventListener(arguments[i], function(event) {
+      event.preventDefault();
+    }, {passive: false});
+  }
+}
+
 /**********************************************************************
  * date functions
  **********************************************************************/
@@ -120,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  preventDefault('#nav', ['touchmove', 'mousewheel']);
-  preventDefault('#alert', ['touchmove', 'mousewheel']);
+  select('#nav').preventDefault('touchmove', 'mousewheel');
+  select('#alert').preventDefault('touchmove', 'mousewheel');
   
   // browser history
   window.addEventListener('popstate', function(event) {
@@ -140,16 +148,6 @@ window.addEventListener('load', function() {
     });
   }
 });
-
-function preventDefault(element, eventTypes) {
-  element = select(element);
-
-  eventTypes.forEach(function(eventType) {
-    element.addEventListener(eventType, function(event) {
-      event.preventDefault();
-    }, {passive: false});
-  });
-}
 
 /**********************************************************************
  * page loading

@@ -11,7 +11,7 @@ function showLightbox(gallery, initialPosition = 0) {
   var prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
   var nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
 
-  preventDefault(lightbox, ['touchmove', 'mousewheel']);
+  lightbox.preventDefault('touchmove', 'mousewheel');
 
   // pictures
   var pictureCount = 0;
