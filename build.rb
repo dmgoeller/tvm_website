@@ -50,13 +50,13 @@ def deep_merge(h1, h2)
   }
 end
 
-def upload_entries(sftp, local_path, remote_path)
+def upload_entries(sftp, local_path, remote_path, options = {})
   remote_entries = {}
   sftp.dir.foreach(remote_path) { |entry| remote_entries[entry.name] = entry }
   
   Dir.chdir(local_path) do
     Dir.entries('.').each do |filename|
-      next if %w(. .. .DS_Store).include?(filename)
+      next if %w(. .. .DS_Store).include?(filename) || options[:exclude]&.match(filename)
       remote_filename = "#{remote_path}/#{filename}"
 
       if File.directory?(filename)
@@ -222,7 +222,7 @@ def deploy
     Net::SFTP.start(config['host'], config['username'], password: config['password']) do |sftp|
       remote_path = config['path']
       upload_entries(sftp, "#{$dist_dir}", remote_path)
-      upload_entries(sftp, "#{$src_dir}/download", "#{remote_path}/download")
+      upload_entries(sftp, "#{$src_dir}/download", "#{remote_path}/download", exclude: /.*\.docx/)
       upload_entries(sftp, "#{$src_dir}/fonts", "#{remote_path}/fonts")
       upload_entries(sftp, "#{$src_dir}/icons", "#{remote_path}/icons")
       upload_entries(sftp, "#{$src_dir}/media", "#{remote_path}/media")
