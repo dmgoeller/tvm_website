@@ -95,13 +95,26 @@ article picture > .loading-indicator {
   justify-content: center;
 }
 
-@media (max-device-width: 767px) and (orientation: portrait) {
-  article picture.mobile-landscape-tablet-desktop {
+@media (max-device-width: 767px) {
+  article picture.tablet-desktop {
     display: none;
+  }
+
+  @media (orientation: landscape) {
+    article picture.mobile-portrait {
+      display: none;
+    }
+  }
+
+  @media (orientation: portrait) {
+    article picture.mobile-landscape {
+      display: none;
+    }
   }
 }
 
-@media (min-device-width: 768px), (orientation: landscape) {
+@media (min-device-width: 768px) {
+  article picture.mobile-landscape,
   article picture.mobile-portrait {
     display: none;
   }

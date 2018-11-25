@@ -149,6 +149,12 @@ window.addEventListener('load', function() {
   }
 });
 
+window.addEventListener('scroll', function(event) {
+  selectAll('.parallax').forEach(function(element) {
+    element.style.top = Math.max((0.5 * window.pageYOffset), 0) + 'px';
+  });
+});
+
 /**********************************************************************
  * page loading
  **********************************************************************/
