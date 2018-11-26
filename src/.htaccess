@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# MIME Types
+AddType text/calendar .ics
+
 # Caching
 <filesMatch "\.(jpg|png|ico|woff|woff2|ttf)$">
 Header set Cache-Control "max-age=2592000, public"
@@ -8,3 +11,4 @@ Header set Cache-Control "max-age=2592000, public"
 # Redirect HTTP requests to HTTPS
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+

@@ -224,6 +224,7 @@ def deploy
       upload_entries(sftp, "#{$dist_dir}", remote_path)
       upload_entries(sftp, "#{$src_dir}/download", "#{remote_path}/download", exclude: /.*\.docx/)
       upload_entries(sftp, "#{$src_dir}/fonts", "#{remote_path}/fonts")
+      upload_entries(sftp, "#{$src_dir}/ical", "#{remote_path}/ical")
       upload_entries(sftp, "#{$src_dir}/icons", "#{remote_path}/icons")
       upload_entries(sftp, "#{$src_dir}/media", "#{remote_path}/media")
     end

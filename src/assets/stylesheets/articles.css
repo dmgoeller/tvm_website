@@ -478,16 +478,20 @@ article .calendar {
 }
 
 article .calendar > * {
-  padding: .25rem .5rem;
+  padding: .5rem;
 }
 
-article .calendar .day-of-week,
-article .calendar .date,
-article .calendar .time {
+article .calendar > .day-of-week,
+article .calendar > .date,
+article .calendar > .time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background: var(--gray);
 }
 
-article .calendar .text {
+article .calendar > .text {
+  display: grid;
   background: var(--light-gray);
 }
 
@@ -495,22 +499,36 @@ article .calendar .expired {
   opacity: .5;
 }
 
+article .calendar .expired .button {
+  display: none;
+}
+
 @media (max-width: 767px) {
   article .calendar {
     grid-template-columns: auto auto auto;
   }
 
-  article .calendar .date {
-    text-align: center;
+  article .calendar > .day-of-week {
+    justify-content: flex-start;
   }
 
-  article .calendar .time {
-    text-align: right;
+  article .calendar > .date {
+    justify-content: center;
   }
 
-  article .calendar .text {
+  article .calendar > .time {
+    justify-content: flex-end;
+  }
+
+  article .calendar > .text {
     grid-column: 1 / span 3;
+    grid-template-columns: auto;
+    grid-row-gap: .5rem;
     margin-bottom: .5rem;
+  }
+
+  article .calendar > .text .button {
+    justify-self: center;
   }
 }
 
@@ -521,6 +539,12 @@ article .calendar .expired {
 
   article .calendar > * {
     margin-bottom: .125rem;
+  }
+
+  article .calendar > .text {
+    grid-template-columns: 1fr auto;
+    grid-column-gap: 1rem;
+    align-items: center;
   }
 }
 
