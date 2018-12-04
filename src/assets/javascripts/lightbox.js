@@ -3,7 +3,7 @@ function showLightbox(gallery, initialPosition = 0) {
   gallery = select(gallery);
 
   // elements
-  var lightbox = document.body.addElement('div', 'lightbox');
+  var lightbox = select('body > main').addElement('div', 'lightbox');
   var container = lightbox.addElement('div', 'lb-container');
   var viewport = container.addElement('div', 'lb-viewport');
   var pictures = viewport.addElement('div', 'lb-pictures');
