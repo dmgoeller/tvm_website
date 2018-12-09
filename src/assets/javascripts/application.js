@@ -4,29 +4,31 @@
  **********************************************************************/
 
 Array.prototype.first = function() {
-  return this.length > 0 ? this[0] : null; 
+  return this.length > 0 ? this[0] : null;
+}
+
+Array.prototype.swap = function(i, j) {
+  let element = this[i];
+  this[i] = this[j];
+  this[j] = element;
+  return this;
 }
 
 Array.prototype.shuffle = function() {
-  for (var i = this.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-
-    // swap the elements at the i-th and j-th position
-    var element = this[i];
-    this[i] = this[j];
-    this[j] = element;
+  for (let i = this.length - 1; i > 0; i--) {
+    this.swap(i, Math.floor(Math.random() * (i + 1)));
   }
   return this;
 }
 
 Element.prototype.addElement = function(name, classes) {
-  var element = document.createElement(name);
+  let element = document.createElement(name);
   element.className = classes;
   return this.appendChild(element);
 }
 
 Element.prototype.addText = function(text) {
-  var textNode = document.createTextNode(text);
+  let textNode = document.createTextNode(text);
   return this.appendChild(textNode);
 }
 
@@ -48,12 +50,12 @@ Element.prototype.hide = function() {
   this.classList.add('hidden');
 }
 
-Element.prototype.preventDefault = function() {
-  for (var i = 0; i < arguments.length; i++) {
-    this.addEventListener(arguments[i], function(event) {
+Element.prototype.preventDefault = function(eventTypes) {
+  eventTypes.forEach(function(eventType) {
+    this.addEventListener(eventType, function(event) {
       event.preventDefault();
     }, {passive: false});
-  }
+  });
 }
 
 /**********************************************************************
@@ -61,7 +63,7 @@ Element.prototype.preventDefault = function() {
  **********************************************************************/
 
 function midnight(date) {
-  var midnight = new Date(date.valueOf());
+  let midnight = new Date(date.valueOf());
   midnight.setHours(0, 0, 0, 0);
   return midnight;
 }
@@ -102,7 +104,7 @@ var applicationProperties = {}; // base path, title etc.
 
 document.addEventListener('DOMContentLoaded', function() {
   // read application properties
-  var attr = select('html').attributes;
+  let attr = select('html').attributes;
   for (i = 0; i < attr.length; i++) {
     if (attr[i].name.startsWith('data-')) {
       applicationProperties[attr[i].name.slice(5)] = attr[i].value;
@@ -113,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     copyrightYear.addText((new Date()).getFullYear());
   }
   // load initial article
-  var path = window.location.pathname;
+  let path = window.location.pathname;
 
   if (path.startsWith(applicationProperties['base-path'])) {
     path = path.slice(applicationProperties['base-path'].length);
@@ -128,20 +130,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  select('#nav').preventDefault('touchmove', 'mousewheel');
-  select('#alert').preventDefault('touchmove', 'mousewheel');
-  
+  select('#nav').preventDefault(['touchmove', 'mousewheel']);
+  select('#alert').preventDefault(['touchmove', 'mousewheel']);
+
   // browser history
   window.addEventListener('popstate', function(event) {
     if (event.state) {
       loadArticle(event.state['article'], {'ypos': event.state['ypos']});
     }
   });
-  // service worker
+  // register service worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
       .then(function(registration) {
-        console.log('Service worker registered for ' + registration.scope);
+        console.log('Service worker registered for ', registration.scope);
       })
       .catch(function(error) {
         console.log('Service worker registration failed:', error);
@@ -156,38 +158,38 @@ window.addEventListener('scroll', function(event) {
 });
 
 /**********************************************************************
- * page loading
+ * article loading
  **********************************************************************/
 
 function loadArticle(name, options = {}) {
-  var nav = select('#nav');
-  var glasspane = select('#glasspane');
-  var caller = select(options['caller']);
-  var ypos = options['ypos'] || 0;
+  let nav = select('#nav');
+  let glasspane = select('#glasspane');
+  let caller = select(options['caller']);
+  let ypos = options['ypos'] || 0;
 
   if (caller) caller.classList.add('loading');
   glasspane.show();
 
   fetch('articles/' + name + '.html', {timeout: 3000})
     .then(function(response) {
-      var main = select('body > main');
-      var article = null;
-      var title = null;
+      let main = select('body > main');
+      let article = null;
+      let title = null;
 
       if (caller) caller.classList.remove('loading');
       nav.classList.remove('top-menu-unfolded');
       glasspane.hide();
 
       if (history.state != null) {
-        var state = {'article': history.state['article'], 'ypos': window.pageYOffset};
+        let state = {'article': history.state['article'], 'ypos': window.pageYOffset};
         history.replaceState(state, null, getPath(state['article']));
       }
-      // display new article 
+      // display new article
       main.innerHTML = response;
       article = main.querySelector('article');
 
       if (history.state == null || history.state['article'] != name) {
-        var state = {'article': name, 'ypos': ypos};
+        let state = {'article': name, 'ypos': ypos};
         if (history.state == null) {
           history.replaceState(state, null, getPath(name));
         } else {
@@ -212,13 +214,13 @@ function loadArticle(name, options = {}) {
       if (caller) caller.classList.remove('loading');
       nav.classList.remove('top-menu-unfolded');
       glasspane.hide();
-      alert(error.message);
+      alert(error);
     });
 }
 
 function fetch(url, options = {}) {
   return new Promise(function(resolve, reject) {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open('GET', url);
     request.timeout = options.timeout || 0;
 
@@ -228,12 +230,28 @@ function fetch(url, options = {}) {
           resolve(request.responseText);
         } else
         if (request.status == 404) {
-          reject(new Error('ERR_NOT_FOUND'));
+          reject({
+            message: 'Upps!',
+            details: [
+              'Die gewünschte Seite existiert nicht.'
+            ]
+          });
         } else
         if (!navigator.onLine) {
-          reject(new Error('ERR_DISCONNECTED'));
+          reject({
+            message: 'Keine Internetverbindung',
+            details: [
+              'Die gewünschte Seite kann im Moment nicht angezeigt werden.'
+            ]
+          });
         } else {
-          reject(new Error('ERR_FETCH_FAILED'));
+          reject({
+            message: 'Upps!',
+            details: [
+              'Die gewünschte Seite konnte nicht geladen werden.',
+              'Bitte versuche es später noch einmal.'
+            ]
+          });
         }
       }
     }
@@ -242,11 +260,11 @@ function fetch(url, options = {}) {
 }
 
 function execute(expression) {
-  var tokens = expression.split(" ");
+  let tokens = expression.split(" ");
 
   if (tokens.length > 0) {
-    var func = window[tokens.first()];
-    var args = tokens.slice(1);
+    let func = window[tokens.first()];
+    let args = tokens.slice(1);
     try {
       func.apply(null, args);
     } catch(e) {
@@ -263,112 +281,112 @@ function getPath(article) {
  * lazy image loading
  **********************************************************************/
 
-var loadedImages = [];
+let loadedImages = []; // holds the images that have already been loaded
 
 function buildImages(container) {
   container.querySelectorAll('[data-image]').forEach(function(element) {
-    var filename = element.getAttribute('data-image');
-    
+    let src = element.getAttribute('data-image');
+
     // create nested source tags for full HD images
-    if (element.tagName.toLowerCase() == 'picture' && filename.endsWith('-1920x1080.jpg')) {
-
-      // Note: Firefox ignores the image tag's src attribute if a source tag is present.
-      // Thus, the source for large devices must be defined by an additional source tag.
-      
-      var source = element.addElement('source');
-      source.setAttribute('media', '(min-device-width: 768px)');
-      source.setAttribute('srcset', filename);
-
-      source = element.addElement('source');
+    if (element.tagName.toLowerCase() == 'picture' && src.endsWith('-1920x1080.jpg')) {
+      // small devices
+      let source = element.addElement('source');
       source.setAttribute('media', '(max-device-width: 767px)');
-      source.setAttribute('srcset', filename.slice(0, -14) + '-960x540.jpg');
+      source.setAttribute('srcset', src.slice(0, -14) + '-960x540.jpg');
+
+      // large devices
+      source = element.addElement('source');
+      source.setAttribute('media', '(min-device-width: 768px)');
+      source.setAttribute('srcset', src);
+
+      // Note: Firefox ignores the image tag's 'src' attribute if at least one source tag is
+      // present. Thus, the source for large devices must also be defined by a source tag.
     }
     // create a nested image tag
-    var image = element.addElement('img');
-    image.setAttribute('data-src', filename);
+    let image = element.addElement('img');
+    image.setAttribute('data-src', src);
     image.setAttribute('alt', element.getAttribute('data-alt') || '');
 
-    // add data-lazy-loading attribute if the image hasn't been loaded yet
-    if (!loadedImages.includes(filename)) {
+    // add a data-lazy-loading attribute if the image hasn't been loaded yet
+    if (!loadedImages.includes(src)) {
       image.setAttribute('data-lazy-loading', '');
 
-      // add loading indicator
+      // add a loading indicator tag
       if (element.hasAttribute('data-loading-indicator')) {
-        var loadingIndicator = element.addElement('div', 'loading-indicator delayed-fade-in');
-        loadingIndicator.addElement('div', 'spinner spinner-circle');
-        element.removeAttribute('data-lazy-loading');
+        element.addElement('div', 'loading-indicator').addElement('div', 'spinner');
+        element.removeAttribute('data-loading-indicator');
       }
     }
-    // remove the data-image attribute
+    // remove 'data-' attributes
     element.removeAttribute('data-image');
+    element.removeAttribute('data-alt');
   });
 }
 
 function loadImages(containers) {
   if (containers.length > 0) {
-    var container = containers.first();
-    var images = container.querySelectorAll('img[data-src]');
-    var displayImagesImmediately = container.hasAttribute('data-display-images-immediately');
+    let container = containers.first();
+    let images = container.querySelectorAll('img[data-src]');
 
     if (images.length > 0) {
-      var counter = 0;
+      let counter = 0;
 
       images.forEach(function(image) {
         image.onload = function() {
-          if (displayImagesImmediately) imageLoaded(image);
-          
+          if (container.hasAttribute('data-display-images-immediately')) {
+            imageLoaded(image);
+          }
           if (++counter >= images.length) {
-            if (!displayImagesImmediately) images.forEach(imageLoaded);
-
+            if (!container.hasAttribute('data-display-images-immediately')) {
+              images.forEach(imageLoaded);
+            }
             // load images in the next containers
             loadImages(containers.slice(1));
           }
         }
-        // load image
         image.src = image.getAttribute('data-src');
+        image.removeAttribute('data-src');
       });
     } else {
       // load images in the next containers
       loadImages(containers.slice(1));
     }
-    // remove the data-display-images-immediately attribute
     container.removeAttribute('data-display-images-immediately');
   }
 }
 
 function imageLoaded(image) {
-  var src = image.getAttribute('data-src');
-  var parent = image.parentNode;
+  let src = image.src
+  let parent = image.parentNode;
 
-  // Edge: Paint scaled images on a canvas element to use bicubic (high quality) interpolation
-  if (navigator.userAgent.indexOf('Edge') >= 0 && image.getComputedStyle().objectFit == 'cover') {          
-    var canvas = document.createElement('canvas');
+  // paint scaled images on a canvas element in Edge to use bicubic (high quality) interpolation
+  if (navigator.userAgent.indexOf('Edge') >= 0 && image.getComputedStyle().objectFit == 'cover') {
+    let canvas = document.createElement('canvas');
     canvas.height = image.naturalHeight;
     canvas.width = image.naturalWidth;
-
     canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
 
     image.onload = null;
     image.src = canvas.toDataURL('image/jpg');
   }
-  // remove the image's loading indicator
-  if (loadingIndicator = parent.querySelector('.loading-indicator')) {
+  // remove the loading indicator tag
+  let loadingIndicator = parent.querySelector('.loading-indicator');
+  if (loadingIndicator) {
     loadingIndicator.remove();
   }
-  // remove the data-lazy-loading attribute to display the image
+  // remove the 'data-lazy-loading' attribute to display the image
   image.removeAttribute('data-lazy-loading');
 
-  // enable the parent's onclick function
-  if (onClick = parent.getAttribute('data-onclick')) {
-    parent.setAttribute('onclick', onClick);
+  // enable the parent's 'onclick' handler
+  let onclick = parent.getAttribute('data-onclick');
+  if (onclick) {
+    parent.setAttribute('onclick', onclick);
     parent.removeAttribute('data-onclick');
   }
-  // remember that the image has been loaded
+  // remember that the given image has been loaded
   if (!loadedImages.includes(src)) {
-    loadedImages.push(src);  
+    loadedImages.push(src);
   }
-  // remove the data-src attribute
-  image.removeAttribute('data-src');
 }
 
 /**********************************************************************
@@ -377,17 +395,17 @@ function imageLoaded(image) {
 
 function initGalleries() {
   selectAll('.gallery').forEach(function(gallery) {
-    var pictures = gallery.querySelectorAll('picture');
+    let pictures = gallery.querySelectorAll('picture');
 
-    for (var i = 0; i < pictures.length; i++) {
-      var onclick = 'showLightbox(this.parentNode, ' + i + ');';
+    for (let i = 0; i < pictures.length; i++) {
+      let onclick = 'showLightbox(this.parentNode, ' + i + ');';
       pictures[i].setAttribute('data-onclick', onclick);
     }
   });
 }
 
 function initCalendar() {
-  var today = midnight(new Date());
+  let today = midnight(new Date());
 
   selectAll('.calendar .date').forEach(function(dateElement) {
     if (parseDate(dateElement.innerText) < today) {
@@ -420,45 +438,18 @@ function shuffleChildren(element) {
  * alerts
  **********************************************************************/
 
-function alert(msg) {
-  var container = select('#alert .text');
-  container.innerHTML = '';
+function alert(message) {
+  let text = select('#alert .text');
+  text.innerHTML = '';
 
-  if (errorMessage = ERROR_MESSAGES[msg]) {
-    if (message = errorMessage.message) {
-      container.addElement('div', 'message').addText(message);
-    }
-    errorMessage.details.forEach(function(detail) {
-      container.addElement('div', 'detail').addText(detail);
+  if (typeof message == 'object') {
+    text.addElement('div', 'message').addText(message.message);
+    message.details.forEach(function(detail) {
+      text.addElement('div', 'detail').addText(detail);
     });
   } else {
-    container.addText(msg);
+    text.addText(message);
   }
   select('#alert').show();
 }
 
-/**********************************************************************
- * error messages
- **********************************************************************/
-
-var ERROR_MESSAGES = {
-  ERR_NOT_FOUND: {
-    message: 'Upps!',
-    details: [
-      'Die gewünschte Seite existiert nicht.'
-    ]
-  },
-  ERR_DISCONNECTED: {
-    message: 'Keine Internetverbindung',
-    details: [
-      'Die gewünschte Seite kann im Moment nicht angezeigt werden.'
-    ]
-  },
-  ERR_FETCH_FAILED: {
-    message: 'Upps!',
-    details: [
-      'Die gewünschte Seite konnte nicht geladen werden.',
-      'Bitte versuche es später noch einmal.'
-    ]
-  }
-};

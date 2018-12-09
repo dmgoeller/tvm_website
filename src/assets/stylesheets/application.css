@@ -95,7 +95,7 @@ body > header {
  * navigation
  **********************************************************************/
 
-#nav {  
+#nav {
   color: var(--white);
 }
 
@@ -190,7 +190,7 @@ body > header {
 }
 
 @media (min-width: 768px) {
-  #nav {  
+  #nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -230,7 +230,7 @@ body > header {
 body > main {
   flex: 1 0 auto;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 /**********************************************************************
@@ -266,7 +266,7 @@ body > footer.copyright p {
   font-size: .8rem;
 }
 
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
   body > footer.links .container {
     grid-template-columns: 1fr;
     padding: .25rem 0;
@@ -291,11 +291,11 @@ body > footer.copyright p {
     justify-self: center;
     padding: .5rem 0;
   }
-  
+
   body > footer.links .container > *:first-child {
     justify-self: start;
   }
-  
+
   body > footer.links .container > *:last-child {
     justify-self: end;
   }
@@ -356,7 +356,7 @@ body > footer.copyright p {
 /**********************************************************************
  * interactive elements
  **********************************************************************/
-  
+
 [onclick]:not(.disabled) {
   user-select: none;
 }
@@ -454,6 +454,11 @@ body > footer.copyright p {
  * animations
  **********************************************************************/
 
+@keyframes progressbar {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+
 @keyframes delayed-fade-in {
   0%, 20% { opacity: 0.0; }
   100%    { opacity: 1.0; }
@@ -462,37 +467,6 @@ body > footer.copyright p {
 @keyframes rotate {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-.delayed-fade-in {
-  animation-name: delayed-fade-in;
-  animation-duration: 1.5s;
-  animation-timing-function: linear;
-}
-
-.spinner {
-  animation-name: rotate;
-  animation-duration: 1.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.spinner.spinner-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border-width: 4px;
-  border-style: solid;
-  border-color: var(--primary) var(--primary) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
-}
-
-/**********************************************************************
- * loading indicators
- **********************************************************************/
-
-@keyframes progressbar {
-  0%   { width: 0%; }
-  100% { width: 100%; }
 }
 
 .loading {
@@ -509,6 +483,25 @@ body > footer.copyright p {
   animation-name: progressbar;
   animation-duration: 3s;
   animation-delay: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.loading-indicator {
+  animation-name: delayed-fade-in;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+}
+
+.loading-indicator .spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: solid;
+  border-color: var(--primary) var(--primary) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
+  animation-name: rotate;
+  animation-duration: 1.5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
