@@ -34,7 +34,7 @@ def load_svg(filename)
   File.readlines(filename)[1..-1].collect(&:strip).join
 end
 
-def uri_escape(s) 
+def uri_escape(s)
   URI.escape(s.gsub('(', '%28').gsub(')', '%29'))
 end
 
@@ -53,7 +53,7 @@ end
 def upload_entries(sftp, local_path, remote_path, options = {})
   remote_entries = {}
   sftp.dir.foreach(remote_path) { |entry| remote_entries[entry.name] = entry }
-  
+
   Dir.chdir(local_path) do
     Dir.entries('.').each do |filename|
       next if %w(. .. .DS_Store).include?(filename) || options[:exclude]&.match(filename)
@@ -100,7 +100,7 @@ def copy(src, dest, options = {})
   action "Copy files from \'#{src}\' to \'#{dest}\'" do
     FileUtils.copy_entry(src, dest)
 
-    options[:exclude].each do |exclude| 
+    options[:exclude].each do |exclude|
       FileUtils.rm_r("#{dest}/#{exclude}")
     end unless options[:exclude].nil?
   end
@@ -111,7 +111,7 @@ def build_html(filename, options = {})
     html = File.read(filename)
 
     # replace base path
-    html.gsub!(/data\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk| 
+    html.gsub!(/data\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
       "data-base-path=\"#{options[:base_path]}\""
     }
     # replace robots meta property
@@ -130,7 +130,7 @@ def build_html(filename, options = {})
       "<style>\n#{stylesheet}\n</style>"
     }
     # embed javascripts
-    html.gsub!(/\<script.*src\=\"assets\/javascripts\/(\w|\-)*\.js\".*\>/) { |script| 
+    html.gsub!(/\<script.*src\=\"assets\/javascripts\/(\w|\-)*\.js\".*\>/) { |script|
       javascript = File.read(script.match(/(\w|\-|\/)*\.js/)[0])
       javascript = Uglifier.compile(javascript, harmony: true)
       "<script type=\"text/javascript\">\n#{javascript}\n</script>"
@@ -156,13 +156,14 @@ end
 
 def build_htaccess(filename, articles_dir, options = {})
   action "Build '#{filename}'" do
+    rewrite_base = options[:base_path].empty? ? '/' : options[:base_path]
     htaccess = File.read(filename)
     htaccess << "\n"
-    htaccess << "RewriteBase #{options[:base_path]}\n" unless options[:base_path].empty?
+    htaccess << "RewriteBase #{rewrite_base}\n"
     Dir.glob("#{articles_dir}/*.html") { |page|
       next if page == options[:index_page]
       htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
-    } 
+    }
     File.write(filename, htaccess)
   end
 end
