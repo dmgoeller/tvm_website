@@ -289,15 +289,15 @@ function buildImages(container) {
 
     // create nested source tags for full HD images
     if (element.tagName.toLowerCase() == 'picture' && src.endsWith('-1920x1080.jpg')) {
-      // small devices
-      let source = element.addElement('source');
-      source.setAttribute('media', '(max-device-width: 767px)');
-      source.setAttribute('srcset', src.slice(0, -14) + '-960x540.jpg');
-
       // large devices
-      source = element.addElement('source');
+      let source = element.addElement('source');
       source.setAttribute('media', '(min-device-width: 768px)');
       source.setAttribute('srcset', src);
+
+      // small devices
+      source = element.addElement('source');
+      source.setAttribute('media', '(max-device-width: 767px)');
+      source.setAttribute('srcset', src.slice(0, -14) + '-960x540.jpg');
 
       // Note: Firefox ignores the image tag's 'src' attribute if at least one source tag is
       // present. Thus, the source for large devices must also be defined by a source tag.
