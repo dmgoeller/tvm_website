@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  select('#nav').preventDefault(['touchmove', 'mousewheel']);
-  select('#alert').preventDefault(['touchmove', 'mousewheel']);
+  //select('#nav').preventDefault(['touchmove', 'mousewheel']);
+  //select('#alert').preventDefault(['touchmove', 'mousewheel']);
 
   // browser history
   window.addEventListener('popstate', function(event) {
