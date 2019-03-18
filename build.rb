@@ -156,14 +156,22 @@ end
 
 def build_htaccess(filename, articles_dir, options = {})
   action "Build '#{filename}'" do
-    rewrite_base = options[:base_path].empty? ? '/' : options[:base_path]
     htaccess = File.read(filename)
-    htaccess << "\n"
-    htaccess << "RewriteBase #{rewrite_base}\n"
-    Dir.glob("#{articles_dir}/*.html") { |page|
-      next if page == options[:index_page]
-      htaccess << "RewriteRule ^#{File.basename(page, '.html')}$ index.html [L]\n"
-    }
+
+    if options[:redirect_http_to_https]
+      htaccess << "\n# Redirect http to https\n"
+      htaccess << "RewriteCond %\{HTTPS\} !=on\n"
+      htaccess << "RewriteRule ^ https://%\{HTTP_HOST\}%\{REQUEST_URI\} [L,R=301]\n"
+    end
+    if options[:redirect_article_paths_to_index]
+      htaccess << "\n# Redirect article paths to index.html\n"
+      htaccess << "RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
+
+      Dir.glob("#{articles_dir}/*.html") { |article|
+        next if article == options[:index_page]
+        htaccess << "RewriteRule ^#{File.basename(article, '.html')}$ index.html [L]\n"
+      }
+    end
     File.write(filename, htaccess)
   end
 end
@@ -203,6 +211,8 @@ def build_app
 
     FileUtils.cd(build_dir) do
       options = {
+        redirect_http_to_https: config['redirect_http_to_https'],
+        redirect_article_paths_to_index: config['redirect_article_paths_to_index'],
         base_path: base_path,
         icons: (Dir.glob("assets/icons/*.svg").collect { |f| [File.basename(f), load_svg(f)] }).to_h,
         index_page: File.read('index.html').scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
