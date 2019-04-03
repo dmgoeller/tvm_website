@@ -35,9 +35,9 @@
   font-style: normal;
   font-weight: 300; /* light */
   font-display: fallback;
-  src: url(../../fonts/libre-franklin-v2-latin-300.woff2) format('woff2'),
-       url(../../fonts/libre-franklin-v2-latin-300.woff) format('woff'),
-       url(../../fonts/libre-franklin-v2-latin-300.ttf) format('truetype');
+  src: url(../../web-fonts/libre-franklin-v2-latin-300.woff2) format('woff2'),
+       url(../../web-fonts/libre-franklin-v2-latin-300.woff) format('woff'),
+       url(../../web-fonts/libre-franklin-v2-latin-300.ttf) format('truetype');
 }
 
 @font-face {
@@ -45,9 +45,9 @@
   font-style: normal;
   font-weight: 400; /* regular */
   font-display: fallback;
-  src: url(../../fonts/libre-franklin-v2-latin-regular.woff2) format('woff2'),
-       url(../../fonts/libre-franklin-v2-latin-regular.woff) format('woff'),
-       url(../../fonts/libre-franklin-v2-latin-regular.ttf) format('truetype');
+  src: url(../../web-fonts/libre-franklin-v2-latin-regular.woff2) format('woff2'),
+       url(../../web-fonts/libre-franklin-v2-latin-regular.woff) format('woff'),
+       url(../../web-fonts/libre-franklin-v2-latin-regular.ttf) format('truetype');
 }
 
 @font-face {
@@ -55,9 +55,9 @@
   font-style: normal;
   font-weight: 700; /* bold */
   font-display: fallback;
-  src: url(../../fonts/libre-franklin-v2-latin-700.woff2) format('woff2'),
-       url(../../fonts/libre-franklin-v2-latin-700.woff) format('woff'),
-       url(../../fonts/libre-franklin-v2-latin-700.ttf) format('truetype');
+  src: url(../../web-fonts/libre-franklin-v2-latin-700.woff2) format('woff2'),
+       url(../../web-fonts/libre-franklin-v2-latin-700.woff) format('woff'),
+       url(../../web-fonts/libre-franklin-v2-latin-700.ttf) format('truetype');
 }
 
 /**********************************************************************

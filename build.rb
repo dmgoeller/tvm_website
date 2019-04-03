@@ -125,7 +125,7 @@ def build_html(filename, options = {})
         icon = options[:icons][chunk.match(/(\w|\-)*\.svg/)[0]]
         "url(data:image/svg+xml,#{uri_escape(icon)})"
       }
-      stylesheet.gsub!('url(../../fonts/', 'url(fonts/')
+      stylesheet.gsub!('url(../../web-fonts/', 'url(web-fonts/')
       stylesheet = CSSminify.compress(stylesheet)
       "<style>\n#{stylesheet}\n</style>"
     }
@@ -207,7 +207,7 @@ def build_app
     base_path = base_path[0..-2] if base_path.end_with?('/')
 
     create_or_clean(build_dir)
-    copy($src_dir, build_dir, exclude: %w(fonts icons media download))
+    copy($src_dir, build_dir, exclude: %w(download media web-fonts web-icons))
 
     FileUtils.cd(build_dir) do
       options = {
@@ -234,10 +234,10 @@ def deploy
       remote_path = config['path']
       upload_entries(sftp, "#{$dist_dir}", remote_path)
       upload_entries(sftp, "#{$src_dir}/download", "#{remote_path}/download", exclude: /.*\.docx/)
-      upload_entries(sftp, "#{$src_dir}/fonts", "#{remote_path}/fonts")
       upload_entries(sftp, "#{$src_dir}/ical", "#{remote_path}/ical")
-      upload_entries(sftp, "#{$src_dir}/icons", "#{remote_path}/icons")
       upload_entries(sftp, "#{$src_dir}/media", "#{remote_path}/media")
+      upload_entries(sftp, "#{$src_dir}/web-fonts", "#{remote_path}/web-fonts")
+      upload_entries(sftp, "#{$src_dir}/web-icons", "#{remote_path}/web-icons")
     end
   end
 end
