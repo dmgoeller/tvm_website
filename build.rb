@@ -2,18 +2,20 @@
 
 require 'optparse'
 require 'cssminify'
+require 'net/ftp'
 require 'net/sftp'
 require 'uglifier'
 require 'uri'
 require 'yaml'
 require 'fastimage'
 
+$environment = 'test'
 $options = {}
 
 OptionParser.new do |opt|
   opt.banner = 'Usage: ruby build.rb [options]'
 
-  opt.on('-e ENVIRONMENT') { |env| $options[:env] = env }
+  opt.on('-e ENVIRONMENT') { |environment| $environment = environment }
   opt.on('-d', '--deploy') { $options[:deploy] = true }
   opt.on('-m', '--build-media') { $options[:build_media] = true }
 end.parse!
@@ -50,37 +52,41 @@ def deep_merge(h1, h2)
   }
 end
 
-def upload_entries(sftp, local_path, remote_path, options = {})
-  remote_entries = {}
-  sftp.dir.foreach(remote_path) { |entry| remote_entries[entry.name] = entry }
+def ftp_upload(ftp, local_dir, remote_dir, options = {})
+  exclude = options[:exclude]
 
-  Dir.chdir(local_path) do
+  Dir.chdir(local_dir) do
+    remote_dir_before = ftp.pwd
+    ftp.chdir(remote_dir)
+    remote_filenames = ftp.nlst.map { |filename| filename }
+
     Dir.entries('.').each do |filename|
-      next if %w(. .. .DS_Store).include?(filename) || options[:exclude]&.match(filename)
-      remote_filename = "#{remote_path}/#{filename}"
+      next if %w(. .. .DS_Store).include?(filename) || exclude&.match(filename)
 
       if File.directory?(filename)
-        sftp.mkdir!(remote_filename) unless remote_entries.include?(filename)
-        upload_entries(sftp, filename, remote_filename)
+        ftp.mkdir(filename) unless remote_filenames.include?(filename)
+        ftp_upload(ftp, filename, filename, options)
       else
-        remote_entry = remote_entries[filename]
-        if remote_entry.nil? || remote_entry.attributes.mtime < File.mtime(filename).to_i
-          puts "Upload #{remote_filename}"
-          sftp.upload!(filename, remote_filename)
-        end
+        next if remote_filenames.include?(filename) && ftp.mtime(filename) >= File.mtime(filename)
+        puts "Upload #{remote_dir}/#{filename}"
+        ftp.putbinaryfile(filename)
       end
     end
+    ftp.chdir(remote_dir_before)
   end
 end
 
 # configuration
 
 build_yaml = YAML.load_file('./build.yml')
+$config = deep_merge(build_yaml['defaults'], build_yaml[$environment])
 
-$config = deep_merge(build_yaml['defaults'], build_yaml[$options[:env] || 'test'])
+# directories
+
 $src_dir = $config.dig('directories', 'src') || 'src'
 $build_dir = $config.dig('directories', 'build') || 'build'
-$dist_dir = $config.dig('directories', 'dist') || 'dist'
+$tmp_dir = "#{$build_dir}/tmp"
+$dest_dir = "#{$build_dir}/#{$environment}"
 
 # actions
 
@@ -142,7 +148,7 @@ def build_html(filename, options = {})
     }
     # embed placeholder images
     html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image/) { |chunk|
-      placeholder_image = "#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../media/thumbs')
+      placeholder_image = "#{chunk.match(/(\w|\-|\/)*\.jpg/)[0]}".sub('media', '../thumbs')
       image_size = FastImage.size(placeholder_image)
       svg = String.new(options[:placeholder_image_template])
       svg.sub!('#{height}', !image_size.nil? ? image_size[1].to_s : '27')
@@ -163,15 +169,14 @@ def build_htaccess(filename, articles_dir, options = {})
       htaccess << "RewriteCond %\{HTTPS\} !=on\n"
       htaccess << "RewriteRule ^ https://%\{HTTP_HOST\}%\{REQUEST_URI\} [L,R=301]\n"
     end
-    if options[:redirect_article_paths_to_index]
-      htaccess << "\n# Redirect article paths to index.html\n"
-      htaccess << "RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
 
-      Dir.glob("#{articles_dir}/*.html") { |article|
-        next if article == options[:index_page]
-        htaccess << "RewriteRule ^#{File.basename(article, '.html')}$ index.html [L]\n"
-      }
-    end
+    htaccess << "\nRewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
+    htaccess << "RewriteRule ^index.php index.html [L,R=301]\n"
+
+    Dir.glob("#{articles_dir}/*.html") { |article|
+      next if article == options[:index_page]
+      htaccess << "RewriteRule ^#{File.basename(article, '.html')}$ index.html [L]\n"
+    }
     File.write(filename, htaccess)
   end
 end
@@ -187,32 +192,30 @@ end
 
 def prepare
   task 'Prepare' do
-    create_or_clean($dist_dir)
+    create_or_clean($dest_dir)
   end
 end
 
 def build_media
   task 'Build Media' do
-    build_dir = "#{$build_dir}/media"
-
-    create_or_clean(build_dir)
-    build_thumbnail_images("#{$src_dir}/media", "#{build_dir}/thumbs")
+    dest_dir = "#{$tmp_dir}/thumbs"
+    create_or_clean(dest_dir)
+    build_thumbnail_images("#{$src_dir}/media", "#{dest_dir}")
   end
 end
 
 def build_app
   task 'Build App' do |config|
-    build_dir = "#{$build_dir}/app"
+    build_dir = "#{$tmp_dir}/app"
     base_path = config['base_path'] || ''
     base_path = base_path[0..-2] if base_path.end_with?('/')
 
     create_or_clean(build_dir)
-    copy($src_dir, build_dir, exclude: %w(download media web-fonts web-icons))
+    copy($src_dir, build_dir, exclude: %w(download ical media web-fonts web-icons))
 
     FileUtils.cd(build_dir) do
       options = {
         redirect_http_to_https: config['redirect_http_to_https'],
-        redirect_article_paths_to_index: config['redirect_article_paths_to_index'],
         base_path: base_path,
         icons: (Dir.glob("assets/icons/*.svg").collect { |f| [File.basename(f), load_svg(f)] }).to_h,
         index_page: File.read('index.html').scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
@@ -224,20 +227,20 @@ def build_app
       build_htaccess('.htaccess', 'articles', options)
     end
 
-    copy(build_dir, $dist_dir, exclude: %w(assets))
+    copy(build_dir, $dest_dir, exclude: %w(assets))
   end
 end
 
 def deploy
   task 'Deploy' do |config|
-    Net::SFTP.start(config['host'], config['username'], password: config['password']) do |sftp|
-      remote_path = config['path']
-      upload_entries(sftp, "#{$dist_dir}", remote_path)
-      upload_entries(sftp, "#{$src_dir}/download", "#{remote_path}/download", exclude: /.*\.docx/)
-      upload_entries(sftp, "#{$src_dir}/ical", "#{remote_path}/ical")
-      upload_entries(sftp, "#{$src_dir}/media", "#{remote_path}/media")
-      upload_entries(sftp, "#{$src_dir}/web-fonts", "#{remote_path}/web-fonts")
-      upload_entries(sftp, "#{$src_dir}/web-icons", "#{remote_path}/web-icons")
+    Net::FTP.open(config['host'], config['username'], config['password']) do |ftp|
+      ftp.chdir(config['remote_dir'])
+      ftp_upload(ftp, "#{$dest_dir}", '.')
+      ftp_upload(ftp, "#{$src_dir}/download", 'download', exclude: /.*\.docx/)
+      ftp_upload(ftp, "#{$src_dir}/ical", 'ical')
+      ftp_upload(ftp, "#{$src_dir}/media", 'media')
+      ftp_upload(ftp, "#{$src_dir}/web-fonts", 'web-fonts')
+      ftp_upload(ftp, "#{$src_dir}/web-icons", 'web-icons')
     end
   end
 end
