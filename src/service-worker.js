@@ -15,7 +15,6 @@ var ARTICLES_TO_CACHE = [
   'articles/startseite.html',
   'articles/tennis.html',
   'articles/termine.html',
-  'articles/training.html',
   'articles/verein.html',
   'articles/vorstand.html'
 ];
