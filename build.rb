@@ -3,7 +3,6 @@
 require 'optparse'
 require 'cssminify'
 require 'net/ftp'
-require 'net/sftp'
 require 'uglifier'
 require 'uri'
 require 'yaml'
