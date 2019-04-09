@@ -1,4 +1,6 @@
 
+'use strict';
+
 /**********************************************************************
  * prototypes
  **********************************************************************/
@@ -105,13 +107,16 @@ var applicationProperties = {}; // base path, title etc.
 document.addEventListener('DOMContentLoaded', function() {
   // read application properties
   let attr = select('html').attributes;
-  for (i = 0; i < attr.length; i++) {
+
+  for (let i = 0; i < attr.length; i++) {
     if (attr[i].name.startsWith('data-')) {
       applicationProperties[attr[i].name.slice(5)] = attr[i].value;
     }
   }
   // set copyright year
-  if (copyrightYear = select('#copyright-year')) {
+  let copyrightYear = select('#copyright-year');
+
+  if (copyrightYear) {
     copyrightYear.addText((new Date()).getFullYear());
   }
   // load initial article
@@ -167,7 +172,9 @@ function loadArticle(name, options = {}) {
   let caller = select(options['caller']);
   let ypos = options['ypos'] || 0;
 
-  if (caller) caller.classList.add('loading');
+  if (caller) {
+    caller.classList.add('loading');
+  }
   glasspane.show();
 
   fetch('articles/' + name + '.html', {timeout: 3000})
@@ -197,8 +204,9 @@ function loadArticle(name, options = {}) {
         }
       }
       if (article) {
-        if (articleonload = article.getAttribute('data-onload')) {
-          execute(articleonload);
+        let articleOnload = article.getAttribute('data-onload');
+        if (articleOnload) {
+          execute(articleOnload);
         }
         title = article.getAttribute('data-title');
       }
@@ -444,12 +452,14 @@ function alert(message) {
 
   if (typeof message == 'object') {
     text.addElement('div', 'message').addText(message.message);
-    message.details.forEach(function(detail) {
-      text.addElement('div', 'detail').addText(detail);
-    });
+
+    if (message.details) {
+      message.details.forEach(function(detail) {
+        text.addElement('div', 'detail').addText(detail);
+      });
+    }
   } else {
     text.addText(message);
   }
   select('#alert').show();
 }
-
