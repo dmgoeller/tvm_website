@@ -53,8 +53,10 @@ Element.prototype.hide = function() {
 }
 
 Element.prototype.preventDefault = function(eventTypes) {
+  let element = this;
+
   eventTypes.forEach(function(eventType) {
-    this.addEventListener(eventType, function(event) {
+    element.addEventListener(eventType, function(event) {
       event.preventDefault();
     }, {passive: false});
   });

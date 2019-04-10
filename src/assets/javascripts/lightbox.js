@@ -1,27 +1,29 @@
 
+'use strict';
+
 function showLightbox(gallery, initialPosition = 0) {
   gallery = select(gallery);
 
   // elements
-  var lightbox = select('body > main').addElement('div', 'lightbox');
-  var container = lightbox.addElement('div', 'lb-container');
-  var viewport = container.addElement('div', 'lb-viewport');
-  var pictures = viewport.addElement('div', 'lb-pictures');
-  var closeButton = container.addElement('div', 'lb-button lb-close-button icon icon-close');
-  var prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
-  var nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
+  let lightbox = select('body > main').addElement('div', 'lightbox');
+  let container = lightbox.addElement('div', 'lb-container');
+  let viewport = container.addElement('div', 'lb-viewport');
+  let pictures = viewport.addElement('div', 'lb-pictures');
+  let closeButton = container.addElement('div', 'lb-button lb-close-button icon icon-close');
+  let prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
+  let nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
 
   lightbox.preventDefault(['touchmove', 'mousewheel']);
 
   // pictures
-  var pictureCount = 0;
-  var position = null;
+  let pictureCount = 0;
+  let position = null;
 
   gallery.querySelectorAll('picture').forEach(function(original) {
-    var copy = pictures.addElement('picture');
-    
+    let copy = pictures.addElement('picture');
+
     Array.from(original.children).forEach(function(child) {
-      var nodeName = child.nodeName.toLowerCase(); 
+      let nodeName = child.nodeName.toLowerCase();
 
       if (nodeName == 'source' || nodeName == 'img') {
         copy.appendChild(child.cloneNode(true));
@@ -31,11 +33,11 @@ function showLightbox(gallery, initialPosition = 0) {
   });
 
   // functions
-  var posToPx = function(pos) {
+  let posToPx = function(pos) {
     return pos * (viewport.offsetWidth + 8);
   };
 
-  var moveToPicture = function(newPosition, transition = 'none') {
+  let moveToPicture = function(newPosition, transition = 'none') {
     position = Math.max(0, Math.min(pictureCount - 1, newPosition));
     if (position == 0) {
       prevButton.classList.add('disabled');
@@ -51,28 +53,28 @@ function showLightbox(gallery, initialPosition = 0) {
     pictures.style.transform = 'translate(-' + posToPx(position) + 'px, 0)';
   };
 
-  var moveToPreviousPicture = function() {
+  let moveToPreviousPicture = function() {
     moveToPicture(position - 1, '.6s');
   }
 
-  var moveToNextPicture = function() {
+  let moveToNextPicture = function() {
     moveToPicture(position + 1, '.6s');
   }
 
-  var closeLightbox = function() {
+  let closeLightbox = function() {
     lightbox.remove();
     window.removeEventListener('keyup', onKeyup);
     window.removeEventListener('resize', onResize);
   };
 
   // resize events
-  var onResize = function(event) {
+  let onResize = function(event) {
     moveToPicture(position);
   };
   window.addEventListener('resize', onResize);
 
   // key events
-  var onKeyup = function(event) {
+  let onKeyup = function(event) {
     switch (event.keyCode) {
       case 27: closeLightbox(); break;
       case 37: moveToPreviousPicture(); break;
@@ -87,7 +89,7 @@ function showLightbox(gallery, initialPosition = 0) {
   nextButton.onclick = moveToNextPicture;
 
   // touch events
-  var touchStartX = null;
+  let touchStartX = null;
 
   pictures.addEventListener('touchstart', function(event) {
     if (event.touches.length == 1) {
@@ -99,7 +101,7 @@ function showLightbox(gallery, initialPosition = 0) {
 
   pictures.addEventListener('touchmove', function(event) {
     if (touchStartX) {
-      var touchDeltaX = event.touches[0].clientX - touchStartX;
+      let touchDeltaX = event.touches[0].clientX - touchStartX;
       if (touchDeltaX > 0 || position < pictureCount - 1) {
         pictures.style.transform = 'translate(-' + (posToPx(position) - touchDeltaX) + 'px, 0)';
       }
@@ -109,7 +111,7 @@ function showLightbox(gallery, initialPosition = 0) {
 
   pictures.addEventListener('touchend', function(event) {
     if (touchStartX) {
-      var touchDeltaX = event.changedTouches[0].clientX - touchStartX;
+      let touchDeltaX = event.changedTouches[0].clientX - touchStartX;
       pictures.style.transition = '.5s';
       if (touchDeltaX < 0) moveToPicture(position + 1, '.3s ease-out');
       if (touchDeltaX > 0) moveToPicture(position - 1, '.3s ease-out');
