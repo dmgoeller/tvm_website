@@ -119,6 +119,10 @@ def build_html(filename, options = {})
     html.gsub!(/data\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
       "data-base-path=\"#{options[:base_path]}\""
     }
+    # replace canonical path
+    html.gsub!(/data\-canonical\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
+      "data-canonical-path=\"#{options[:canonical_path]}\""
+    }
     # replace robots meta property
     html.gsub!(/\<meta\s+name\=\"robots\"\s+content\=\"(\w|\s)*\"\>/) {
       "<meta name=\"robots\" content=\"#{options[:meta][:robots]}\">"
@@ -216,6 +220,7 @@ def build_app
       options = {
         redirect_http_to_https: config['redirect_http_to_https'],
         base_path: base_path,
+        canonical_path: config['canonical_path'],
         icons: (Dir.glob("assets/icons/*.svg").collect { |f| [File.basename(f), load_svg(f)] }).to_h,
         index_page: File.read('index.html').scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
         meta: { robots: config['meta_robots'] },

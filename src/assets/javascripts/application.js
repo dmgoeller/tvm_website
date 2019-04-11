@@ -168,6 +168,19 @@ window.addEventListener('scroll', function(event) {
  * article loading
  **********************************************************************/
 
+function getArticlePath(name) {
+  return name == applicationProperties['index-page'] ? '.' : name;
+}
+
+function getCanonicalURL(name) {
+  let canonicalURL= applicationProperties['canonical-path'];
+
+  if (name != applicationProperties['index-page']) {
+    canonicalURL += '/' + name;
+  }
+  return canonicalURL;
+}
+
 function loadArticle(name, options = {}) {
   let nav = select('#nav');
   let glasspane = select('#glasspane');
@@ -191,7 +204,7 @@ function loadArticle(name, options = {}) {
 
       if (history.state != null) {
         let state = {'article': history.state['article'], 'ypos': window.pageYOffset};
-        history.replaceState(state, null, getPath(state['article']));
+        history.replaceState(state, null, getArticlePath(state['article']));
       }
       // display new article
       main.innerHTML = response;
@@ -200,9 +213,9 @@ function loadArticle(name, options = {}) {
       if (history.state == null || history.state['article'] != name) {
         let state = {'article': name, 'ypos': ypos};
         if (history.state == null) {
-          history.replaceState(state, null, getPath(name));
+          history.replaceState(state, null, getArticlePath(name));
         } else {
-          history.pushState(state, null, getPath(name));
+          history.pushState(state, null, getArticlePath(name));
         }
       }
       if (article) {
@@ -210,6 +223,11 @@ function loadArticle(name, options = {}) {
         if (articleOnload) {
           execute(articleOnload);
         }
+        let canonicalTag = select('head > link[rel="canonical"]');
+        if (canonicalTag) {
+          canonicalTag.setAttribute('href', getCanonicalURL(name));
+        }
+
         title = article.getAttribute('data-title');
       }
       document.title = applicationProperties['app-title'] + (title ? ' - ' + title : '');
@@ -281,10 +299,6 @@ function execute(expression) {
       console.log(e);
     }
   }
-}
-
-function getPath(article) {
-  return article == applicationProperties['index-page'] ? '.' : article;
 }
 
 /**********************************************************************
