@@ -181,7 +181,9 @@ function getCanonicalURL(name) {
   return canonicalURL;
 }
 
-function loadArticle(name, options = {}) {
+function loadArticle(name, options) {
+  options = options || {};
+
   let nav = select('#nav');
   let glasspane = select('#glasspane');
   let caller = select(options['caller']);
@@ -246,7 +248,9 @@ function loadArticle(name, options = {}) {
     });
 }
 
-function fetch(url, options = {}) {
+function fetch(url, options) {
+  options = options || {};
+
   return new Promise(function(resolve, reject) {
     let request = new XMLHttpRequest();
     request.open('GET', url);

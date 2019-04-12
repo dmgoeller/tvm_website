@@ -1,7 +1,7 @@
 
 'use strict';
 
-function showLightbox(gallery, initialPosition = 0) {
+function showLightbox(gallery, initialPosition) {
   gallery = select(gallery);
 
   // elements
@@ -37,7 +37,7 @@ function showLightbox(gallery, initialPosition = 0) {
     return pos * (viewport.offsetWidth + 8);
   };
 
-  let moveToPicture = function(newPosition, transition = 'none') {
+  let moveToPicture = function(newPosition, transition) {
     position = Math.max(0, Math.min(pictureCount - 1, newPosition));
     if (position == 0) {
       prevButton.classList.add('disabled');
@@ -69,7 +69,7 @@ function showLightbox(gallery, initialPosition = 0) {
 
   // resize events
   let onResize = function(event) {
-    moveToPicture(position);
+    moveToPicture(position, 'none');
   };
   window.addEventListener('resize', onResize);
 
@@ -121,5 +121,5 @@ function showLightbox(gallery, initialPosition = 0) {
   }, {passive: false});
 
   // move to initialize position
-  moveToPicture(initialPosition);
+  moveToPicture(initialPosition, 'none');
 }
