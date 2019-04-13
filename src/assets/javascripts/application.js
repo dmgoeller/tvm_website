@@ -189,16 +189,13 @@ function loadArticle(name, options) {
   let caller = select(options['caller']);
   let ypos = options['ypos'] || 0;
 
-  if (caller) {
-    caller.classList.add('loading');
-  }
+  if (caller) caller.classList.add('loading');
   glasspane.show();
 
   fetch('articles/' + name + '.html', {timeout: 3000})
     .then(function(response) {
       let main = select('body > main');
       let article = null;
-      let title = null;
 
       if (caller) caller.classList.remove('loading');
       nav.classList.remove('top-menu-unfolded');
@@ -222,22 +219,26 @@ function loadArticle(name, options) {
       }
       if (article) {
         let articleOnload = article.getAttribute('data-onload');
-        if (articleOnload) {
-          execute(articleOnload);
+        if (articleOnload) execute(articleOnload);
+
+        let title = article.getAttribute('data-title');
+        document.title = applicationProperties['app-title'] + (title ? ' - ' + title : '');
+
+        let metaDescriptionTag = select('head > meta[name="description"]');
+        if (metaDescriptionTag) {
+          let description = article.getAttribute('data-description') || '';
+          metaDescriptionTag.setAttribute('content', description);
         }
         let canonicalTag = select('head > link[rel="canonical"]');
-        if (canonicalTag) {
-          canonicalTag.setAttribute('href', getCanonicalURL(name));
-        }
+        if (canonicalTag) canonicalTag.setAttribute('href', getCanonicalURL(name));
 
-        title = article.getAttribute('data-title');
-      }
-      document.title = applicationProperties['app-title'] + (title ? ' - ' + title : '');
-      window.scrollTo(0, ypos);
+        window.scrollTo(0, ypos);
 
-      if (article) {
         buildImages(article);
         loadImages(Array.from(article.children));
+      } else {
+        document.title = applicationProperties['app-title'];
+        window.scrollTo(0, 0);
       }
     })
     .catch(function(error) {
