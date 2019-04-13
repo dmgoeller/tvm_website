@@ -7,6 +7,7 @@ require 'uglifier'
 require 'uri'
 require 'yaml'
 require 'fastimage'
+require 'nokogiri'
 
 $environment = 'test'
 $options = {}
@@ -29,6 +30,10 @@ end
 def task(name, &block)
   puts ['', "#{'-' * 40}", name, "#{'-' * 40}", '']
   yield $config[name.downcase.gsub(' ', '_')] || {}
+end
+
+def article_names(articles_dir)
+  Dir.glob("#{articles_dir}/*.html").map { |filename| File.basename(filename, '.html') }
 end
 
 def load_svg(filename)
@@ -163,9 +168,36 @@ def build_html(filename, options = {})
   end
 end
 
-def build_htaccess(filename, articles_dir, options = {})
-  action "Build '#{filename}'" do
-    htaccess = File.read(filename)
+def build_service_worker_js(article_dir, options = {})
+  action "Build 'service-worker.js'" do
+    service_worker_js = File.read('service-worker.js')
+
+    service_worker_js.gsub!(/ARTICLES_TO_CACHE\s\=\s\[.*\]/) {
+      articles = article_names(article_dir).map { |article| "'articles/#{article}.html'"}
+      "ARTICLES_TO_CACHE = [#{articles.join(',')}]"
+    }
+    File.write('service-worker.js', service_worker_js)
+  end
+end
+
+def build_sitemap_xml(articles_dir, options = {})
+  action "Build 'sitemap.xml'" do
+    File.write('sitemap.xml', Nokogiri::XML::Builder.new { |xml|
+      xml.urlset xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' do
+        article_names(articles_dir).each do |article_name|
+          article_name = '' if article_name == options[:index_page]
+          xml.url do
+            xml.loc "#{options[:canonical_path]}/#{article_name}"
+          end
+        end
+      end
+    }.to_xml )
+  end
+end
+
+def build_htaccess(articles_dir, options = {})
+  action "Build '.htaccess'" do
+    htaccess = File.read('.htaccess')
 
     if options[:redirect_http_to_https]
       htaccess << "\n# Redirect http to https\n"
@@ -176,11 +208,10 @@ def build_htaccess(filename, articles_dir, options = {})
     htaccess << "\nRewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
     htaccess << "RewriteRule ^index.php index.html [L,R=301]\n"
 
-    Dir.glob("#{articles_dir}/*.html") { |article|
-      next if article == options[:index_page]
-      htaccess << "RewriteRule ^#{File.basename(article, '.html')}$ index.html [L]\n"
-    }
-    File.write(filename, htaccess)
+    article_names(articles_dir).each do |article_name|
+      htaccess << "RewriteRule ^#{article_name}$ index.html [L]\n" unless article_name == options[:index_page]
+    end
+    File.write('.htaccess', htaccess)
   end
 end
 
@@ -228,7 +259,9 @@ def build_app
       }
       build_html('index.html', options)
       Dir.glob("articles/*.html") { |filename| build_html(filename, options) }
-      build_htaccess('.htaccess', 'articles', options)
+      build_service_worker_js('articles', options)
+      build_sitemap_xml('articles', options)
+      build_htaccess('articles', options)
     end
 
     copy(build_dir, $dest_dir, exclude: %w(assets))
