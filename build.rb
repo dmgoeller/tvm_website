@@ -180,14 +180,22 @@ def build_service_worker_js(article_dir, options = {})
   end
 end
 
+def build_robots_txt(options = {})
+  action "Build 'robots.txt'" do
+    File.write('robots.txt', "User-agent: *\n\nSitemap: #{options[:canonical_path]}/sitemap.xml")
+  end
+end
+
 def build_sitemap_xml(articles_dir, options = {})
   action "Build 'sitemap.xml'" do
+    lastmod = Time.now.strftime('%Y-%m-%d')
     File.write('sitemap.xml', Nokogiri::XML::Builder.new { |xml|
       xml.urlset xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' do
         article_names(articles_dir).each do |article_name|
           article_name = '' if article_name == options[:index_page]
           xml.url do
             xml.loc "#{options[:canonical_path]}/#{article_name}"
+            xml.lastmod lastmod
           end
         end
       end
@@ -260,6 +268,7 @@ def build_app
       build_html('index.html', options)
       Dir.glob("articles/*.html") { |filename| build_html(filename, options) }
       build_service_worker_js('articles', options)
+      build_robots_txt(options)
       build_sitemap_xml('articles', options)
       build_htaccess('articles', options)
     end
