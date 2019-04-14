@@ -205,15 +205,24 @@ end
 
 def build_htaccess(articles_dir, options = {})
   action "Build '.htaccess'" do
-    htaccess = File.read('.htaccess')
+    #htaccess = File.read('.htaccess')
+    htaccess = "RewriteEngine On\n\n"
+
+    htaccess << "\# MIME Types\n"
+    htaccess << "AddType text/calendar .ics\n\n"
+
+    htaccess << "\# Caching\n"
+    htaccess << "<filesMatch \"\\.(jpg|png|ico|woff|woff2|ttf)$\">\n"
+    htaccess << "Header set Cache-Control \"max-age=2592000, public\"\n"
+    htaccess << "</filesMatch>\n\n"
 
     if options[:redirect_http_to_https]
-      htaccess << "\n# Redirect http to https\n"
+      htaccess << "\# Redirect http to https\n"
       htaccess << "RewriteCond %\{HTTPS\} !=on\n"
-      htaccess << "RewriteRule ^ https://%\{HTTP_HOST\}%\{REQUEST_URI\} [L,R=301]\n"
+      htaccess << "RewriteRule ^ https://%\{HTTP_HOST\}%\{REQUEST_URI\} [L,R=301]\n\n"
     end
 
-    htaccess << "\nRewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
+    htaccess << "RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
     htaccess << "RewriteRule ^index.php index.html [L,R=301]\n"
 
     article_names(articles_dir).each do |article_name|
