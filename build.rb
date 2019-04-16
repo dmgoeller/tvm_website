@@ -139,7 +139,7 @@ def build_html(filename, options = {})
         icon = options[:icons][chunk.match(/(\w|\-)*\.svg/)[0]]
         "url(data:image/svg+xml,#{uri_escape(icon)})"
       }
-      stylesheet.gsub!('url(../../web-fonts/', 'url(web-fonts/')
+      stylesheet.gsub!('url(../../fonts/', 'url(fonts/')
       stylesheet = CSSminify.compress(stylesheet)
       "<style>\n#{stylesheet}\n</style>"
     }
@@ -218,8 +218,12 @@ def build_htaccess(articles_dir, options = {})
 
     if options[:redirect_http_to_https]
       htaccess << "\# Redirect http to https\n"
-      htaccess << "RewriteCond %\{HTTPS\} !=on\n"
-      htaccess << "RewriteRule ^ https://%\{HTTP_HOST\}%\{REQUEST_URI\} [L,R=301]\n\n"
+      htaccess << "RewriteCond %{HTTPS} !=on\n"
+      htaccess << "RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]\n\n"
+
+      #htaccess << "\# Redirect www to non-www\n"
+      #htaccess << "RewriteCond %{HTTP_HOST} ^www\\.(.*)$ [NC]\n"
+      #htaccess << "RewriteRule ^(.*)$ https://%1/a/$1 [L,R=301]\n\n"
     end
 
     htaccess << "RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
@@ -262,7 +266,7 @@ def build_app
     base_path = base_path[0..-2] if base_path.end_with?('/')
 
     create_or_clean(build_dir)
-    copy($src_dir, build_dir, exclude: %w(download ical media web-fonts web-icons))
+    copy($src_dir, build_dir, exclude: %w(download fonts ical media webapp))
 
     FileUtils.cd(build_dir) do
       options = {
@@ -294,8 +298,8 @@ def deploy
       ftp_upload(ftp, "#{$src_dir}/download", 'download', exclude: /.*\.docx/)
       ftp_upload(ftp, "#{$src_dir}/ical", 'ical')
       ftp_upload(ftp, "#{$src_dir}/media", 'media')
-      ftp_upload(ftp, "#{$src_dir}/web-fonts", 'web-fonts')
-      ftp_upload(ftp, "#{$src_dir}/web-icons", 'web-icons')
+      ftp_upload(ftp, "#{$src_dir}/fonts", 'fonts')
+      ftp_upload(ftp, "#{$src_dir}/webapp", 'webapp')
     end
   end
 end
