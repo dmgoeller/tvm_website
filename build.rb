@@ -182,7 +182,9 @@ end
 
 def build_robots_txt(options = {})
   action "Build 'robots.txt'" do
-    File.write('robots.txt', "User-agent: *\n\nSitemap: #{options[:canonical_path]}/sitemap.xml")
+    robots_txt = "User-agent: *\nDisallow: /index.php\nDisallow: /images/\n\n"
+    robots_txt << "Sitemap: #{options[:canonical_path]}/sitemap.xml"
+    File.write('robots.txt', robots_txt)
   end
 end
 
