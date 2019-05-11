@@ -260,6 +260,11 @@ article > footer > section:nth-child(odd) {
   background: var(--light-gray);
 }
 
+article section.banner {
+  background: #480000 !important;
+  color: white;
+}
+
 article section .container {
   margin-top: 2rem;
   margin-bottom: 2rem;
