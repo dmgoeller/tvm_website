@@ -453,7 +453,7 @@ function initCalendar() {
 function shuffleChildren(element) {
   element = select(element);
 
-  children = Array.from(element.children);
+  let children = Array.from(element.children);
   children.shuffle();
 
   element.removeChildren();
