@@ -192,7 +192,7 @@ function loadArticle(name, options) {
   if (caller) caller.classList.add('loading');
   glasspane.show();
 
-  fetch('articles/' + name + '.html', {timeout: 3000})
+  fetchResource('articles/' + name + '.html', {timeout: 3000})
     .then(function(response) {
       let main = select('body > main');
       let article = null;
@@ -249,7 +249,7 @@ function loadArticle(name, options) {
     });
 }
 
-function fetch(url, options) {
+function fetchResource(url, options) {
   options = options || {};
 
   return new Promise(function(resolve, reject) {
