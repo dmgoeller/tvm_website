@@ -216,7 +216,6 @@ body > header {
 }
 
 @media (min-device-width: 1024px), not all and (display-mode: standalone) {
-
   /* back button */
   #nav .top-navigation li:first-child {
     display: none !important;
@@ -299,6 +298,50 @@ body > footer.copyright p {
   body > footer.links .container > *:last-child {
     justify-self: end;
   }
+}
+
+/**********************************************************************
+ * device-dependent elements
+ **********************************************************************/
+
+@media (max-device-width: 767px) and (orientation: landscape) {
+  .mobile-portrait:not(.mobile-landscape),
+  .tablet:not(.mobile-landscape),
+  .desktop:not(.mobile-landscape) {
+    display: none;
+  }
+}
+
+@media (max-device-width: 767px) and (orientation: portrait) {
+  .mobile-landscape:not(.mobile-portrait),
+  .tablet:not(.mobile-portrait),
+  .desktop:not(.mobile-portrait) {
+    display: none;
+  }
+}
+
+@media (min-device-width: 768px) and (max-device-width: 1024px) {
+  .mobile-landscape:not(.tablet),
+  .mobile-portrait:not(.tablet),
+  .desktop:not(.tablet) {
+    display: none;
+  }
+}
+
+@media (min-device-width: 1025px) {
+  .mobile-landscape:not(.desktop),
+  .mobile-portrait:not(.desktop),
+  .tablet:not(.desktop) {
+    display: none;
+  }
+}
+
+/**********************************************************************
+ * hidden elements
+ **********************************************************************/
+
+.hidden {
+  display: none !important;
 }
 
 /**********************************************************************
@@ -440,14 +483,6 @@ body > footer.copyright p {
   right: 0;
   top: 0;
   bottom: 0;
-}
-
-/**********************************************************************
- * hidden elements
- **********************************************************************/
-
-.hidden {
-  display: none !important;
 }
 
 /**********************************************************************

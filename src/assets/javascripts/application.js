@@ -346,6 +346,13 @@ function buildImages(container) {
         element.removeAttribute('data-loading-indicator');
       }
     }
+    // set image position
+    let imagePosition = element.getAttribute('data-image-position');
+    if (imagePosition) {
+      image.style.objectPosition = imagePosition;
+      element.style.backgroundPosition = imagePosition;
+      element.removeAttribute('data-image-position');
+    }
     // remove 'data-' attributes
     element.removeAttribute('data-image');
     element.removeAttribute('data-alt');
