@@ -395,7 +395,7 @@ function imageLoaded(image) {
   let src = image.src
   let parent = image.parentNode;
 
-  // paint scaled images on a canvas element in Edge to use bicubic (high quality) interpolation
+  // Edge: paint scaled images on a canvas element to use bicubic interpolation (high quality)
   if (navigator.userAgent.indexOf('Edge') >= 0 && image.getComputedStyle().objectFit == 'cover') {
     let canvas = document.createElement('canvas');
     canvas.height = image.naturalHeight;
@@ -405,7 +405,7 @@ function imageLoaded(image) {
     image.onload = null;
     image.src = canvas.toDataURL('image/jpg');
   }
-  // remove the loading indicator tag
+  // remove the loading indicator element
   let loadingIndicator = parent.querySelector('.loading-indicator');
   if (loadingIndicator) {
     loadingIndicator.remove();
@@ -413,7 +413,7 @@ function imageLoaded(image) {
   // remove the 'data-lazy-loading' attribute to display the image
   image.removeAttribute('data-lazy-loading');
 
-  // enable the parent's 'onclick' handler
+  // enable the parent element's 'onclick' handler
   let onclick = parent.getAttribute('data-onclick');
   if (onclick) {
     parent.setAttribute('onclick', onclick);
