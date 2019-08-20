@@ -108,11 +108,9 @@ var applicationProperties = {}; // base path, title etc.
 
 document.addEventListener('DOMContentLoaded', function() {
   // read application properties
-  let attr = select('html').attributes;
-
-  for (let i = 0; i < attr.length; i++) {
-    if (attr[i].name.startsWith('data-')) {
-      applicationProperties[attr[i].name.slice(5)] = attr[i].value;
+  for (let attribute of select('html').attributes) {
+    if (attribute.name.startsWith('data-app-')) {
+      applicationProperties[attribute.name.slice(9)] =attribute.value;
     }
   }
   // set copyright year
@@ -222,7 +220,7 @@ function loadArticle(name, options) {
         if (articleOnload) execute(articleOnload);
 
         let title = article.getAttribute('data-title');
-        document.title = applicationProperties['app-title'] + (title ? ' - ' + title : '');
+        document.title = applicationProperties['title'] + (title ? ' - ' + title : '');
 
         let metaDescriptionTag = select('head > meta[name="description"]');
         if (metaDescriptionTag) {
@@ -237,7 +235,7 @@ function loadArticle(name, options) {
         buildImages(article);
         loadImages(Array.from(article.children));
       } else {
-        document.title = applicationProperties['app-title'];
+        document.title = applicationProperties['title'];
         window.scrollTo(0, 0);
       }
     })
