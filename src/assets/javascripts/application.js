@@ -108,11 +108,11 @@ var applicationProperties = {}; // base path, title etc.
 
 document.addEventListener('DOMContentLoaded', function() {
   // read application properties
-  for (let attribute of select('html').attributes) {
+  Array.from(select('html').attributes).forEach(function(attribute) {
     if (attribute.name.startsWith('data-app-')) {
-      applicationProperties[attribute.name.slice(9)] =attribute.value;
+      applicationProperties[attribute.name.slice(9)] = attribute.value;
     }
-  }
+  });
   // set copyright year
   let copyrightYear = select('#copyright-year');
 
