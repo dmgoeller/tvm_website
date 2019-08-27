@@ -130,8 +130,8 @@ def build_html(filename, options = {})
     }
     # replace robots meta property
     html.gsub!(/\<meta\s+name\=\"robots\"\s+content\=\"(\w|\s)*\"\>/) {
-      "<meta name=\"robots\" content=\"#{options[:meta][:robots]}\">"
-    } unless options[:meta][:robots].nil?
+      "<meta name=\"robots\" content=\"#{options[:meta_robots]}\">"
+    } unless options[:meta_robots].nil?
     # embed stylesheets
     html.gsub!(/\<link.*href\=\"assets\/stylesheets\/(\w|\-)*\.css\".*\>/) { |link|
       stylesheet = File.read(link.match(/(\w|\-|\/)*\.css/)[0])
@@ -228,12 +228,18 @@ def build_htaccess(articles_dir, options = {})
       #htaccess << "RewriteRule ^(.*)$ https://%1/a/$1 [L,R=301]\n\n"
     end
 
+    htaccess << "\# Pages\n"
     htaccess << "RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
     htaccess << "RewriteRule ^index.php index.html [L,R=301]\n"
 
     article_names(articles_dir).each do |article_name|
       htaccess << "RewriteRule ^#{article_name}$ index.html [L]\n" unless article_name == options[:index_page]
     end
+
+    htaccess << "\n\# Error Pages\n"
+    Dir.glob('*.html').grep(/\d{3}\.html/) { |filename|
+      htaccess << "ErrorDocument #{filename[0, 3]} /#{filename}\n"
+    }
     File.write('.htaccess', htaccess)
   end
 end
@@ -275,13 +281,13 @@ def build_app
         redirect_http_to_https: config['redirect_http_to_https'],
         base_path: base_path,
         canonical_path: config['canonical_path'],
-        icons: (Dir.glob("assets/icons/*.svg").collect { |f| [File.basename(f), load_svg(f)] }).to_h,
+        icons: (Dir.glob('assets/icons/*.svg').collect { |f| [File.basename(f), load_svg(f)] }).to_h,
         index_page: File.read('index.html').scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
-        meta: { robots: config['meta_robots'] },
         placeholder_image_template: load_svg('assets/templates/placeholder.svg')
       }
-      build_html('index.html', options)
-      Dir.glob("articles/*.html") { |filename| build_html(filename, options) }
+      build_html('index.html', options.merge( { meta_robots: config['meta_robots'] } ))
+      Dir.glob('*.html').grep(/\d{3}\.html/) { |filename| build_html(filename, options) }
+      Dir.glob('articles/*.html') { |filename| build_html(filename, options) }
       build_service_worker_js('articles', options)
       build_robots_txt(options)
       build_sitemap_xml('articles', options)

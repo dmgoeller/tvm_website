@@ -408,7 +408,38 @@ body > footer.copyright p {
   cursor: pointer;
 }
 
- /**********************************************************************
+/**********************************************************************
+ * buttons
+ **********************************************************************/
+
+.button {
+  border-radius: .5rem;
+  padding: .5rem 1rem;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-gap: .5rem;
+  align-items: center;
+  justify-items: center;
+  color: var(--white);
+  background: var(--primary-transparent);
+  text-decoration: none;
+  text-shadow: none;
+  text-align: center;
+  transition: background .3s;
+  -webkit-backdrop-filter: var(--backdrop-filter);
+}
+
+.button:hover {
+  background: var(--primary-light-transparent);
+}
+
+nav .button {
+  padding: .5rem .25rem;
+  border-radius: .25rem;
+  grid-template-rows: auto 1fr;
+}
+
+/**********************************************************************
  * alerts
  **********************************************************************/
 
@@ -447,7 +478,7 @@ body > footer.copyright p {
   margin-top: .5rem;
 }
 
-.alert .box .button {
+.alert .box .action {
   padding: .5rem 1rem;
   border-top: var(--gray-border);
   text-align: center;

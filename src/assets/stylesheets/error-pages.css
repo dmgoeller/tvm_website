@@ -1,0 +1,19 @@
+
+.error-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.error-page header {
+  background: var(--primary);
+  color: var(--white);
+  padding: .5rem 1rem;
+}
+
+.error-page main {
+  place-self: center;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
