@@ -13,7 +13,7 @@
   --primary: #800000;
   --primary-dark: #600000;
   --primary-transparent: rgba(128,0,0,0.9);
-  --primary-light-transparent: rgba(144,0,0,0.9);
+  --primary-transparent-light: rgba(140,0,0,0.9);
   --white: #fff;
   --light-gray: #f8f8f8;
   --gray: #e8e8e8;
@@ -413,6 +413,7 @@ body > footer.copyright p {
  **********************************************************************/
 
 .button {
+  cursor: pointer;
   border-radius: .5rem;
   padding: .5rem 1rem;
   display: inline-grid;
@@ -425,12 +426,12 @@ body > footer.copyright p {
   text-decoration: none;
   text-shadow: none;
   text-align: center;
-  transition: background .3s;
+  transition: background .1s;
   -webkit-backdrop-filter: var(--backdrop-filter);
 }
 
 .button:hover {
-  background: var(--primary-light-transparent);
+  background: var(--primary-transparent-light);
 }
 
 nav .button {
