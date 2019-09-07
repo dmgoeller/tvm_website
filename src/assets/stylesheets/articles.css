@@ -54,7 +54,7 @@ article li {
 
 article a.link {
   color: var(--primary);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 article sup {

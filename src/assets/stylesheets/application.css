@@ -12,8 +12,9 @@
 :root {
   --primary: #800000;
   --primary-dark: #600000;
-  --primary-transparent: rgba(128,0,0,0.9);
-  --primary-transparent-light: rgba(140,0,0,0.9);
+  --primary-light: #900000;
+  --primary-transparent: rgba(128, 0, 0, 0.9);
+  --primary-transparent-light: rgba(144, 0, 0, 0.9);
   --white: #fff;
   --light-gray: #f8f8f8;
   --gray: #e8e8e8;
@@ -174,6 +175,7 @@ body > header {
   }
 
   #nav .top-menu li {
+    position: relative;
     flex: 1 0 auto;
     max-height: 5rem;
     padding: 0 2rem;
@@ -186,6 +188,26 @@ body > header {
 
   #nav .top-menu li:hover {
     background: rgba(32, 32, 32, .9);
+  }
+
+  /* ripple effect */
+  #nav .top-menu li:before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    opacity: 0;
+    transform: scale(0, 1);
+    transition: transform .15s;
+  }
+
+  #nav .top-menu li:active:before {
+    opacity: .15;
+    transform: scale(1, 1);
   }
 }
 
@@ -414,6 +436,7 @@ body > footer.copyright p {
 
 .button {
   cursor: pointer;
+  position: relative;
   border-radius: .5rem;
   padding: .5rem 1rem;
   display: inline-grid;
@@ -440,6 +463,31 @@ nav .button {
   grid-template-rows: auto 1fr;
 }
 
+/* ripple effect */
+.button:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: .5rem;
+  background: var(--white);
+  opacity: 0;
+  transform: scale(0, 0);
+  transition: transform .15s;
+}
+
+.button:active:before {
+  opacity: .3;
+  transform: scale(1, 1);
+}
+
+nav .button:before {
+  border-radius: .25rem;
+}
+
 /**********************************************************************
  * alerts
  **********************************************************************/
@@ -461,29 +509,55 @@ nav .button {
 .alert .box {
   max-width: 80%;
   border-radius: .5rem;
-  display: column;
   flex-direction: row;
   background: var(--white);
   box-shadow: var(--box-shadow);
 }
 
-.alert .box .text {
+.alert .text {
   padding: 1rem;
 }
 
-.alert .box .text .message {
+.alert .message {
   font-weight: bold;
 }
 
-.alert .box .text .detail {
+.alert .detail {
   margin-top: .5rem;
 }
 
-.alert .box .action {
+.alert .action {
+  position: relative;
   padding: .5rem 1rem;
   border-top: var(--gray-border);
+  border-radius: 0 0 .5rem .5rem;
   text-align: center;
   font-weight: bold;
+}
+
+.alert .action:hover {
+  background: var(--light-gray);
+}
+
+/* ripple effect */
+.alert .action:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--dark-gray);
+  border-radius: 0 0 .5rem .5rem;
+  opacity: 0;
+  transform: scale(0, 1);
+  transition: transform .15s;
+}
+
+.alert .action:active:before {
+  opacity: .15;
+  transform: scale(1, 1);
 }
 
 @media (max-width: 767px) {
@@ -549,7 +623,7 @@ nav .button {
   background: var(--white);
   animation-name: progressbar;
   animation-duration: 3s;
-  animation-delay: 0.5s;
+  animation-delay: 0.3s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
