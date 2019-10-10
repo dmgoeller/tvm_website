@@ -121,12 +121,12 @@ def build_html(filename, options = {})
     html = File.read(filename)
 
     # replace base path
-    html.gsub!(/data\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
-      "data-base-path=\"#{options[:base_path]}\""
+    html.gsub!(/data\-app\-base\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
+      "data-app-base-path=\"#{options[:base_path]}\""
     }
     # replace canonical path
-    html.gsub!(/data\-canonical\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
-      "data-canonical-path=\"#{options[:canonical_path]}\""
+    html.gsub!(/data\-app\-canonical\-path\s*\=\s*\"(\w|\/)*\"/) { |chunk|
+      "data-app-canonical-path=\"#{options[:canonical_path]}\""
     }
     # replace robots meta property
     html.gsub!(/\<meta\s+name\=\"robots\"\s+content\=\"(\w|\s)*\"\>/) {
