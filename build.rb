@@ -282,7 +282,7 @@ def build_app
         base_path: base_path,
         canonical_path: config['canonical_path'],
         icons: (Dir.glob('assets/icons/*.svg').collect { |f| [File.basename(f), load_svg(f)] }).to_h,
-        index_page: File.read('index.html').scan(/data\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
+        index_page: File.read('index.html').scan(/data\-app\-index\-page\s*\=\s*\"((?:\w|\-)*)\"/).flatten.first,
         placeholder_image_template: load_svg('assets/templates/placeholder.svg')
       }
       build_html('index.html', options.merge( { meta_robots: config['meta_robots'] } ))
