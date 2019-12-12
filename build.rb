@@ -56,6 +56,20 @@ def deep_merge(h1, h2)
   }
 end
 
+def convert_images(src, dest, options)
+  FileUtils.mkdir_p(dest) unless File.exists?(dest)
+
+  Dir.glob("#{src}/*") do |src_filename|
+    dest_filename = "#{dest}/#{File.basename(src_filename)}"
+
+    if File.directory?(src_filename)
+      convert_images(src_filename, dest_filename, options)
+    elsif src_filename.end_with?('.jpg')
+      system("convert #{options} #{src_filename} #{dest_filename}", out: :close, err: :close)
+    end
+  end
+end
+
 def ftp_upload(ftp, local_dir, remote_dir, options = {})
   exclude = options[:exclude]
 
@@ -246,8 +260,9 @@ end
 
 def build_thumbnail_images(src, dest)
   action 'Build thumbnail images' do
-    FileUtils.copy_entry(src, dest)
-    system("find #{dest} -type f -name '*.jpg' -exec sips -Z 48 {} \\;", out: :close, err: :close)
+    convert_images(src, dest, "-thumbnail 48")
+    #FileUtils.copy_entry(src, dest)
+    #system("find #{dest} -type f -name '*.jpg' -exec sips -Z 48 {} \\;", out: :close, err: :close)
   end
 end
 
