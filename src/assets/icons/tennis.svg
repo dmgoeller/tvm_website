@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-  <g transform="rotate(-45 12 12)">
-    <circle cx="12" cy="12" r="12" fill="white"/>
-    <g stroke="#800000" stroke-width="2" fill="none">
-      <path d="M3.5 4 A 12 12 0 0 0 20.5 4"/> <!-- center: 12 -4.5 -->
-      <path d="M3.5 20.5 A 12 12 0 0 1 20.5 20.5"/> <!-- center: 29 12 -->
-    </g>
-  </g>
+  <defs>
+    <mask id="mask">
+      <g transform="rotate(-45 12 12)">
+        <circle cx="12" cy="12" r="12" style="fill:white"/>
+        <g style="fill:none;stroke:black;stroke-width:2">
+          <ellipse cx="12" cy="-2" rx="12" ry="9"/>
+          <ellipse cx="12" cy="26" rx="12" ry="9"/>
+        </g>
+      </g>
+    </mask>
+  </defs>
+  <circle cx="12" cy="12" r="12" style="fill:white" mask="url(#mask)"/>
 </svg>
