@@ -53,7 +53,7 @@ article li {
 }
 
 article a.link {
-  color: var(--primary);
+  color: var(--primary--color);
   text-decoration: none;
 }
 
@@ -66,7 +66,7 @@ article sup {
  **********************************************************************/
 
 article picture {
-  background: var(--gray);
+  background: var(--picture--background);
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -93,6 +93,17 @@ article picture > .loading-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+article .text-over-picture {
+  color: #fff;
+  text-shadow: 1px 1px rgba(0, 0, 0, .85);
+}
+
+@media (min-device-width: 768px) {
+  article .text-over-picture h1 {
+    font-size: 3rem;
+  }
 }
 
 /**********************************************************************
@@ -145,7 +156,7 @@ article > header > .background {
   z-index: -1;
   height: 100%;
   width: 100%;
-  background: var(--gradient-bg);
+  background: var(--header--background);
 }
 
 article > header > .background > img.logo {
@@ -153,13 +164,19 @@ article > header > .background > img.logo {
   right: 1rem;
   bottom: -10%;
   height: 120%;
-  opacity: .33;
+  opacity: .3;
 }
 
 article > header > .background > picture {
   position: absolute;
   height: 100%;
   width: 100%;
+}
+
+@media (max-device-width: 767px) {
+  article > header > .background > img.logo {
+    filter: blur(2px);
+  }
 }
 
 @media (max-device-width: 767px) and (orientation: portrait) {
@@ -172,6 +189,12 @@ article > header > .background > picture {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  article > header > .background > img.logo {
+    opacity: .15;
+  }
+}
+
 /* foreground */
 
 article > header > .foreground {
@@ -181,20 +204,9 @@ article > header > .foreground {
   justify-content: space-around;
 }
 
-article > header > .foreground.color-white {
-  color: var(--white);
-  text-shadow: var(--text-shadow);
-}
-
 article > header > .foreground > .container {
   margin-bottom: 1rem;
   justify-content: flex-end;
-}
-
-@media (min-device-width: 768px) {
-  article > header > .foreground.color-white h1 {
-    font-size: 3rem;
-  }
 }
 
 /**********************************************************************
@@ -205,7 +217,7 @@ article > main {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-  background: var(--white);
+  background: var(--background);
 }
 
 /**********************************************************************
@@ -216,7 +228,7 @@ article > footer {
   flex: none;
   display: flex;
   flex-direction: column;
-  background: var(--white);
+  background: var(--background);
 }
 
 /**********************************************************************
@@ -232,12 +244,12 @@ article section {
 article > main.accentuate_even_sections section:nth-child(even),
 article > main.accentuate_odd_sections section:nth-child(odd),
 article > footer > section:nth-child(odd) {
-  background: var(--light-gray);
+  background: var(--alternative--background);
 }
 
 article section.banner {
-  background: #480000 !important;
-  color: white;
+  background: var(--banner--background) !important;
+  color: var(--banner--color);
 }
 
 article section .container {
@@ -273,12 +285,12 @@ article .menu-item {
   padding: 0 0 .5rem 0;
   display: flex;
   flex-direction: column;
-  border-bottom: var(--gray-border);
+  border-bottom: var(--menu-item--border-bottom);
 }
 
 article .menu-item .title {
   flex: none;
-  color: var(--primary);
+  color: var(--primary--color);
   font-weight: bold;
 }
 
@@ -288,7 +300,7 @@ article .menu-item .subline {
 }
 
 article .menu-item.loading:after {
-  background: var(--primary);
+  background: var(--primary--color);
 }
 
 @media (max-width: 767px) {
@@ -348,25 +360,25 @@ article td:last-child {
 }
 
 article th {
-  background: var(--gray);
-  border-color: var(--white);
+  background: var(--table-header--background);
+  border-color: var(--background);
   font-weight: bold;
 }
 
 article td {
-  background: var(--light-gray);
-  border-color: var(--white);
+  background: var(--alternative--background);
+  border-color: var(--background);
 }
 
 article > main.accentuate_even_sections section:nth-child(even) th,
 article > main.accentuate_odd_sections section:nth-child(odd) th {
-  border-color: var(--light-gray);
+  border-color: var(--alternative--background);
 }
 
 article > main.accentuate_even_sections section:nth-child(even) td,
 article > main.accentuate_odd_sections section:nth-child(odd) td {
-  background: var(--white);
-  border-color: var(--light-gray);
+  background: var(--background);
+  border-color: var(--alternative--background);
 }
 
 /**********************************************************************
@@ -441,12 +453,12 @@ article .calendar > .time {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: var(--gray);
+  background: var(--table-header--background);
 }
 
 article .calendar > .text {
   display: grid;
-  background: var(--light-gray);
+  background: var(--alternative--background);
 }
 
 article .calendar .expired {
@@ -701,6 +713,10 @@ article#startpage .headline .logo .placeholder-image {
   width: 100%;
 }
 
+article#startpage .headline .logo .placeholder-image circle {
+  fill: var(--primary--color);
+}
+
 article#startpage .headline .logo > img[data-lazy-loading] {
   opacity: 0;
 }
@@ -710,7 +726,7 @@ article#startpage .headline .logo > img:not([data-lazy-loading]) ~ .placeholder-
 }
 
 article#startpage .headline h1 {
-  color: var(--primary);
+  color: var(--primary--color);
   font-size: 1.5rem;
 }
 
@@ -738,6 +754,16 @@ article#startpage .headline subline {
     grid-column-gap: 1rem;
     justify-content: center;
     align-items: center;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  article#startpage .headline .logo > img {
+    filter: grayscale(1) brightness(10.55);
+  }
+
+  article#startpage .headline .logo .placeholder-image circle {
+    fill: var(--color);
   }
 }
 
@@ -790,6 +816,7 @@ article#sponsors .sponsors a {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #fff; 
 }
 
 article#sponsors .sponsors picture {
@@ -828,8 +855,6 @@ article#contact .how-to-find-us {
   align-items: center;
   background-size: cover;
   background-position: center;
-  color: var(--white);
-  text-shadow: var(--text-shadow);
 }
 
 article#contact .how-to-find-us a.link {
