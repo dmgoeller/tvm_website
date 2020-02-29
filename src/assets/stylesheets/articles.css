@@ -640,8 +640,8 @@ article .contact .email-address:before {
   @media (min-device-width: 1025px) {
     article#startpage > .picture {
       flex: 1 0 auto;
-      min-height: 192px;
-      max-height: 25vw;
+      min-height: 14rem;
+      max-height: 50vh;
     }
   }
 }
