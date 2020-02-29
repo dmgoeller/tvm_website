@@ -9,9 +9,9 @@ function showLightbox(gallery, initialPosition) {
   let container = lightbox.addElement('div', 'lb-container');
   let viewport = container.addElement('div', 'lb-viewport');
   let pictures = viewport.addElement('div', 'lb-pictures');
-  let closeButton = container.addElement('div', 'lb-button lb-close-button icon icon-close');
-  let prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-chevron-left');
-  let nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-chevron-right');
+  let closeButton = container.addElement('div', 'lb-button lb-close-button icon icon-24px icon-close');
+  let prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-24px icon-chevron-left');
+  let nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-24px icon-chevron-right');
 
   lightbox.preventDefault(['touchmove', 'mousewheel']);
 

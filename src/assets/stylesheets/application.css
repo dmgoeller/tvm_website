@@ -109,6 +109,37 @@
 }
 
 /**********************************************************************
+ * icons
+ **********************************************************************/
+
+ .icon {
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.icon-18px {
+  height: 18px;
+  width: 18px;
+}
+
+.icon-24px {
+  height: 24px;
+  width: 24px;
+}
+
+.icon-close {
+  background-image: url('../icons/close-24px.svg');
+}
+
+.icon-chevron-left {
+  background-image: url('../icons/chevron-left.svg');
+}
+
+.icon-chevron-right {
+  background-image: url('../icons/chevron-right.svg');
+}
+
+/**********************************************************************
  * document
  **********************************************************************/
 
@@ -473,37 +504,6 @@ body > footer.copyright p {
   .container {
     width: 960px;
   }
-}
-
-/**********************************************************************
- * icons
- **********************************************************************/
-
-.icon {
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.icon-18px {
-  height: 18px;
-  width: 18px;
-}
-
-.icon-24px {
-  height: 24px;
-  width: 24px;
-}
-
-.icon-close {
-  background-image: url('../icons/close-24px.svg');
-}
-
-.icon-chevron-left {
-  background-image: url('../icons/chevron-left.svg');
-}
-
-.icon-chevron-right {
-  background-image: url('../icons/chevron-right.svg');
 }
 
 /**********************************************************************
