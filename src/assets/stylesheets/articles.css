@@ -145,7 +145,7 @@ article > header {
 
 @media (min-device-width: 1025px) {
   article > header.responsive {
-    height: 12rem; /* 196px */
+    height: 14rem; /* 224px */
   }
 }
 
