@@ -13,6 +13,7 @@
     <meta name="theme-color" content="#480000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="TV Melsbach">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="manifest" href="manifest.json">
@@ -25,26 +26,20 @@
   </head>
   <body>
     <header>
-      <nav id="nav">
-        <div class="top-navigation">
-          <div class="menu">
-            <ul>
-              <li class="icon icon-chevron-left" onclick="window.history.back();"></li>
-              <li onclick="loadArticle('startseite');">TV Melsbach</li>
-              <li class="icon" onclick="select('#nav').classList.toggle('top-menu-unfolded');"></li>
-            </ul>
-          </div>
-        </div>
-        <div class="top-menu cursor-default" onclick="select('#nav').classList.remove('top-menu-unfolded');">
-          <div class="menu">
-            <ul>
-              <li onclick="loadArticle('tennis', {'caller': this});">Tennis</li>
-              <li onclick="loadArticle('boule', {'caller': this});">Boule</li>
-              <li onclick="loadArticle('clubhaus-mieten', {'caller': this});">Clubhaus mieten</li>
-              <li onclick="loadArticle('verein', {'caller': this});">Unser Verein</li>
-            </ul>
-          </div>
-        </div>
+      <nav class="app-bar">
+        <ul>
+          <li id="back-button" class="icon" onclick="window.history.back();"></li>
+          <li onclick="loadArticle('startseite');">TV Melsbach</li>
+          <li id="menu-button" class="icon" onclick="select('body > header').classList.toggle('app-menu-unfolded');"></li>
+        </ul>
+      </nav>
+      <nav class="app-menu cursor-default" onclick="select('body > header').classList.remove('app-menu-unfolded');">
+        <ul>
+          <li onclick="loadArticle('tennis', {'caller': this});">Tennis</li>
+          <li onclick="loadArticle('boule', {'caller': this});">Boule</li>
+          <li onclick="loadArticle('clubhaus-mieten', {'caller': this});">Clubhaus mieten</li>
+          <li onclick="loadArticle('verein', {'caller': this});">Unser Verein</li>
+        </ul>
       </nav>
     </header>
     <main>

@@ -135,9 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-  //select('#nav').preventDefault(['touchmove', 'mousewheel']);
-  //select('#alert').preventDefault(['touchmove', 'mousewheel']);
-
   // browser history
   window.addEventListener('popstate', function(event) {
     if (event.state) {
@@ -182,7 +179,7 @@ function getCanonicalURL(name) {
 function loadArticle(name, options) {
   options = options || {};
 
-  let nav = select('#nav');
+  let header = select('body > header');
   let glasspane = select('#glasspane');
   let caller = select(options['caller']);
   let ypos = options['ypos'] || 0;
@@ -196,7 +193,7 @@ function loadArticle(name, options) {
       let article = null;
 
       if (caller) caller.classList.remove('loading');
-      nav.classList.remove('top-menu-unfolded');
+      header.classList.remove('app-menu-unfolded');
       glasspane.hide();
 
       if (history.state != null) {
@@ -241,7 +238,7 @@ function loadArticle(name, options) {
     })
     .catch(function(error) {
       if (caller) caller.classList.remove('loading');
-      nav.classList.remove('top-menu-unfolded');
+      header.classList.remove('app-menu-unfolded');
       glasspane.hide();
       alert(error);
     });

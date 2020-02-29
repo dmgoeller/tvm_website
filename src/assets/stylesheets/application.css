@@ -1,42 +1,49 @@
 
+/**********************************************************************
+ * layers
+ **********************************************************************/
+
 /* Layer            Elevation Level  Z-Index
  * ===============  ===============  =======
  * background                             -1
  * page content                 0dp     0, 1
- * app bar and menu             4dp    9, 10
+ * app bar and menu             4dp       10
  * lightboxes                             20
  * dialogs                     24dp       30
  * glass pane                             40
  */
 
 /**********************************************************************
- * colors
+ * colors and shadows
  **********************************************************************/
 
 :root {
   --alternative--background: #f5f5f5;
-  --app-bar--background: #781515;
+  --app-bar--background: rgb(120, 21, 21); /* #781515 */
+  --app-bar--semitransparent-background: rgba(120, 21, 21, .9);
   --app-bar--color: #fff;
-  --app-bar--border-bottom: 1px solid #601010;
-  --app-footer-links--background: #eeeeee;
+  --app-bar--border-color: #601010;
+  --app-bar--box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
+  --app-footer-links--background: #e0e0e0;
   --app-menu--color: #424242;
-  --app-menu--background: rgba(224, 224, 224, .9);
-  --app-menu--border: 1px solid rgba(0, 0, 0, .15);
+  --app-menu--background: rgb(224, 224, 224); /* #e0e0e0 */
+  --app-menu--semitransparent-background: rgba(224, 224, 224, .9);
+  --app-menu--border-color: rgba(0, 0, 0, .15);
   --app-menu-item--hover--background: rgba(0, 0, 0, .075);
   --backdrop-filter: blur(8px);
   --background: #fff;
   --banner--background: #ad463c;
   --banner--color: #fff;
-  --box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
   --button--color: #fff;
   --button--background: rgba(120, 21, 21, 0.9);
-  --button--hover--background: rgba(128, 35, 35, 0.9);
+  --button--hover--background: rgba(128, 35, 35, .9);
   --color: #616161;
   --dialog--background: #fff;
-  --dialog-action--border-top: 1px solid #e8e8e8;
+  --dialog--box-shadow: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
+  --dialog-action--border-color: #e8e8e8;
   --dialog-action--hover--background: rgba(0, 0, 0, .075);
   --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
-  --menu-item--border-bottom: 1px solid #e0e0e0;
+  --menu-item--border-color: #e0e0e0;
   --picture--background: #eeeeee;
   --primary--color: #781515;
   --table-header--background: #eeeeee;
@@ -46,16 +53,17 @@
   :root {
     --alternative--background: #202020;
     --app-menu--color: #fff;
-    --app-menu--background: rgba(39, 39, 39, .9);
-    --app-menu--border: 1px solid rgba(255, 255, 255, .15);
-    --app-menu-item--hover--background:  rgba(255, 255, 255, 0.06);
+    --app-menu--background: rgb(39, 39, 39); /* #272727 */
+    --app-menu--semitransparent-background: rgba(39, 39, 39, .9);
+    --app-menu--border-color: rgba(255, 255, 255, .15);
+    --app-menu-item--hover--background: rgba(255, 255, 255, 0.06);
     --app-footer-links--background: #2e2e2e;
     --background: #121212;
     --banner--background: #480000;
     --banner--color: #e0e0e0;
     --color: #e0e0e0;
     --dialog--background: #373737;
-    --dialog-action--border-top: 1px solid rgba(255, 255, 255, .15);
+    --dialog-action--border-color: rgba(255, 255, 255, .15);
     --dialog-action--hover--background: rgba(255, 255, 255, 0.06);
     --header--background: linear-gradient(45deg, #555555, #373737);
     --menu-item--border-bottom: 1px solid #2e2e2e;
@@ -130,89 +138,92 @@ body > header {
   top: 0;
 }
 
-/**********************************************************************
- * navigation
- **********************************************************************/
-
-#nav ul {
+body > header ul {
   list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 
-#nav li {
+body > header li {
   white-space: nowrap;
 }
 
-@media (max-width: 767px) {
+/* back button */
+#back-button {
+  background-image: url('../icons/arrow-back-24px.svg');
+}
 
-  /* top navigation bar */
-  #nav .top-navigation {
+@media (max-width: 767px) {
+  /* app bar */
+  .app-bar {
+    box-sizing: border-box;
+    height: 56px;
+    padding: 16px 16px 15px 16px;
+    border-bottom: 1px solid var(--app-bar--border-color);
+    box-shadow: var(--app-bar--box-shadow);
     background: var(--app-bar--background);
     color: var(--app-bar--color);
-    border-bottom: var(--app-bar--border-bottom);
   }
 
-  #nav .top-navigation ul {
-    margin: 0 1rem;
+  .app-bar ul {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
   }
 
-  #nav .top-navigation li {
-    padding: .5rem 0;
+  .app-bar li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   /* menu button */
-  #nav .top-navigation li:last-child {
-    background-image: url('../icons/menu.svg');
+  #menu-button {
+    background-image: url('../icons/menu-24px.svg');
   }
 
-  #nav.top-menu-unfolded .top-navigation li:last-child {
-    background-image: url('../icons/close.svg');
+  .app-menu-unfolded #menu-button {
+    background-image: url('../icons/close-24px.svg');
   }
 
-  /* top menu */
-  #nav .top-menu {
+  /* app menu */
+  .app-menu {
     position: absolute;
-    z-index: -1;
-    height: calc(100vh - 2.25rem);
+    height: calc(100vh - 56px);
     width: 100%;
     overflow: hidden;
     visibility: hidden;
     transition: visibility .5s;
   }
 
-  #nav.top-menu-unfolded .top-menu {
+  .app-menu-unfolded .app-menu {
     visibility: visible;
   }
 
-  #nav .top-menu .menu {
+  .app-menu .menu {
     position: relative;
     height: 100%;
   }
 
-  #nav .top-menu ul {
+  .app-menu ul {
     position: absolute;
     left: 100%;
     height: 100%;
-    margin: 0;
     display: flex;
     flex-direction: column;
     color: var(--app-menu--color);
     background: var(--app-menu--background);
-    border-left: var(--app-menu--border);
+    border-left: 1px solid var(--app-menu--border-color);
+    box-shadow: var(--app-bar--box-shadow);
     transition: transform .5s;
-    backdrop-filter: var(--backdrop-filter);
-    -webkit-backdrop-filter: var(--backdrop-filter);
   }
 
-  #nav.top-menu-unfolded .top-menu ul {
+  .app-menu-unfolded .app-menu ul {
     transform: translate(-100%, 0);
   }
 
-  #nav .top-menu li {
+  .app-menu li {
     position: relative;
     flex: 1 0 auto;
     max-height: 5rem;
@@ -220,15 +231,15 @@ body > header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-bottom: var(--app-menu--border);
+    border-bottom: 1px solid var(--app-menu--border-color);
   }
 
-  #nav .top-menu li:hover {
+  .app-menu li:hover {
     background: var(--app-menu-item--hover--background);
   }
 
   /* ripple effect */
-  #nav .top-menu li:before {
+  .app-menu li:before {
     content: "";
     pointer-events: none;
     position: absolute;
@@ -242,42 +253,76 @@ body > header {
     transition: transform .15s;
   }
 
-  #nav .top-menu li:active:before {
+  .app-menu li:active:before {
     opacity: .15;
     transform: scale(1, 1);
+  }
+
+  @supports ((backdrop-filter: var(--backdrop-filter)) or (-webkit-backdrop-filter: var(--backdrop-filter))) {
+    .app-bar {
+      background: var(--app-bar--semitransparent-background);
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+    }
+    .app-menu ul {
+      background: var(--app-menu--semitransparent-background);
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+    }
   }
 }
 
 @media (min-width: 768px) {
-  #nav {
+  body > header {
+    box-sizing: border-box;
+    height: 56px;
+    padding: 16px 16px 15px 16px;
+    border-bottom: 1px solid var(--app-bar--border-color);
+    box-shadow: var(--app-bar--box-shadow);
     display: flex;
     flex-direction: row;
+    align-items: stretch;
     justify-content: space-between;
     background: var(--app-bar--background);
     color: var(--app-bar--color);
-    border-bottom: var(--app-bar--border-bottom);
   }
 
-  #nav ul {
-    margin: 0 1rem;
+  .app-bar,
+  .app-menu  {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  body > header ul {
     display: grid;
-    grid-column-gap: 2rem;
+    grid-column-gap: 3rem;
     grid-auto-flow: column;
   }
 
-  #nav li {
-    padding: .5rem 0;
+  body > header li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   /* menu button */
-  #nav .top-navigation li:last-child {
+  #menu-button {
     display: none;
+  }
+
+  @supports ((backdrop-filter: var(--backdrop-filter)) or (-webkit-backdrop-filter: var(--backdrop-filter))) {
+    body > header {
+      background: var(--app-bar--semitransparent-background);
+      backdrop-filter: var(--backdrop-filter);
+      -webkit-backdrop-filter: var(--backdrop-filter);
+    }
   }
 }
 
 @media (min-device-width: 1024px), not all and (display-mode: standalone) {
   /* back button */
-  #nav .top-navigation li:first-child {
+  #back-button {
     display: none !important;
   }
 }
@@ -437,8 +482,8 @@ body > footer.copyright p {
  **********************************************************************/
 
 .icon {
-  height: 16px;
-  width: 16px;
+  height: 24px;
+  width: 24px;
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -549,7 +594,7 @@ nav .button:before {
   border-radius: .5rem;
   flex-direction: row;
   background: var(--dialog--background);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--dialog--box-shadow);
 }
 
 .alert .text {
@@ -567,14 +612,14 @@ nav .button:before {
 .alert .action {
   position: relative;
   padding: .5rem 1rem;
-  border-top: var(--dialog-action--border-top);
+  border-top: 1px solid var(--dialog-action--border-color);
   border-radius: 0 0 .5rem .5rem;
   text-align: center;
   font-weight: bold;
 }
 
 .alert .action:hover {
-  background: var(--hover--background);
+  background: var(--dialog-action--hover--background);
 }
 
 /* ripple effect */
