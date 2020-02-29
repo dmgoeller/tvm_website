@@ -35,10 +35,10 @@
       </nav>
       <nav class="app-menu cursor-default" onclick="select('body > header').classList.remove('app-menu-unfolded');">
         <ul>
-          <li onclick="loadArticle('tennis', {'caller': this});">Tennis</li>
-          <li onclick="loadArticle('boule', {'caller': this});">Boule</li>
-          <li onclick="loadArticle('clubhaus-mieten', {'caller': this});">Clubhaus mieten</li>
-          <li onclick="loadArticle('verein', {'caller': this});">Unser Verein</li>
+          <li onclick="loadArticle('tennis');">Tennis</li>
+          <li onclick="loadArticle('boule');">Boule</li>
+          <li onclick="loadArticle('clubhaus-mieten');">Clubhaus mieten</li>
+          <li onclick="loadArticle('verein');">Unser Verein</li>
         </ul>
       </nav>
     </header>
@@ -63,9 +63,9 @@
     </main>
     <footer class="links">
       <div class="container">
-        <div class="link" onclick="loadArticle('kontakt', {'caller': this});">Kontakt</div>
-        <div class="link" onclick="loadArticle('datenschutz', {'caller': this});">Datenschutz</div>
-        <div class="link" onclick="loadArticle('impressum', {'caller': this});">Impressum</div>
+        <div class="link" onclick="loadArticle('kontakt');">Kontakt</div>
+        <div class="link" onclick="loadArticle('datenschutz');">Datenschutz</div>
+        <div class="link" onclick="loadArticle('impressum');">Impressum</div>
       </div>
     </footer>
     <footer class="copyright">
@@ -79,6 +79,5 @@
         <div class="action" onclick="select('#alert').hide();">Ok</div>
       </div>
     </div>
-    <div id="glasspane" class="glasspane hidden"></div>
   </body>
 </html>

@@ -1,7 +1,7 @@
 
 .lightbox {
   position: fixed;
-  z-index: 20;
+  z-index: 3;
   top: 0;
   bottom: 0;
   left: 0;

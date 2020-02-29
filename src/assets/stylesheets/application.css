@@ -7,10 +7,10 @@
  * ===============  ===============  =======
  * background                             -1
  * page content                 0dp     0, 1
- * app bar and menu             4dp       10
- * lightboxes                             20
- * dialogs                     24dp       30
- * glass pane                             40
+ * app bar and menu             4dp        2
+ * lightboxes                              3
+ * loading-indicator                       4
+ * alerts                      24dp        5
  */
 
 /**********************************************************************
@@ -44,6 +44,7 @@
   --dialog-action--border-color: #e8e8e8;
   --dialog-action--hover--background: rgba(0, 0, 0, .075);
   --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
+  --loading-indicator-background: rgba(255, 255, 255, .5);
   --menu-item--border-color: #e0e0e0;
   --picture--background: #eeeeee;
   --primary--color: #781515;
@@ -109,6 +110,26 @@
 }
 
 /**********************************************************************
+ * document
+ **********************************************************************/
+
+ html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%; /* prevent font scaling in iOS Safari */
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 12pt; /* = 16px */
+  color: var(--color);
+  background: var(--background);
+}
+
+/**********************************************************************
  * icons
  **********************************************************************/
 
@@ -140,33 +161,13 @@
 }
 
 /**********************************************************************
- * document
- **********************************************************************/
-
-html {
-  height: 100%;
-  -webkit-text-size-adjust: 100%; /* prevent font scaling in iOS Safari */
-}
-
-body {
-  min-height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Libre Franklin', sans-serif;
-  font-size: 12pt; /* = 16px */
-  color: var(--color);
-  background: var(--background);
-}
-
-/**********************************************************************
  * app header
  **********************************************************************/
 
 body > header {
   position: -webkit-sticky;
   position: sticky;
-  z-index: 10;
+  z-index: 2;
   top: 0;
 }
 
@@ -584,12 +585,73 @@ nav .button-with-icon:before {
 }
 
 /**********************************************************************
+ * loading indicators
+ **********************************************************************/
+
+ @keyframes article-loading {
+  0%   { left: 0; width: 0; }
+  50%  { left: 0; width: 100%; }
+  100% { left: 100%; width: 0; }
+}
+
+ .article-loading-indicator {
+  position: fixed;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.article-loading-indicator:after {
+  position: absolute;
+  top: 0;
+  height: 4px;
+  content: '';
+  background: var(--loading-indicator-background);
+  animation-name: article-loading;
+  animation-duration: 5s;
+  animation-delay: 0.3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes delayed-fade-in {
+  0%, 20% { opacity: 0.0; }
+  100%    { opacity: 1.0; }
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.image-loading-indicator {
+  animation-name: delayed-fade-in;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+}
+
+.image-loading-indicator .spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: solid;
+  border-color: var(--primary--color) var(--primary--color) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
+  animation-name: rotate;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/**********************************************************************
  * alerts
  **********************************************************************/
 
-.alert {
+ .alert {
   position: fixed;
-  z-index: 30;
+  z-index: 5;
   left: 0;
   right: 0;
   top: 0;
@@ -671,73 +733,4 @@ nav .button-with-icon:before {
   .alert .box {
     max-width: 640px;
   }
-}
-
-/**********************************************************************
- * glass panes
- **********************************************************************/
-
-.glasspane {
-  position: fixed;
-  z-index: 40;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
-/**********************************************************************
- * animations
- **********************************************************************/
-
-@keyframes progressbar {
-  0%   { width: 0%; }
-  100% { width: 100%; }
-}
-
-@keyframes delayed-fade-in {
-  0%, 20% { opacity: 0.0; }
-  100%    { opacity: 1.0; }
-}
-
-@keyframes rotate {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loading {
-  position: relative;
-}
-
-.loading:after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  content: '';
-  background: var(--background);
-  animation-name: progressbar;
-  animation-duration: 3s;
-  animation-delay: 0.3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.loading-indicator {
-  animation-name: delayed-fade-in;
-  animation-duration: 1.5s;
-  animation-timing-function: linear;
-}
-
-.loading-indicator .spinner {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border-width: 4px;
-  border-style: solid;
-  border-color: var(--primary--color) var(--primary--color) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
-  animation-name: rotate;
-  animation-duration: 1.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
 }

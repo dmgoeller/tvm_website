@@ -178,24 +178,19 @@ function getCanonicalURL(name) {
 
 function loadArticle(name, options) {
   options = options || {};
-
-  let header = select('body > header');
-  let glasspane = select('#glasspane');
-  let caller = select(options['caller']);
   let ypos = options['ypos'] || 0;
 
-  if (caller) caller.classList.add('loading');
-  glasspane.show();
+  let body = select('body');
+  let header = body.querySelector('header');
+  let loadingIndicator = body.addElement('div', 'article-loading-indicator');
 
-  fetchResource('articles/' + name + '.html', {timeout: 3000})
+  fetchResource('articles/' + name + '.html', {timeout: 5000})
     .then(function(response) {
-      let main = select('body > main');
+      let main = body.querySelector('main');
       let article = null;
 
-      if (caller) caller.classList.remove('loading');
       header.classList.remove('app-menu-unfolded');
-      glasspane.hide();
-
+      
       if (history.state != null) {
         let state = {'article': history.state['article'], 'ypos': window.pageYOffset};
         history.replaceState(state, null, getArticlePath(state['article']));
@@ -235,11 +230,11 @@ function loadArticle(name, options) {
         document.title = applicationProperties['title'];
         window.scrollTo(0, 0);
       }
+      loadingIndicator.remove();
     })
     .catch(function(error) {
-      if (caller) caller.classList.remove('loading');
       header.classList.remove('app-menu-unfolded');
-      glasspane.hide();
+      loadingIndicator.remove();
       alert(error);
     });
 }
@@ -337,7 +332,7 @@ function buildImages(container) {
 
       // add a loading indicator tag
       if (element.hasAttribute('data-loading-indicator')) {
-        element.addElement('div', 'loading-indicator').addElement('div', 'spinner');
+        element.addElement('div', 'image-loading-indicator').addElement('div', 'spinner');
         element.removeAttribute('data-loading-indicator');
       }
     }
@@ -401,7 +396,7 @@ function imageLoaded(image) {
     image.src = canvas.toDataURL('image/jpg');
   }
   // remove the loading indicator element
-  let loadingIndicator = parent.querySelector('.loading-indicator');
+  let loadingIndicator = parent.querySelector('.image-loading-indicator');
   if (loadingIndicator) {
     loadingIndicator.remove();
   }
