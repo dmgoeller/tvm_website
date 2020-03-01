@@ -527,7 +527,7 @@ article .contacts {
 article .contact {
   display: grid;
   grid-gap: 1rem;
-  line-height: 1.5;
+  line-height: 1.5rem;
 }
 
 article .contact picture {
@@ -842,6 +842,14 @@ article#sponsors .sponsors .loading-indicator {
 /**********************************************************************
  * contact
  **********************************************************************/
+
+article#contact .email {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+  align-items: center;
+  justify-content: start;
+}
 
 article#contact .how-to-find-us {
   flex: 1 0 auto;
