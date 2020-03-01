@@ -37,7 +37,7 @@ def article_names(articles_dir)
 end
 
 def load_svg(filename)
-  File.readlines(filename)[1..-1].collect(&:strip).join
+  File.readlines(filename).collect(&:strip).join
 end
 
 def uri_escape(s)
@@ -164,9 +164,8 @@ def build_html(filename, options = {})
       "<script type=\"text/javascript\">\n#{javascript}\n</script>"
     }
     # embed icons
-    html.gsub!(/\<img(\s*\w*\=\".*\"\s*)*\s*src\=\"(\w|\-|\/)*\.svg\"(\s*\w*\=\".*\"\s*)*\>/) { |element|
-      icon = options[:icons][element.match(/(\w|\-)*\.svg/)[0]]
-      icon.nil? ? element : icon
+    html.gsub!(/\<.*data-icon\=\"(\w|\-)*\.svg\"\>/) { |element| 
+      element + options[:icons][element.match(/(\w|\-)*\.svg/)[0]]
     }
     # embed placeholder images
     html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image/) { |chunk|

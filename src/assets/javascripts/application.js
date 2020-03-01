@@ -216,6 +216,7 @@ function loadArticle(name, options) {
 
         window.scrollTo(0, ypos);
 
+        embedIcons(article);
         buildImages(article);
         loadImages(Array.from(article.children));
       } else {
@@ -286,6 +287,19 @@ function execute(expression) {
       console.log(e);
     }
   }
+}
+
+/**********************************************************************
+ * icon embedding
+ **********************************************************************/
+
+function embedIcons(container) {
+  container.querySelectorAll('[data-icon]').forEach(function(element) {
+    fetchResource('assets/icons/' + element.getAttribute('data-icon'))
+      .then(function(response) {
+        element.innerHTML = response;
+      });
+  });
 }
 
 /**********************************************************************

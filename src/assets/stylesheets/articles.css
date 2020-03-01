@@ -544,16 +544,12 @@ article .contact .name {
   font-weight: bold;
 }
 
-article .contact .phone-number:before {
-  content: 'Telefon: ';
-}
-
-article .contact .mobile-number:before {
-  content: 'Mobil: ';
-}
-
-article .contact .email-address:before {
-  content: 'E-Mail: ';
+article .contact .contact-details {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+  align-items: center;
+  justify-content: start;
 }
 
 @media (max-width: 480px) {
@@ -565,18 +561,15 @@ article .contact .email-address:before {
   article .contact picture {
     justify-self: center;
   }
+
+  article .contact .contact-details {
+    justify-content: center;
+  }
 }
 
 @media (min-width: 481px) {
   article .contact {
     grid-template-columns: auto 1fr;
-  }
-
-  article .contact .phone-number:before,
-  article .contact .mobile-number:before,
-  article .contact .email-address:before {
-    float: left;
-    width: 4rem;
   }
 }
 

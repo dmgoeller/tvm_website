@@ -48,7 +48,7 @@
   --menu-item--border-color: #e0e0e0;
   --picture--background: #eeeeee;
   --primary--color: #781515;
-  --table-header--background: #eeeeee;
+  --table-header--background: #e0e0e0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -134,16 +134,19 @@ body {
  **********************************************************************/
 
  .icon {
+  vertical-align: middle;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-.icon-18px {
+.icon-18px,
+.icon-18px svg {
   height: 18px;
   width: 18px;
 }
 
-.icon-24px {
+.icon-24px,
+.icon-24px svg {
   height: 24px;
   width: 24px;
 }
