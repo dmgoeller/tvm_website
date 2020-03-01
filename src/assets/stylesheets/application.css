@@ -649,7 +649,7 @@ nav .button-with-icon:before {
  * alerts
  **********************************************************************/
 
- .alert {
+.alert {
   position: fixed;
   z-index: 5;
   left: 0;
@@ -671,7 +671,7 @@ nav .button-with-icon:before {
   box-shadow: var(--box-shadow-24dp);
 }
 
-.alert .text {
+.alert .content {
   padding: 1rem;
 }
 
@@ -684,6 +684,7 @@ nav .button-with-icon:before {
 }
 
 .alert .action {
+  cursor: pointer;
   position: relative;
   padding: .5rem 1rem;
   border-top: 1px solid var(--dialog-action--border-color);

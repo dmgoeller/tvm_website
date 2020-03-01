@@ -465,19 +465,24 @@ function shuffleChildren(element) {
  **********************************************************************/
 
 function alert(message) {
-  let text = select('#alert .text');
-  text.innerHTML = '';
+  let alert = select('body').addElement('div', 'alert');
+  let box = alert.addElement('div', 'box');
+  let content = box.addElement('div', 'content');
 
   if (typeof message == 'object') {
-    text.addElement('div', 'message').addText(message.message);
+    content.addElement('div', 'message').addText(message.message);
 
     if (message.details) {
       message.details.forEach(function(detail) {
-        text.addElement('div', 'detail').addText(detail);
+        content.addElement('div', 'detail').addText(detail);
       });
     }
   } else {
-    text.addText(message);
+    content.addText(message);
   }
-  select('#alert').show();
+  let closeButton = box.addElement('div', 'action');
+  closeButton.addText('Ok');
+  closeButton.addEventListener('click', function() {
+    alert.remove();
+  });
 }
