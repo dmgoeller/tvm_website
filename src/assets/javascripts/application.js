@@ -44,14 +44,6 @@ Element.prototype.getComputedStyle = function() {
   return window.getComputedStyle(this);
 }
 
-Element.prototype.show = function() {
-  this.classList.remove('hidden');
-}
-
-Element.prototype.hide = function() {
-  this.classList.add('hidden');
-}
-
 Element.prototype.preventDefault = function(eventTypes) {
   let element = this;
 
