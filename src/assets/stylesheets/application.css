@@ -134,7 +134,6 @@ body {
  **********************************************************************/
 
  .icon {
-  vertical-align: middle;
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -184,7 +183,11 @@ body > header li {
   white-space: nowrap;
 }
 
-/* back button */
+body > header svg {
+  transform: scale(0.75);
+  -webkit-transform: scale(0.75);
+}
+
 #back-button {
   background-image: url('../icons/arrow-back-24px.svg');
 }
@@ -260,17 +263,25 @@ body > header li {
 
   .app-menu li {
     position: relative;
-    flex: 1 0 auto;
-    max-height: 5rem;
-    padding: 0 2rem;
+    flex: none;
+    padding: 1rem 1rem;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     border-bottom: 1px solid var(--app-menu--border-color);
   }
 
   .app-menu li:hover {
     background: var(--app-menu-item--hover--background);
+  }
+
+  .app-menu li .icon {
+    width: 36px;
+    margin-right: .5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
   /* ripple effect */
@@ -331,14 +342,15 @@ body > header li {
 
   body > header ul {
     display: grid;
-    grid-column-gap: 3rem;
+    grid-column-gap: 2rem;
     grid-auto-flow: column;
   }
 
   body > header li {
-    display: flex;
-    flex-direction: row;
+    display: inline-grid;
+    grid-auto-flow: column;
     align-items: center;
+    grid-gap: 8px;
   }
 
   #menu-button {

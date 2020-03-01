@@ -111,6 +111,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (copyrightYear) {
     copyrightYear.addText((new Date()).getFullYear());
   }
+  // embed icons
+  embedIcons(select('body'));
+
   // load initial article
   let path = window.location.pathname;
 
@@ -293,11 +296,17 @@ function execute(expression) {
  * icon embedding
  **********************************************************************/
 
+let nextMaskId= 1;
+
 function embedIcons(container) {
   container.querySelectorAll('[data-icon]').forEach(function(element) {
     fetchResource('assets/icons/' + element.getAttribute('data-icon'))
       .then(function(response) {
-        element.innerHTML = response;
+        let maskId = nextMaskId++;
+        let svg = response.replace(/mask\-__id__/g, function(match) {
+          return 'mask-' + maskId;
+        });
+        element.innerHTML = svg;
       });
   });
 }

@@ -8,6 +8,7 @@ require 'uri'
 require 'yaml'
 require 'fastimage'
 require 'nokogiri'
+require 'securerandom'
 
 $environment = 'test'
 $options = {}
@@ -164,8 +165,10 @@ def build_html(filename, options = {})
       "<script type=\"text/javascript\">\n#{javascript}\n</script>"
     }
     # embed icons
-    html.gsub!(/\<.*data-icon\=\"(\w|\-)*\.svg\"\>/) { |element| 
-      element + options[:icons][element.match(/(\w|\-)*\.svg/)[0]]
+    html.gsub!(/\<.*data-icon\=\"(\w|\-)*\.svg\"\>/) { |element|
+      svg = options[:icons][element.match(/(\w|\-)*\.svg/)[0]]
+      svg = svg.gsub('mask-__id__', "mask-#{SecureRandom.uuid}")
+      element + svg
     }
     # embed placeholder images
     html.gsub!(/data-image\=\"(\w|\-|\/)*\.jpg\"\s*data-placeholder-image/) { |chunk|
