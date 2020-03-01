@@ -68,7 +68,7 @@
     --dialog-action--border-color: rgba(255, 255, 255, .15);
     --dialog-action--hover--background: rgba(255, 255, 255, 0.06);
     --header--background: linear-gradient(45deg, #555555, #373737);
-    --menu-item--border-bottom: 1px solid #2e2e2e;
+    --menu-item--border-color: #2e2e2e;
     --picture--background: #2e2e2e;
     --primary--color: #ca8a8b;
     --table-header--background: #2e2e2e;
