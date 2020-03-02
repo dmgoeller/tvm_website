@@ -28,9 +28,15 @@
     <header>
       <nav class="app-bar">
         <ul>
-          <li id="back-button" class="icon icon-24px" onclick="window.history.back();"></li>
-          <li onclick="loadArticle('startseite');">TV Melsbach</li>
-          <li id="menu-button" class="icon icon-24px" onclick="select('body > header').classList.toggle('app-menu-unfolded');"></li>
+          <li id="back-button" onclick="window.history.back();">
+            <span class="icon-24px" data-icon="arrow-back-24px.svg"></span>
+          </li>
+          <li onclick="loadArticle('startseite');">
+            TV Melsbach
+          </li>
+          <li id="menu-button" onclick="select('body > header').classList.toggle('app-menu-unfolded');">
+            <span class="icon-24px" data-icon="menu-24px.svg"></span>
+          </li>
         </ul>
       </nav>
       <nav class="app-menu cursor-default" onclick="select('body > header').classList.remove('app-menu-unfolded');">

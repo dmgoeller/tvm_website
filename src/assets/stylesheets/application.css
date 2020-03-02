@@ -68,10 +68,10 @@
     --dialog-action--border-color: rgba(255, 255, 255, .15);
     --dialog-action--hover--background: rgba(255, 255, 255, 0.06);
     --header--background: linear-gradient(45deg, #555555, #373737);
-    --menu-item--border-color: #2e2e2e;
+    --menu-item--border-color: #424242;
     --picture--background: #2e2e2e;
     --primary--color: #ca8a8b;
-    --table-header--background: #2e2e2e;
+    --table-header--background: #424242;
   }
 }
 
@@ -130,39 +130,6 @@ body {
 }
 
 /**********************************************************************
- * icons
- **********************************************************************/
-
- .icon {
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.icon-18px,
-.icon-18px svg {
-  height: 18px;
-  width: 18px;
-}
-
-.icon-24px,
-.icon-24px svg {
-  height: 24px;
-  width: 24px;
-}
-
-.icon-close {
-  background-image: url('../icons/close-24px.svg');
-}
-
-.icon-chevron-left {
-  background-image: url('../icons/chevron-left.svg');
-}
-
-.icon-chevron-right {
-  background-image: url('../icons/chevron-right.svg');
-}
-
-/**********************************************************************
  * app header
  **********************************************************************/
 
@@ -183,13 +150,9 @@ body > header li {
   white-space: nowrap;
 }
 
-body > header svg {
-  transform: scale(0.75);
+.app-menu svg {
+  transform: scale(0.75); /* 18px */
   -webkit-transform: scale(0.75);
-}
-
-#back-button {
-  background-image: url('../icons/arrow-back-24px.svg');
 }
 
 @media (max-width: 767px) {
@@ -217,12 +180,14 @@ body > header svg {
     align-items: center;
   }
 
-  #menu-button {
-    background-image: url('../icons/menu-24px.svg');
+  #open-menu-icon,
+  .app-menu-unfolded #close-menu-icon {
+    fill: currentColor;
   }
 
-  .app-menu-unfolded #menu-button {
-    background-image: url('../icons/close-24px.svg');
+  #close-menu-icon,
+  .app-menu-unfolded #open-menu-icon {
+    fill: none;
   }
 
   /* app menu */
@@ -230,18 +195,13 @@ body > header svg {
     position: absolute;
     height: calc(100vh - 56px);
     width: 100%;
-    overflow: hidden;
     visibility: hidden;
+    overflow: hidden;
     transition: visibility .5s;
   }
 
   .app-menu-unfolded .app-menu {
     visibility: visible;
-  }
-
-  .app-menu .menu {
-    position: relative;
-    height: 100%;
   }
 
   .app-menu ul {
@@ -276,7 +236,7 @@ body > header svg {
     background: var(--app-menu-item--hover--background);
   }
 
-  .app-menu li .icon {
+  .app-menu .icon {
     width: 36px;
     margin-right: .5rem;
     display: flex;
@@ -347,10 +307,11 @@ body > header svg {
   }
 
   body > header li {
-    display: inline-grid;
+    display: grid;
+    grid-column-gap: .25rem;
     grid-auto-flow: column;
     align-items: center;
-    grid-gap: 8px;
+    line-height: 1rem;
   }
 
   #menu-button {
@@ -366,7 +327,7 @@ body > header svg {
   }
 }
 
-@media (min-device-width: 1024px), not all and (display-mode: standalone) {
+@media (min-device-width: 1025px), not all and (display-mode: standalone) {
   #back-button {
     display: none !important;
   }
@@ -589,6 +550,22 @@ nav .button-with-icon {
 
 nav .button-with-icon:before {
   border-radius: 4px;
+}
+
+/**********************************************************************
+ * icons
+ **********************************************************************/
+
+.icon-18px,
+.icon-18px svg {
+  height: 18px;
+  width: 18px;
+}
+
+.icon-24px,
+.icon-24px svg {
+  height: 24px;
+  width: 24px;
 }
 
 /**********************************************************************

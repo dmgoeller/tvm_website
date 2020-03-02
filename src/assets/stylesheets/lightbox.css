@@ -64,6 +64,23 @@
   cursor: pointer;
 }
 
+.lightbox .icon {
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.lightbox .icon-close {
+  background-image: url('../icons/close-24px.svg');
+}
+
+.lightbox .icon-chevron-left {
+  background-image: url('../icons/chevron-left.svg');
+}
+
+.lightbox .icon-chevron-right {
+  background-image: url('../icons/chevron-right.svg');
+}
+
 @media (orientation: portrait) {
   .lightbox {
     flex-direction: column;
