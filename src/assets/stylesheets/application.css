@@ -44,6 +44,9 @@
   --dialog-action--border-color: #e8e8e8;
   --dialog-action--hover--background: rgba(0, 0, 0, .075);
   --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
+  --lightbox--background: #242424;
+  --lightbox-button--color: #e0e0e0;
+  --lightbox-viewport--background: #121212;
   --loading-indicator-background: rgba(255, 255, 255, .5);
   --menu-item--border-color: #e0e0e0;
   --picture--background: #eeeeee;
@@ -549,22 +552,6 @@ nav .button-with-icon {
 
 nav .button-with-icon:before {
   border-radius: 4px;
-}
-
-/**********************************************************************
- * icons
- **********************************************************************/
-
-.icon-18px,
-.icon-18px svg {
-  height: 18px;
-  width: 18px;
-}
-
-.icon-24px,
-.icon-24px svg {
-  height: 24px;
-  width: 24px;
 }
 
 /**********************************************************************

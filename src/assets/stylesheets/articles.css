@@ -435,6 +435,118 @@ article .gallery.gallery-image-format-16-9 picture {
 }
 
 /**********************************************************************
+ * lightboxes
+ **********************************************************************/
+
+article .lightbox {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background: var(--lightbox--background);
+}
+
+article .lb-container {
+  position: relative;
+}
+
+article .lb-viewport {
+  overflow: hidden;
+  display: flex;
+  background: var(--lightbox-viewport--background);
+}
+
+article .lb-pictures {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+}
+
+article .lb-pictures > picture > img {
+  height: 100%;
+  width: 100%;
+  object-fit: scale-down;
+  background: var(--lightbox-viewport--background);
+}
+
+article .lb-button {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  color: var(--lightbox-button--color);
+  transition: opacity .3s;
+}
+
+article .lb-button.disabled {
+  opacity: .25;
+}
+
+article .lb-close-button {
+  top: 16px;
+  right: 16px;
+}
+
+article .lb-button:not(.disabled):hover {
+  cursor: pointer;
+}
+
+@media (orientation: portrait) {
+  article .lightbox {
+    flex-direction: column;
+  }
+
+  article .lb-container {
+    padding: 56px 0;
+  }
+
+  article .lb-viewport,
+  article .lb-pictures > picture {
+    height: calc(100vh - 112px);
+    width: 100vw;
+  }
+
+  article .lb-prev-button {
+    bottom: 16px;
+    left: 16px;
+  }
+
+  article .lb-next-button {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+@media (orientation: landscape) {
+  article .lightbox {
+    flex-direction: row;
+  }
+
+  article .lb-container {
+    padding: 0 56px;
+  }
+
+  article .lb-viewport,
+  article .lb-pictures > picture {
+    height: 100vh;
+    width: calc(100vw - 112px);
+  }
+
+  article .lb-prev-button {
+    bottom: 50%;
+    left: 16px;
+  }
+
+  article .lb-next-button {
+    bottom: 50%;
+    right: 16px;
+  }
+}
+
+/**********************************************************************
  * calendar
  **********************************************************************/
 
