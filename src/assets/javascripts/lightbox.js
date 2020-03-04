@@ -1,6 +1,13 @@
 
 'use strict';
 
+Element.prototype.addIcon = function(name) {
+  let svg = this.addElement('svg');
+  svg.setAttribute('height', 24);
+  svg.setAttribute('width', 24);
+  svg.addElement('use').setAttribute('href', '#' + name);
+}
+
 function showLightbox(gallery, initialPosition) {
   gallery = select(gallery);
 
@@ -12,6 +19,14 @@ function showLightbox(gallery, initialPosition) {
   let closeButton = container.addElement('div', 'lb-button lb-close-button icon icon-24px icon-close');
   let prevButton = container.addElement('div', 'lb-button lb-prev-button icon icon-24px icon-chevron-left');
   let nextButton = container.addElement('div', 'lb-button lb-next-button icon icon-24px icon-chevron-right');
+
+  //let closeButton = container.addElement('div', 'lb-button lb-close-button');
+  //let prevButton = container.addElement('div', 'lb-button lb-prev-button');
+  //let nextButton = container.addElement('div', 'lb-button lb-next-button');
+
+  //closeButton.addIcon('close-icon');
+  //prevButton.addIcon('chevron-left-icon');
+  //nextButton.addIcon('chevron-right');
 
   lightbox.preventDefault(['touchmove', 'mousewheel']);
 
