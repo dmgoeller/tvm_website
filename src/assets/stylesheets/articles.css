@@ -6,22 +6,6 @@ article {
   flex-direction: column;
 }
 
-article .flex-auto {
-  flex: 1 0 auto;
-}
-
-article .flex-center-items {
-  align-items: center;
-}
-
-article .text-align-center {
-  text-align: center;
-}
-
-article .text-align-right {
-  text-align: right;
-}
-
 /**********************************************************************
  * text elements
  **********************************************************************/
@@ -58,7 +42,7 @@ article a.link {
 }
 
 article sup {
-  font-size: 0.66rem;
+  font-size: 0.67rem;
 }
 
 /**********************************************************************
@@ -303,7 +287,7 @@ article .menu-item.loading:after {
   background: var(--primary--color);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   article .menu {
     grid-template-columns: 1fr;
   }
@@ -336,6 +320,7 @@ article th,
 article td {
   padding: .25rem .5rem;
   border: .125rem solid;
+  line-height: 1.5rem;
   text-align: left;
 }
 
@@ -409,7 +394,7 @@ article .gallery.gallery-image-format-16-9 picture {
   padding-top: 56.25%;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   article .gallery.gallery-layout-2-3-3,
   article .gallery.gallery-layout-2-4-4 {
     grid-template-columns: 1fr 1fr;
@@ -581,7 +566,7 @@ article .calendar .expired .button {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   article .calendar {
     grid-template-columns: auto auto auto;
   }
@@ -664,7 +649,7 @@ article .contact .contact-details {
   justify-content: start;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479.99px) {
   article .contact {
     grid-template-columns: auto;
     text-align: center;
@@ -679,7 +664,7 @@ article .contact .contact-details {
   }
 }
 
-@media (min-width: 481px) {
+@media (min-width: 480px) {
   article .contact {
     grid-template-columns: auto 1fr;
   }
@@ -840,7 +825,7 @@ article#startpage .headline subline {
   font-size: 1.5rem;
 }
 
-@media (max-width:480px) {
+@media (max-width:479.99px) {
   article#startpage .headline {
     grid-template-columns: auto;
     grid-row-gap: 1rem;
@@ -853,7 +838,7 @@ article#startpage .headline subline {
   }
 }
 
-@media (min-width: 481px) {
+@media (min-width: 480px) {
   article#startpage .headline {
     grid-template-columns: auto auto;
     grid-column-gap: 1rem;
@@ -870,39 +855,6 @@ article#startpage .headline subline {
   article#startpage .headline .logo .placeholder-image circle {
     fill: var(--color);
   }
-}
-
-/**********************************************************************
- * teams
- **********************************************************************/
-
-article#teams {
-  background-attachment: fixed; /* parallax */
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: cover;
-}
-
-article#teams > .background {
-  position: fixed;
-  z-index: -1;
-  height: 100vh;
-  width: 100%;
-}
-
-article#teams >.background > img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-article#teams > main {
-  background: transparent;
-}
-
-article#teams > main > section:nth-child(even) {
-  background: rgba(0, 0, 0, 0.1);
-  -webkit-backdrop-filter: var(--backdrop-filter);
 }
 
 /**********************************************************************
@@ -933,7 +885,7 @@ article#sponsors .sponsors .loading-indicator {
   width: 100%;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   article#sponsors .sponsors {
     grid-template-columns: 1fr;
   }

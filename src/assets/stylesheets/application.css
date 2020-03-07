@@ -52,6 +52,7 @@
   --picture--background: #eeeeee;
   --primary--color: #781515;
   --table-header--background: #e0e0e0;
+  --tile--background: #e0e0e0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,6 +76,7 @@
     --picture--background: #2e2e2e;
     --primary--color: #ca8a8b;
     --table-header--background: #424242;
+    --tile--background: #424242;
   }
 }
 
@@ -555,6 +557,35 @@ nav .button-with-icon:before {
 }
 
 /**********************************************************************
+ * tiles
+ **********************************************************************/
+
+.tiles {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-auto-rows: 1fr;
+  grid-gap: 2px;
+}
+
+.tiles > * {
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--tile--background);
+  line-height: 1.5rem;
+}
+
+.tiles > *[onclick] {
+  color: var(--button--color);
+  background: var(--button--background);  
+}
+
+.tiles > *[onclick]:hover {
+  background: var(--button--hover--background);
+}
+
+/**********************************************************************
  * loading indicators
  **********************************************************************/
 
@@ -704,4 +735,28 @@ nav .button-with-icon:before {
   .alert .box {
     max-width: 640px;
   }
+}
+
+/**********************************************************************
+ * helpers
+ **********************************************************************/
+
+.flex-auto {
+  flex: 1 0 auto;
+}
+
+.flex-center-items {
+  align-items: center;
+}
+
+.flex-center-content {
+  justify-content: center;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
 }

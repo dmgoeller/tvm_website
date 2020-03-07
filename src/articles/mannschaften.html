@@ -1,11 +1,12 @@
 <article id="teams" data-title="Mannschaften" data-onload="initGalleries">
-  <div class="background">
-    <!--<img data-src="media/tennis/tv-melsbach-linien-1920x1080.jpg"/>-->
-  </div>
-  <main class="accentuate_even_sections">
-    <section class="flex-auto flex-center-items">
-      <h1 class="container">Damen- und Herren&shy;mannschaften</h1>
-    </section>
+  <header>
+    <div class="foreground">
+      <div class="container">
+        <h1>Mannschaften</h1>
+      </div>
+    </div>
+  </header>
+  <main class="accentuate_odd_sections flex-center-content">
     <section>
       <div class="container">
         <div class="gallery gallery-image-format-16-9 gallery-layout-2-4-4">
@@ -20,16 +21,22 @@
         </div>
       </div>
     </section>
-    <section class="flex-auto flex-center-items">
+    <section>
       <div class="container">
-        <p class="text-align-center">
-          Schau dir unsere Mannschaften in&nbsp;TORP&nbsp;an:
-        </p>
-        <p class="text-align-center large-space-around">
-          <a class="button" href="http://rl-tvrp.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/clubTeams?club=3838" target="_blank">
-            Mannschaften in TORP
-          </a>
-        </p>
+        <p>Unsere Damen- und Herrenmannschaften in der Sommersaison&nbsp;2020:</p>
+        <div class="tiles">
+          <div onclick="openTeamLink('2425836', '2020');">Damen&nbsp;30&nbsp;1</div>
+          <div>Spielgemeinschaft mit TC&nbsp;Rengsdorf</div>
+
+          <div onclick="openTeamLink('2476580', '2020');">Damen&nbsp;30&nbsp;2</div>
+          <div>Spielgemeinschaft mit TC&nbsp;Rengsdorf</div>
+
+          <div onclick="openTeamLink('2424861', '2020');">Damen&nbsp;40</div>
+          <div>Spielgemeinschaft mit TC&nbsp;Rengsdorf</div>
+
+          <div onclick="openTeamLink('2424858', '2020');">Herren&nbsp;40</div>
+          <div></div>
+        </div>
       </div>
     </section>
   </main>

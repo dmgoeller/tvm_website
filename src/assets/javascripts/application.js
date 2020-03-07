@@ -611,3 +611,15 @@ function alert(message) {
     alert.remove();
   });
 }
+
+/**********************************************************************
+ * external links
+ **********************************************************************/
+
+function openTeamLink(team_id, year) {
+  window.open(
+    'http://tvrp.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/teamPortrait' + 
+    '?team=' + team_id + 
+    '&championship=RL+' + year
+  );
+}
