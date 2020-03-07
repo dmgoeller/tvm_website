@@ -153,7 +153,7 @@ body > header li {
   white-space: nowrap;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   /* app bar */
   .app-bar {
     box-sizing: border-box;
@@ -377,7 +377,7 @@ body > footer.copyright p {
   font-size: .8rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   body > footer.links .container {
     grid-template-columns: 1fr;
     padding: .25rem 0;
@@ -457,7 +457,7 @@ body > footer.copyright p {
   flex-direction: column;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   .container {
     width: 100%;
     margin-left: 1rem;
@@ -688,7 +688,7 @@ nav .button-with-icon:before {
   transform: scale(1, 1);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.99px) {
   .alert .box {
     max-width: 80%;
   }
