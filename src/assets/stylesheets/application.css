@@ -548,7 +548,7 @@ nav .button-with-icon {
 }
 
 .button:active:before {
-  opacity: .33;
+  opacity: .15;
   transform: scale(1, 1);
 }
 
@@ -568,6 +568,7 @@ nav .button-with-icon:before {
 }
 
 .tiles > * {
+  position: relative;
   padding: .5rem;
   display: flex;
   flex-direction: column;
@@ -583,6 +584,26 @@ nav .button-with-icon:before {
 
 .tiles > *[onclick]:hover {
   background: var(--button--hover--background);
+}
+
+/* ripple effect */
+.tiles > *[onclick]:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0;
+  transform: scale(0,   border-radius: 8px;0);
+  transition: transform .15s;
+}
+
+.tiles > *[onclick]:active:before {
+  opacity: .15;
+  transform: scale(1, 1);
 }
 
 /**********************************************************************
