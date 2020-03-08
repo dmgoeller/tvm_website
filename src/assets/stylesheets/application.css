@@ -40,7 +40,7 @@
   --button--background: rgb(120, 21, 21); /* #781515 */
   --button--hover--background: rgb(128, 35, 35);
   --color: #616161;
-  --clickable-tile-color: #fff;
+  --clickable-tile--color: #fff;
   --clickable-tile--background: rgba(120, 21, 21, 0.9); /* #781515 */
   --clickable-tile--hover--background: rgba(128, 35, 35, .9);
   --dialog--background: #fff;
@@ -135,6 +135,35 @@ body {
   font-size: 12pt; /* = 16px */
   color: var(--color);
   background: var(--background);
+}
+
+/**********************************************************************
+ * containers
+ **********************************************************************/
+
+ .container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767.99px) {
+  .container {
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px)  {
+  .container {
+    width: 960px;
+  }
 }
 
 /**********************************************************************
@@ -434,35 +463,6 @@ body > footer.copyright p {
 }
 
 /**********************************************************************
- * containers
- **********************************************************************/
-
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-@media (max-width: 767.99px) {
-  .container {
-    width: 100%;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    width: 720px;
-  }
-}
-
-@media (min-width: 992px)  {
-  .container {
-    width: 960px;
-  }
-}
-
-/**********************************************************************
  * clickable elements
  **********************************************************************/
 
@@ -674,7 +674,7 @@ body > footer.copyright p {
 }
 
 /**********************************************************************
- * ripple effects
+ * ripple-like effects
  **********************************************************************/
 
 .button:before,
