@@ -67,7 +67,7 @@ article picture > img[data-lazy-loading] {
   opacity: 0;
 }
 
-article picture > .loading-indicator {
+article picture > .image-loading-indicator {
   position: absolute;
   z-index: 1;
   top: 0;
@@ -281,10 +281,6 @@ article .menu-item .title {
 article .menu-item .subline {
   flex: 1 0 auto;
   margin-top: .25rem;
-}
-
-article .menu-item.loading:after {
-  background: var(--primary--color);
 }
 
 @media (max-width: 767.99px) {
@@ -861,11 +857,6 @@ article#sponsors .sponsors a {
 
 article#sponsors .sponsors picture {
   background: inherit;
-}
-
-article#sponsors .sponsors .loading-indicator {
-  height: 100%;
-  width: 100%;
 }
 
 @media (max-width: 767.99px) {
