@@ -37,9 +37,12 @@
   --box-shadow-4dp: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
   --box-shadow-24dp: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
   --button--color: #fff;
-  --button--background: rgba(120, 21, 21, 0.9); /* #781515 */
-  --button--hover--background: rgba(128, 35, 35, .9);
+  --button--background: rgb(120, 21, 21); /* #781515 */
+  --button--hover--background: rgb(128, 35, 35);
   --color: #616161;
+  --clickable-tile-color: #fff;
+  --clickable-tile--background: rgba(120, 21, 21, 0.9); /* #781515 */
+  --clickable-tile--hover--background: rgba(128, 35, 35, .9);
   --dialog--background: #fff;
   --dialog-action--border-color: #e8e8e8;
   --dialog-action--hover--background: rgba(0, 0, 0, .075);
@@ -237,26 +240,6 @@ body > header li {
 
   .app-menu li:hover {
     background: var(--app-menu-item--hover--background);
-  }
-
-  /* ripple effect */
-  .app-menu li:before {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    opacity: 0;
-    transform: scale(0, 1);
-    transition: transform .15s;
-  }
-
-  .app-menu li:active:before {
-    opacity: .15;
-    transform: scale(1, 1);
   }
 
   .app-menu svg {
@@ -480,7 +463,7 @@ body > footer.copyright p {
 }
 
 /**********************************************************************
- * interactive elements
+ * clickable elements
  **********************************************************************/
 
 [onclick]:not(.disabled) {
@@ -507,9 +490,7 @@ body > footer.copyright p {
   text-decoration: none;
   text-shadow: none;
   text-align: center;
-  transition: background .1s;
-  backdrop-filter: var(--backdrop-filter);
-  -webkit-backdrop-filter: var(--backdrop-filter);
+  transition: background .15s; /* hover delay */
 }
 
 .button:hover {
@@ -525,37 +506,6 @@ body > footer.copyright p {
   justify-items: center;
 }
 
-nav .button-with-icon {
-  padding: 8px 4px;
-  border-radius: 4px;
-  grid-template-rows: auto 1fr;
-}
-
-/* ripple effect */
-.button:before {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  background: #fff;
-  opacity: 0;
-  transform: scale(0, 0);
-  transition: transform .15s;
-}
-
-.button:active:before {
-  opacity: .15;
-  transform: scale(1, 1);
-}
-
-nav .button-with-icon:before {
-  border-radius: 4px;
-}
-
 /**********************************************************************
  * tiles
  **********************************************************************/
@@ -568,42 +518,28 @@ nav .button-with-icon:before {
 }
 
 .tiles > * {
-  position: relative;
   padding: .5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 8px;
+  align-items: center;
+  justify-items: center;
+  align-items: center;
   background: var(--tile--background);
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
   line-height: 1.5rem;
+  transition: background .15s; /* hover delay */
 }
 
 .tiles > *[onclick] {
-  color: var(--button--color);
-  background: var(--button--background);  
+  position: relative;
+  color: var(--clickable-tile--color);
+  background: var(--clickable-tile--background);
 }
 
 .tiles > *[onclick]:hover {
-  background: var(--button--hover--background);
-}
-
-/* ripple effect */
-.tiles > *[onclick]:before {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  opacity: 0;
-  transform: scale(0,   border-radius: 8px;0);
-  transition: transform .15s;
-}
-
-.tiles > *[onclick]:active:before {
-  opacity: .15;
-  transform: scale(1, 1);
+  background: var(--clickable-tile--hover--background);
 }
 
 /**********************************************************************
@@ -719,27 +655,6 @@ nav .button-with-icon:before {
   background: var(--dialog-action--hover--background);
 }
 
-/* ripple effect */
-.alert .action:before {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--color);
-  border-radius: 0 0 .5rem .5rem;
-  opacity: 0;
-  transform: scale(0, 1);
-  transition: transform .15s;
-}
-
-.alert .action:active:before {
-  opacity: .15;
-  transform: scale(1, 1);
-}
-
 @media (max-width: 767.99px) {
   .alert .box {
     max-width: 80%;
@@ -755,6 +670,69 @@ nav .button-with-icon:before {
 @media (min-width: 992px)  {
   .alert .box {
     max-width: 640px;
+  }
+}
+
+/**********************************************************************
+ * ripple effects
+ **********************************************************************/
+
+.button:before,
+.tiles > *[onclick]:before,
+.alert .action:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: transform .15s;
+}
+
+.button:before {
+  border-radius: 8px;
+  background: #fff;
+  transform: scale(0, 0);
+}
+
+.tiles > *[onclick]:before {
+  background: #fff;
+  transform: scale(0, 1);
+}
+
+.alert .action:before {
+  background: var(--color);
+  border-radius: 0 0 .5rem .5rem;
+  transform: scale(0, 1);
+}
+
+.button:active:before,
+.tiles > *[onclick]:active:before,
+.alert .action:active:before {
+  opacity: .15;
+  transform: scale(1, 1);
+}
+
+@media (max-width: 767.99px) {
+  .app-menu li:before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    transform: scale(0, 1);
+    transition: transform .15s;
+  }
+
+  .app-menu li:active:before {
+    opacity: .15;
+    transform: scale(1, 1);
   }
 }
 
