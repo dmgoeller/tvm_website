@@ -6,7 +6,7 @@
 /* Layer            Elevation Level  Z-Index
  * ===============  ===============  =======
  * background                             -1
- * page content                 0dp     0, 1
+ * page content           0dp - 2dp     0, 1
  * app bar and menu             4dp        2
  * lightboxes                              3
  * loading-indicator                       4
@@ -36,16 +36,16 @@
   --box-shadow-2dp: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   --box-shadow-4dp: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
   --box-shadow-24dp: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
-  --button--color: #fff;
-  --button--background: rgb(120, 21, 21); /* #781515 */
-  --button--hover--background: rgb(128, 35, 35);
+  --card--background: #f5f5f5;
+  --card-icon--background: #e0e0e0;
   --color: #616161;
   --clickable-tile--color: #fff;
   --clickable-tile--background: rgba(120, 21, 21, 0.9); /* #781515 */
   --clickable-tile--hover--background: rgba(128, 35, 35, .9);
+  --contained-button--color: #fff;
+  --contained-button--background: rgb(120, 21, 21); /* #781515 */
+  --contained-button--hover--background: rgb(128, 35, 35);
   --dialog--background: #fff;
-  --dialog-action--border-color: #e8e8e8;
-  --dialog-action--hover--background: rgba(0, 0, 0, .075);
   --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
   --lightbox--background: #242424;
   --lightbox-button--color: #e0e0e0;
@@ -55,6 +55,7 @@
   --picture--background: #eeeeee;
   --primary--color: #781515;
   --table-header--background: #e0e0e0;
+  --text-button--hover--background: rgba(0, 0, 0, .075);
   --tile--background: #e0e0e0;
 }
 
@@ -70,15 +71,16 @@
     --background: #121212;
     --banner--background: #480000;
     --banner--color: #e0e0e0;
+    --card--background: #202020;
+    --card-icon--background: #616161;
     --color: #e0e0e0;
     --dialog--background: #373737;
-    --dialog-action--border-color: rgba(255, 255, 255, .15);
-    --dialog-action--hover--background: rgba(255, 255, 255, 0.06);
     --header--background: linear-gradient(45deg, #555555, #373737);
     --menu-item--border-color: #424242;
     --picture--background: #2e2e2e;
     --primary--color: #ca8a8b;
     --table-header--background: #424242;
+    --text-button--hover--background: rgba(255, 255, 255, 0.06);
     --tile--background: #424242;
   }
 }
@@ -478,30 +480,46 @@ body > footer.copyright p {
  * buttons
  **********************************************************************/
 
-.button {
-  cursor: pointer;
+.contained-button,
+.text-button {
   position: relative;
-  border-radius: 8px;
-  padding: 8px 16px;
+  box-sizing: border-box;
   line-height: 20px;
-  color: var(--button--color);
-  background: var(--button--background);
-  box-shadow: var(--box-shadow-2dp);
-  text-decoration: none;
-  text-shadow: none;
   text-align: center;
+  text-decoration: none;
+  cursor: pointer;
   transition: background .15s; /* hover delay */
 }
 
-.button:hover {
-  background: var(--button--hover--background);
+.contained-button {
+  border-radius: .5rem;
+  padding: .5rem 1rem;
+  color: var(--contained-button--color);
+  background: var(--contained-button--background);
+  box-shadow: var(--box-shadow-2dp);
+}
+
+.contained-button:hover {
+  background: var(--contained-button--hover--background);
+}
+
+.text-button {
+  min-width: 4rem;
+  padding: .5rem;
+  border-radius: .25rem;
+  color: var(--primary--color);
+  font-weight: bold;
+}
+
+.text-button:hover {
+  background: var(--text-button--hover--background);
 }
 
 .button-with-icon {
-  padding: 8px 16px 8px 12px;
+  padding: .5rem 1rem .5rem .75rem;
   display: inline-grid;
   grid-auto-flow: column;
-  grid-gap: 8px;
+  grid-gap: .5rem;
   align-items: center;
   justify-items: center;
 }
@@ -536,10 +554,132 @@ body > footer.copyright p {
   position: relative;
   color: var(--clickable-tile--color);
   background: var(--clickable-tile--background);
+[Info  - 20:27:44.596] <syntax> Starting...
 }
 
 .tiles > *[onclick]:hover {
   background: var(--clickable-tile--hover--background);
+}
+
+/**********************************************************************
+ * cards
+ **********************************************************************/
+
+.card {
+  border-radius: .25rem;
+  padding: 1rem .5rem .5rem .5rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "card-icon card-title"
+    "card-icon card-subline"
+    "card-text card-text"
+    "card-actions card-actions";
+  background: var(--card--background);
+  box-shadow: var(--box-shadow-2dp);
+  line-height: 1.5rem;
+}
+
+.card-icon {
+  grid-area: card-icon;
+  height: 40px;
+  width: 40px;
+  margin: 0 1rem 0 .5rem;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--card-icon--background);
+}
+
+.card-title {
+  grid-area: card-title;
+  font-weight: bold;
+}
+
+.card-subline {
+  grid-area: card-subline;
+}
+
+.card-text {
+  grid-area: card-text;
+  margin-top: .5rem;
+}
+
+.card-actions {
+  grid-area: card-actions;
+  height: 2.25rem;
+  margin-top: .5rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: .5rem; 
+  align-items: stretch;
+  justify-content: start;
+}
+
+/**********************************************************************
+ * dialogs
+ **********************************************************************/
+
+.dialog-scrim {
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.67);
+}
+
+.dialog-container {
+  margin: 1rem;
+  border-radius: .5rem;
+  display: grid;
+  grid-gap: .5rem;
+  background: var(--dialog--background);
+  box-shadow: var(--box-shadow-24dp);
+}
+
+.dialog-title {
+  margin: 0 1rem .5rem 1rem;
+  font-weight: bold;
+}
+
+.dialog-text {
+  margin: 0 1rem;
+}
+
+.dialog-text p {
+  margin: 0;
+  line-height: 1.5rem;
+}
+
+.dialog-actions {
+  height: 2.25rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: .5rem; 
+  align-items: stretch;
+  justify-content: end;
+}
+
+@media (max-width: 767.99px) {
+  .dialog-container {
+    width: 280px;
+    padding: 1.5rem .5rem .5rem .5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .dialog-container {
+    width: 560px;
+    padding: 1.75rem .5rem .5rem .5rem;
+  }
 }
 
 /**********************************************************************
@@ -604,80 +744,11 @@ body > footer.copyright p {
 }
 
 /**********************************************************************
- * alerts
- **********************************************************************/
-
-.alert {
-  position: fixed;
-  z-index: 5;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.alert .box {
-  max-width: 80%;
-  border-radius: .5rem;
-  flex-direction: row;
-  background: var(--dialog--background);
-  box-shadow: var(--box-shadow-24dp);
-}
-
-.alert .content {
-  padding: 1rem;
-}
-
-.alert .message {
-  font-weight: bold;
-}
-
-.alert .detail {
-  margin-top: .5rem;
-}
-
-.alert .action {
-  cursor: pointer;
-  position: relative;
-  padding: .5rem 1rem;
-  border-top: 1px solid var(--dialog-action--border-color);
-  border-radius: 0 0 .5rem .5rem;
-  text-align: center;
-  font-weight: bold;
-}
-
-.alert .action:hover {
-  background: var(--dialog-action--hover--background);
-}
-
-@media (max-width: 767.99px) {
-  .alert .box {
-    max-width: 80%;
-  }
-}
-
-@media (min-width: 768px) {
-  .alert .box {
-    max-width: 480px;
-  }
-}
-
-@media (min-width: 992px)  {
-  .alert .box {
-    max-width: 640px;
-  }
-}
-
-/**********************************************************************
  * ripple-like effects
  **********************************************************************/
 
-.button:before,
+.contained-button:before,
+.text-button:before,
 .tiles > *[onclick]:before,
 .alert .action:before {
   content: "";
@@ -691,8 +762,14 @@ body > footer.copyright p {
   transition: transform .15s;
 }
 
-.button:before {
+.contained-button:before {
   border-radius: 8px;
+  background: #fff;
+  transform: scale(0, 0);
+}
+
+.text-button:before {
+  border-radius: 4px;
   background: #fff;
   transform: scale(0, 0);
 }
@@ -708,7 +785,8 @@ body > footer.copyright p {
   transform: scale(0, 1);
 }
 
-.button:active:before,
+.contained-button:active:before,
+.text-button:active:before,
 .tiles > *[onclick]:active:before,
 .alert .action:active:before {
   opacity: .15;

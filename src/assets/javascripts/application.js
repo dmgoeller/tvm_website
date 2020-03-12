@@ -428,23 +428,6 @@ function initGalleries() {
   });
 }
 
-function initCalendar() {
-  let today = midnight(new Date());
-
-  selectAll('.calendar .date').forEach(function(dateElement) {
-    if (parseDate(dateElement.innerText) < today) {
-      [
-        dateElement.previousElementSibling,               // day-of-week
-        dateElement,                                      // date
-        dateElement.nextElementSibling,                   // time
-        dateElement.nextElementSibling.nextElementSibling // text
-      ].forEach(function(element) {
-        element.classList.add('expired');
-      });
-    }
-  });
-}
-
 function shuffleChildren(element) {
   element = select(element);
 
@@ -590,26 +573,27 @@ function showLightbox(gallery, initialPosition) {
  **********************************************************************/
 
 function alert(message) {
-  let alert = select('body').addElement('div', 'alert');
-  let box = alert.addElement('div', 'box');
-  let content = box.addElement('div', 'content');
+  let scrim = select('body').addElement('div', 'dialog-scrim');
+  let dialog = scrim.addElement('div', 'dialog-container');
 
   if (typeof message == 'object') {
-    content.addElement('div', 'message').addText(message.message);
-
+    if (message.message) {
+      dialog.addElement('div', 'dialog-title').addText(message.message);
+    }
     if (message.details) {
+      let text = dialog.addElement('div', 'dialog-text');
+
       message.details.forEach(function(detail) {
-        content.addElement('div', 'detail').addText(detail);
+        text.addElement('p').addText(detail);
       });
     }
   } else {
-    content.addText(message);
+    dialog.addElement('div', 'dialog-text').addElement('p').addText(message);
   }
-  let closeButton = box.addElement('div', 'action');
+  let actions = dialog.addElement('div', 'dialog-actions');
+  let closeButton = actions.addElement('div', 'text-button');
   closeButton.addText('Ok');
-  closeButton.addEventListener('click', function() {
-    alert.remove();
-  });
+  closeButton.addEventListener('click', function() { scrim.remove(); });
 }
 
 /**********************************************************************
