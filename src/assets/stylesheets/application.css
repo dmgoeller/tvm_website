@@ -554,7 +554,6 @@ body > footer.copyright p {
   position: relative;
   color: var(--clickable-tile--color);
   background: var(--clickable-tile--background);
-[Info  - 20:27:44.596] <syntax> Starting...
 }
 
 .tiles > *[onclick]:hover {
