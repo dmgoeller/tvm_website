@@ -578,19 +578,19 @@ function alert(message) {
 
   if (typeof message == 'object') {
     if (message.message) {
-      dialog.addElement('div', 'dialog-title').addText(message.message);
+      dialog.addElement('div', 'title').addText(message.message);
     }
     if (message.details) {
-      let text = dialog.addElement('div', 'dialog-text');
+      let text = dialog.addElement('div', 'text');
 
       message.details.forEach(function(detail) {
         text.addElement('p').addText(detail);
       });
     }
   } else {
-    dialog.addElement('div', 'dialog-text').addElement('p').addText(message);
+    dialog.addElement('div', 'text').addElement('p').addText(message);
   }
-  let actions = dialog.addElement('div', 'dialog-actions');
+  let actions = dialog.addElement('div', 'actions');
   let closeButton = actions.addElement('div', 'text-button');
   closeButton.addText('Ok');
   closeButton.addEventListener('click', function() { scrim.remove(); });

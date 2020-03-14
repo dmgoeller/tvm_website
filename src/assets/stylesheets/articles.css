@@ -254,10 +254,52 @@ article section .container .large-space-around:not(:last-child) {
 }
 
 /**********************************************************************
- * menus
+ * lists
  **********************************************************************/
 
-article .menu {
+article ul.menu,
+article ul.calendar {
+  list-style-type: none;
+  padding: 0;
+}
+
+article ul.menu li,
+article ul.calendar li {
+  padding: 1rem .5rem;
+  border-bottom: 1px solid var(--list--border-color);
+  display: grid;
+  transition: background .15s; /* hover delay */
+}
+
+article ul.menu .icon,
+article ul.calendar .icon {
+  grid-area: icon;
+  height: 40px;
+  width: 40px;
+  margin-right: 1rem;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--list-icon--color);
+  background: var(--list-icon--background);
+}
+
+article ul.menu .title,
+article ul.calendar .title {
+  grid-area: title;
+  font-weight: bold;
+}
+
+article ul.menu .subline,
+article ul.calendar .subline {
+  grid-area: subline;
+}
+
+/* menus */
+
+article ul.menu {
   flex: 1 0 auto;
   display: grid;
   align-content: space-evenly;
@@ -265,41 +307,121 @@ article .menu {
   grid-column-gap: 2rem;
 }
 
-article .menu-item {
-  padding: 0 0 .5rem 0;
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid var(--menu-item--border-color);
+article ul.menu li {
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "title"
+    "subline";
+  justify-content: start;
 }
 
-article .menu-item .title {
-  flex: none;
+article ul.menu li:hover {
+  background: var(--list--hover--background);
+}
+
+article ul.menu .title {
   color: var(--primary--color);
-  font-weight: bold;
 }
 
-article .menu-item .subline {
-  flex: 1 0 auto;
-  margin-top: .25rem;
-}
-
-@media (max-width: 767.99px) {
-  article .menu {
-    grid-template-columns: 1fr;
+@media (min-width: 768px) and (orientation: landscape) {
+  article ul.menu {
+    grid-template-columns: 1fr 1fr;
   }
+}
+
+/* calendars */
+
+article ul.calendar li {
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "icon title"
+    "icon subline"
+    "actions actions";
+}
+
+article ul.calendar .actions {
+  grid-area: actions;
+  margin: .5rem 0 -.5rem -.5rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: .5rem; 
+  justify-content: start;
 }
 
 @media (min-width: 768px) {
-  @media (orientation: portrait) {
-    article .menu {
-      grid-template-columns: 1fr;
-    }
+  article ul.calendar {
+    padding-left: 2rem;
+  }
+}
+
+/**********************************************************************
+ * contacts
+ **********************************************************************/
+
+article .contacts {
+  display: grid;
+}
+
+article .contact {
+  display: grid;
+  grid-gap: 1rem;
+  line-height: 1.5rem;
+}
+
+article .contacts .contact {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--list--border-color);
+}
+
+article .contact picture {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+}
+
+article .contact picture > img {
+  border-radius: 50%;
+}
+
+article .contact .name {
+  font-weight: bold;
+}
+
+article .contact .contact-details {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 8px;
+  align-items: center;
+  justify-content: start;
+}
+
+@media not all and (min-width: 480px) {
+  article .contact {
+    grid-template-columns: auto;
+    text-align: center;
   }
 
-  @media (orientation: landscape) {
-    article .menu {
-      grid-template-columns: 1fr 1fr;
-    }
+  article .contact picture {
+    justify-self: center;
+  }
+
+  article .contact .contact-details {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 480px) {
+  article .contact {
+    grid-template-columns: auto 1fr;
+  }
+}
+
+@media (min-width: 992px)  {
+  article .contacts {
+    align-self: stretch;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2rem;
+    align-content: space-evenly;
   }
 }
 
@@ -528,72 +650,6 @@ article .lb-button:not(.disabled):hover {
 }
 
 /**********************************************************************
- * contacts
- **********************************************************************/
-
-article .contacts {
-  display: grid;
-  grid-gap: 2rem;
-}
-
-article .contact {
-  display: grid;
-  grid-gap: 1rem;
-  line-height: 1.5rem;
-}
-
-article .contact picture {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-}
-
-article .contact picture > img {
-  border-radius: 50%;
-}
-
-article .contact .name {
-  font-weight: bold;
-}
-
-article .contact .contact-details {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 8px;
-  align-items: center;
-  justify-content: start;
-}
-
-@media (max-width: 479.99px) {
-  article .contact {
-    grid-template-columns: auto;
-    text-align: center;
-  }
-
-  article .contact picture {
-    justify-self: center;
-  }
-
-  article .contact .contact-details {
-    justify-content: center;
-  }
-}
-
-@media (min-width: 480px) {
-  article .contact {
-    grid-template-columns: auto 1fr;
-  }
-}
-
-@media (min-width: 992px)  {
-  article .contacts {
-    align-self: stretch;
-    grid-template-columns: 1fr 1fr;
-    align-content: space-evenly;
-  }
-}
-
-/**********************************************************************
  * startpage
  **********************************************************************/
 
@@ -723,7 +779,7 @@ article#startpage .headline subline {
   font-size: 1.5rem;
 }
 
-@media (max-width:479.99px) {
+@media not all and (min-width: 480px) {
   article#startpage .headline {
     grid-template-columns: auto;
     grid-row-gap: 1rem;
@@ -778,7 +834,7 @@ article#sponsors .sponsors picture {
   background: inherit;
 }
 
-@media (max-width: 767.99px) {
+@media not all and (min-width: 768px) {
   article#sponsors .sponsors {
     grid-template-columns: 1fr;
   }
