@@ -20,15 +20,17 @@
 :root {
   --alternative--background: #f5f5f5;
   --app-bar--background: #781515;
-  --app-bar--transluent-background: #781515e0;
+  --app-bar--translucent-background: #781515e0;
   --app-bar--color: #fff;
   --app-bar--border-color: #601010;
   --app-bar--hover--background: #ffffff18;
   --app-bar--active--background: #ffffff30;
   --app-footer-links--background: #e0e0e0;
+  --app-footer-links--hover--background: #00000010;
+  --app-footer-links--active--background: #00000020;
   --app-menu--color: #424242;
   --app-menu--background: #e0e0e0;
-  --app-menu--transluent-background: #e0e0e0e0;
+  --app-menu--translucent-background: #e0e0e0e0;
   --app-menu--border-color: #00000028;
   --app-menu--hover--background: #00000010;
   --app-menu--active--background: #00000020;
@@ -49,11 +51,11 @@
   --lightbox--background: #242424;
   --lightbox-button--color: #e0e0e0;
   --lightbox-viewport--background: #121212;
-  --list--border-color: #e0e0e0;
-  --list--hover--background: #00000010;
-  --list--active--background: #00000020;
-  --list-icon--color: #fff;
-  --list-icon--background: #bdbdbd;
+  --list-divider--color: #e0e0e0;
+  --list-item--hover--background: #00000010;
+  --list-item--active--background: #00000020;
+  --list-item-icon--color: #fff;
+  --list-item-icon--background: #bdbdbd;
   --loading-indicator-background: #ffffff80;
   --picture--background: #eeeeee;
   --primary--color: #781515;
@@ -71,11 +73,13 @@
     --alternative--background: #202020;
     --app-menu--color: #fff;
     --app-menu--background: #272727;
-    --app-menu--transluent-background: #272727e0;
+    --app-menu--translucent-background: #272727e0;
     --app-menu--border-color: #ffffff28;
     --app-menu--hover--background: #ffffff10;
     --app-menu--active--background: #ffffff20;
     --app-footer-links--background: #2e2e2e;
+    --app-footer-links--hover--background: #ffffff10;
+    --app-footer-links--active--background: #ffffff20;
     --background: #121212;
     --banner--background: #480000;
     --banner--color: #e0e0e0;
@@ -84,7 +88,7 @@
     --contained-button--active--background: #8c3838; /* 15% white overlay transparency */
     --dialog--background: #373737;
     --header--background: linear-gradient(45deg, #555555, #373737);
-    --list--border-color: #424242;
+    --list-divider--color: #424242;
     --list--hover--background: #ffffff10;
     --list--active--background: #ffffff20;
     --list-icon--color: #121212;
@@ -232,7 +236,7 @@ body > header li {
     background: var(--app-bar--active--background);
   }
 
-  /* back and menu button */
+  /* buttons */
 
   #back-button,
   #menu-button {
@@ -310,22 +314,22 @@ body > header li {
 
   @supports (backdrop-filter: var(--backdrop-filter)) {
     .app-bar {
-      background: var(--app-bar--transluent-background);
+      background: var(--app-bar--translucent-background);
       backdrop-filter: var(--backdrop-filter);
     }
     .app-menu ul {
-      background: var(--app-menu--transluent-background);
+      background: var(--app-menu--translucent-background);
       backdrop-filter: var(--backdrop-filter);
     }
   }
 
   @supports (-webkit-backdrop-filter: var(--backdrop-filter)) {
     .app-bar {
-      background: var(--app-bar--transluent-background);
+      background: var(--app-bar--translucent-background);
       -webkit-backdrop-filter: var(--backdrop-filter);
     }
     .app-menu ul {
-      background: var(--app-menu--transluent-background);
+      background: var(--app-menu--translucent-background);
       -webkit-backdrop-filter: var(--backdrop-filter);
     }
   }
@@ -353,6 +357,11 @@ body > header li {
     align-items: stretch;
   }
 
+  .app-menu svg,
+  #menu-button {
+    display: none;
+  }
+
   body > header ul {
     display: grid;
     grid-column-gap: 2rem;
@@ -378,21 +387,16 @@ body > header li {
     background: var(--app-bar--active--background);
   }
 
-  .app-menu svg,
-  #menu-button {
-    display: none;
-  }
-
   @supports (backdrop-filter: var(--backdrop-filter)) {
     body > header {
-      background: var(--app-bar--transluent-background);
+      background: var(--app-bar--translucent-background);
       backdrop-filter: var(--backdrop-filter);
     }
   }
 
   @supports (-webkit-backdrop-filter: var(--backdrop-filter)) {
     body > header {
-      background: var(--app-bar--transluent-background);
+      background: var(--app-bar--translucent-background);
       -webkit-backdrop-filter: var(--backdrop-filter);
     }
   }
@@ -431,8 +435,12 @@ body > footer.links .container {
   display: grid;
 }
 
-body > footer.links .link.progress:after {
-  background: var(--color);
+body > footer.links .link:hover {
+  background: var(--app-footer-links--hover--background);
+}
+
+body > footer.links .link:active {
+  background: var(--app-footer-links--active--background);
 }
 
 body > footer.copyright {
@@ -454,7 +462,9 @@ body > footer.copyright p {
 
   body > footer.links .link {
     justify-self: start;
-    padding: .25rem 0;
+    margin-left: -.5rem;
+    padding: .5rem;
+    border-radius: .25rem;
   }
 }
 
@@ -465,19 +475,21 @@ body > footer.copyright p {
 
   body > footer.links .container {
     grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
   }
 
   body > footer.links .container .link {
-    justify-self: center;
-    padding: .5rem 0;
+    padding: .5rem;
   }
 
   body > footer.links .container > *:first-child {
     justify-self: start;
+    margin-left: -.5rem;
   }
 
   body > footer.links .container > *:last-child {
     justify-self: end;
+    margin-right: -.5rem;
   }
 }
 

@@ -257,21 +257,26 @@ article section .container .large-space-around:not(:last-child) {
  * lists
  **********************************************************************/
 
-article ul.menu,
-article ul.calendar {
+article ul.list {
   list-style-type: none;
   padding: 0;
 }
 
-article ul.menu li,
-article ul.calendar li {
+article ul.list li {
   padding: 1rem .5rem;
-  border-bottom: 1px solid var(--list--border-color);
+  border-bottom: 1px solid var(--list-divider--color);
   display: grid;
 }
 
-article ul.menu .icon,
-article ul.calendar .icon {
+article ul.list li[onclick]:hover {
+  background: var(--list-item--hover--background);
+}
+
+article ul.list li[onclick]:active {
+  background: var(--list-item--active--background);
+}
+
+article ul.list .icon {
   grid-area: icon;
   height: 40px;
   width: 40px;
@@ -281,19 +286,26 @@ article ul.calendar .icon {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: var(--list-icon--color);
-  background: var(--list-icon--background);
+  color: var(--list-item-icon--color);
+  background: var(--list-item-icon--background);
 }
 
-article ul.menu .title,
-article ul.calendar .title {
+article ul.list .title {
   grid-area: title;
   font-weight: bold;
 }
 
-article ul.menu .subline,
-article ul.calendar .subline {
+article ul.list .subline {
   grid-area: subline;
+}
+
+article ul.list .actions {
+  grid-area: actions;
+  margin: .5rem 0 -.5rem -.5rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: .5rem; 
+  justify-content: start;
 }
 
 /* menus */
@@ -314,14 +326,6 @@ article ul.menu li {
   justify-content: start;
 }
 
-article ul.menu li:hover {
-  background: var(--list--hover--background);
-}
-
-article ul.menu li:active {
-  background: var(--list--active--background);
-}
-
 article ul.menu .title {
   color: var(--primary--color);
 }
@@ -340,15 +344,6 @@ article ul.calendar li {
     "icon title"
     "icon subline"
     "actions actions";
-}
-
-article ul.calendar .actions {
-  grid-area: actions;
-  margin: .5rem 0 -.5rem -.5rem;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: .5rem; 
-  justify-content: start;
 }
 
 @media (min-width: 768px) {
@@ -865,7 +860,6 @@ article#sponsors .sponsors a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff; 
 }
 
 article#sponsors .sponsors picture {
@@ -887,6 +881,12 @@ article#sponsors .sponsors picture {
 @media (min-width: 992px) {
   article#sponsors .sponsors {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  article#sponsors .sponsors a {
+    background: #e0e0e0; 
   }
 }
 
