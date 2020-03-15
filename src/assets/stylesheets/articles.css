@@ -268,7 +268,6 @@ article ul.calendar li {
   padding: 1rem .5rem;
   border-bottom: 1px solid var(--list--border-color);
   display: grid;
-  transition: background .15s; /* hover delay */
 }
 
 article ul.menu .icon,
@@ -317,6 +316,10 @@ article ul.menu li {
 
 article ul.menu li:hover {
   background: var(--list--hover--background);
+}
+
+article ul.menu li:active {
+  background: var(--list--active--background);
 }
 
 article ul.menu .title {
@@ -551,6 +554,7 @@ article .lightbox {
   display: flex;
   justify-content: space-around;
   background: var(--lightbox--background);
+  animation: fade-in .5s;
 }
 
 article .lb-container {
@@ -581,7 +585,7 @@ article .lb-button {
   height: 24px;
   width: 24px;
   color: var(--lightbox-button--color);
-  transition: opacity .3s;
+  transition: opacity .25s;
 }
 
 article .lb-button.disabled {
@@ -647,6 +651,40 @@ article .lb-button:not(.disabled):hover {
     bottom: 50%;
     right: 16px;
   }
+}
+
+/**********************************************************************
+ * tiles
+ **********************************************************************/
+
+ article .tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  grid-gap: 2px;
+}
+
+article .tiles > * {
+  padding: .5rem;
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: .5rem;
+  align-items: center;
+  justify-items: center;
+  align-items: center;
+  color: var(--tile--color);
+  background: var(--tile--background);
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
+  line-height: 1.5rem;
+}
+
+article .tiles > *:hover {
+  background: var(--tile--hover--background);
+}
+
+article .tiles > *:active {
+  background: var(--tile--active--background);
 }
 
 /**********************************************************************

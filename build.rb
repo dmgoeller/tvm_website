@@ -150,10 +150,6 @@ def build_html(filename, options = {})
     # embed stylesheets
     html.gsub!(/\<link.*href\=\"assets\/stylesheets\/(\w|\-)*\.css\".*\>/) { |link|
       stylesheet = File.read(link.match(/(\w|\-|\/)*\.css/)[0])
-      stylesheet.gsub!(/url\(\'(\w|\-|\/|\.)*\.svg\'\)/) { |chunk|
-        icon = options[:icons][chunk.match(/(\w|\-)*\.svg/)[0]]
-        "url(data:image/svg+xml,#{uri_escape(icon)})"
-      }
       stylesheet.gsub!('url(../../fonts/', 'url(fonts/')
       stylesheet = CSSminify.compress(stylesheet)
       "<style>\n#{stylesheet}\n</style>"
