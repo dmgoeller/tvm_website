@@ -19,19 +19,19 @@
 
 :root {
   --alternative--background: #f5f5f5;
-  --app-bar--background: rgb(120, 21, 21); /* #781515 */
-  --app-bar--transluent-background: rgba(120, 21, 21, .9);
+  --app-bar--background: #781515;
+  --app-bar--transluent-background: #781515e0;
   --app-bar--color: #fff;
   --app-bar--border-color: #601010;
-  --app-bar--hover--background: rgba(255, 255, 255, .1);
-  --app-bar--active--background: rgba(255, 255, 255, .2);
+  --app-bar--hover--background: #ffffff18;
+  --app-bar--active--background: #ffffff30;
   --app-footer-links--background: #e0e0e0;
   --app-menu--color: #424242;
-  --app-menu--background: rgb(224, 224, 224); /* #e0e0e0 */
-  --app-menu--transluent-background: rgba(224, 224, 224, .9);
-  --app-menu--border-color: rgba(0, 0, 0, .15);
-  --app-menu--hover--background: rgba(0, 0, 0, .05);
-  --app-menu--active--background: rgba(0, 0, 0, .1);
+  --app-menu--background: #e0e0e0;
+  --app-menu--transluent-background: #e0e0e0e0;
+  --app-menu--border-color: #00000028;
+  --app-menu--hover--background: #00000010;
+  --app-menu--active--background: #00000020;
   --backdrop-filter: blur(8px);
   --background: #fff;
   --banner--background: #ad463c;
@@ -41,59 +41,59 @@
   --box-shadow-24dp: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
   --color: #616161;
   --contained-button--color: #fff;
-  --contained-button--background: rgb(120, 21, 21); /* #781515 */
-  --contained-button--hover--background: rgb(133, 44, 44); /* 10% white */
-  --contained-button--active--background: rgb(147, 68, 68); /* 20% white */
+  --contained-button--background: #781515;
+  --contained-button--hover--background: #852c2c; /* 10% white overlay transparency */
+  --contained-button--active--background: #934444; /* 20% white overlay transparency */
   --dialog--background: #fff;
   --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
   --lightbox--background: #242424;
   --lightbox-button--color: #e0e0e0;
   --lightbox-viewport--background: #121212;
   --list--border-color: #e0e0e0;
-  --list--hover--background: rgba(0, 0, 0, .05);
-  --list--active--background: rgba(0, 0, 0, .1);
+  --list--hover--background: #00000010;
+  --list--active--background: #00000020;
   --list-icon--color: #fff;
   --list-icon--background: #bdbdbd;
-  --loading-indicator-background: rgba(255, 255, 255, .5);
+  --loading-indicator-background: #ffffff80;
   --picture--background: #eeeeee;
   --primary--color: #781515;
   --table-header--background: #e0e0e0;
-  --text-button--hover--background: rgba(0, 0, 0, .05);
-  --text-button--active--background: rgba(0, 0, 0, .1);
+  --text-button--hover--background: #00000010;
+  --text-button--active--background: #00000020;
   --tile--color: #fff;
-  --tile--background: rgba(120, 21, 21, .9); /* #781515 */
-  --tile--hover--background: rgba(133, 44, 44, .9); /* 10% white */
-  --tile--active--background: rgba(147, 68, 68, .9); /* TODO 20% white */
+  --tile--background: #781515e0;
+  --tile--hover--background: #852c2ce0;
+  --tile--active--background: #934444e0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --alternative--background: #202020;
     --app-menu--color: #fff;
-    --app-menu--background: rgb(39, 39, 39); /* #272727 */
-    --app-menu--transluent-background: rgba(39, 39, 39, .9);
-    --app-menu--border-color: rgba(255, 255, 255, .15);
-    --app-menu--hover--background: rgba(255, 255, 255, .05);
-    --app-menu--active--background: rgba(255, 255, 255, .1);
+    --app-menu--background: #272727;
+    --app-menu--transluent-background: #272727e0;
+    --app-menu--border-color: #ffffff28;
+    --app-menu--hover--background: #ffffff10;
+    --app-menu--active--background: #ffffff20;
     --app-footer-links--background: #2e2e2e;
     --background: #121212;
     --banner--background: #480000;
     --banner--color: #e0e0e0;
     --color: #e0e0e0;
-    --contained-button--hover--background: rgb(130, 38, 38); /* 7.5% white */
-    --contained-button--active--background: rgb(140, 56, 56); /* 15% white */
+    --contained-button--hover--background: #822626; /* 7.5% white overlay transparency */
+    --contained-button--active--background: #8c3838; /* 15% white overlay transparency */
     --dialog--background: #373737;
     --header--background: linear-gradient(45deg, #555555, #373737);
     --list--border-color: #424242;
-    --list--hover--background: rgba(255, 255, 255, .075);
-    --list--active--background: rgba(255, 255, 255, .15);
+    --list--hover--background: #ffffff10;
+    --list--active--background: #ffffff20;
     --list-icon--color: #121212;
     --list-icon--background: #747474;
     --picture--background: #2e2e2e;
     --primary--color: #ca8a8b;
     --table-header--background: #424242;
-    --text-button--hover--background: rgba(255, 255, 255, .1);
-    --text-button--active--background: rgba(255, 255, 255, .2);
+    --text-button--hover--background: #ffffff18;
+    --text-button--active--background: #ffffff30;
   }
 }
 

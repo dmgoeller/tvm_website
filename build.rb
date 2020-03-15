@@ -45,6 +45,12 @@ def uri_escape(s)
   URI.escape(s.gsub('(', '%28').gsub(')', '%29'))
 end
 
+def hex_to_rgba(hex)
+  decimals = [1, 3, 5, 7].map { |i| hex[i..(i+1)].to_i(16) }
+  decimals[3] = (decimals[3]).to_f / 256 # alpha
+  "rgba(#{decimals.join(',')})"
+end
+
 def deep_merge(h1, h2)
   h1.dup.tap { |merged|
     h2.each_pair do |key, value|
@@ -150,6 +156,7 @@ def build_html(filename, options = {})
     # embed stylesheets
     html.gsub!(/\<link.*href\=\"assets\/stylesheets\/(\w|\-)*\.css\".*\>/) { |link|
       stylesheet = File.read(link.match(/(\w|\-|\/)*\.css/)[0])
+      stylesheet.gsub!(/#[0-9a-fA-F]{8}/) { |color| hex_to_rgba(color) }
       stylesheet.gsub!('url(../../fonts/', 'url(fonts/')
       stylesheet = CSSminify.compress(stylesheet)
       "<style>\n#{stylesheet}\n</style>"
