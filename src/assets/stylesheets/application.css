@@ -89,10 +89,10 @@
     --dialog--background: #373737;
     --header--background: linear-gradient(45deg, #555555, #373737);
     --list-divider--color: #424242;
-    --list--hover--background: #ffffff10;
-    --list--active--background: #ffffff20;
-    --list-icon--color: #121212;
-    --list-icon--background: #747474;
+    --list-item--hover--background: #ffffff10;
+    --list-item--active--background: #ffffff20;
+    --list-item-icon--color: #121212;
+    --list-item-icon--background: #747474;
     --picture--background: #2e2e2e;
     --primary--color: #ca8a8b;
     --table-header--background: #424242;

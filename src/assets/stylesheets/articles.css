@@ -236,20 +236,22 @@ article section.banner {
   color: var(--banner--color);
 }
 
-article section .container {
+/* containers */
+
+article section > .container {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
 
-article section .container > *:not(:first-child) {
+article section > .container > *:not(:first-child) {
   margin-top: 1rem;
 }
 
-article section .container .large-space-around:not(:first-child) {
+article section > .container .large-space-around:not(:first-child) {
   margin-top: 2rem !important;
 }
 
-article section .container .large-space-around:not(:last-child) {
+article section > .container .large-space-around:not(:last-child) {
   margin-bottom: 1rem;
 }
 
@@ -262,24 +264,41 @@ article ul.list {
   padding: 0;
 }
 
-article ul.list li {
-  padding: 1rem .5rem;
-  border-bottom: 1px solid var(--list-divider--color);
-  display: grid;
+@media (min-width: 768px) {
+  article ul.list.menu,
+  article ul.list.contacts {
+    flex: 1 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2rem;
+    align-content: space-evenly;
+  }
+
+  article ul.list.calendar {
+    padding-left: 2rem;
+  }
 }
 
-article ul.list li[onclick]:hover {
+/* list items */
+
+article ul.list > li {
+  display: grid;
+  padding: 1rem .5rem;
+  border-bottom: 1px solid var(--list-divider--color);
+}
+
+article ul.list > li[onclick]:hover {
   background: var(--list-item--hover--background);
 }
 
-article ul.list li[onclick]:active {
+article ul.list > li[onclick]:active {
   background: var(--list-item--active--background);
 }
 
-article ul.list .icon {
+article ul.list > li > .icon {
   grid-area: icon;
-  height: 40px;
-  width: 40px;
+  height: 2.5rem; /* = 40px */
+  width: 2.5rem;
   margin-right: 1rem;
   display: flex;
   align-self: center;
@@ -290,16 +309,16 @@ article ul.list .icon {
   background: var(--list-item-icon--background);
 }
 
-article ul.list .title {
+article ul.list > li > .title {
   grid-area: title;
   font-weight: bold;
 }
 
-article ul.list .subline {
+article ul.list > li > .subline {
   grid-area: subline;
 }
 
-article ul.list .actions {
+article ul.list > li > .actions {
   grid-area: actions;
   margin: .5rem 0 -.5rem -.5rem;
   display: grid;
@@ -308,17 +327,9 @@ article ul.list .actions {
   justify-content: start;
 }
 
-/* menus */
+/* menu items */
 
-article ul.menu {
-  flex: 1 0 auto;
-  display: grid;
-  align-content: space-evenly;
-  grid-row-gap: 1rem;
-  grid-column-gap: 2rem;
-}
-
-article ul.menu li {
+article ul.list.menu > li {
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "title"
@@ -326,19 +337,13 @@ article ul.menu li {
   justify-content: start;
 }
 
-article ul.menu .title {
+article ul.list.menu > li > .title {
   color: var(--primary--color);
 }
 
-@media (min-width: 768px) and (orientation: landscape) {
-  article ul.menu {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+/* calendar items */
 
-/* calendars */
-
-article ul.calendar li {
+article ul.list.calendar > li {
   grid-template-columns: auto 1fr;
   grid-template-areas:
     "icon title"
@@ -346,81 +351,56 @@ article ul.calendar li {
     "actions actions";
 }
 
-@media (min-width: 768px) {
-  article ul.calendar {
-    padding-left: 2rem;
-  }
+/* contact list items */
+
+article ul.list.contacts > li {
+  padding: 1rem 0;
 }
 
 /**********************************************************************
  * contacts
  **********************************************************************/
 
-article .contacts {
-  display: grid;
-}
-
 article .contact {
   display: grid;
-  grid-gap: 1rem;
+  grid-template-areas:
+    "picture name"
+    "picture subline"
+    "picture contact-details";
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 1rem;
   line-height: 1.5rem;
 }
 
-article .contacts .contact {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--list--border-color);
-}
-
-article .contact picture {
+article .contact > picture {
+  grid-area: picture;
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
 }
 
-article .contact picture > img {
+article .contact > picture > img {
   border-radius: 50%;
 }
 
-article .contact .name {
+article .contact > .name {
+  grid-area: name;
   font-weight: bold;
 }
 
-article .contact .contact-details {
+article .contact > .subline {
+  grid-area: subline;
+}
+
+article .contact > .contact-details {
+  grid-area: contact-details;
   display: grid;
-  grid-auto-flow: column;
-  grid-gap: 8px;
-  align-items: center;
-  justify-content: start;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: .5rem;
 }
 
-@media not all and (min-width: 480px) {
-  article .contact {
-    grid-template-columns: auto;
-    text-align: center;
-  }
-
-  article .contact picture {
-    justify-self: center;
-  }
-
-  article .contact .contact-details {
-    justify-content: center;
-  }
-}
-
-@media (min-width: 480px) {
-  article .contact {
-    grid-template-columns: auto 1fr;
-  }
-}
-
-@media (min-width: 992px)  {
-  article .contacts {
-    align-self: stretch;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 2rem;
-    align-content: space-evenly;
-  }
+article .contact > .contact-details > svg {
+  margin-top: 2px;
 }
 
 /**********************************************************************
