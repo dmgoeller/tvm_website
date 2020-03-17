@@ -450,12 +450,11 @@ function showLightbox(gallery, initialPosition) {
 
   // elements
   let lightbox = select('article').addElement('div', 'lightbox');
-  let container = lightbox.addElement('div', 'lb-container');
-  let viewport = container.addElement('div', 'lb-viewport');
+  let viewport = lightbox.addElement('div', 'lb-viewport');
   let pictures = viewport.addElement('div', 'lb-pictures');
-  let closeButton = container.addElement('div', 'lb-button lb-close-button').setIcon('close');
-  let prevButton = container.addElement('div', 'lb-button lb-prev-button').setIcon('chevron-left');
-  let nextButton = container.addElement('div', 'lb-button lb-next-button').setIcon('chevron-right');
+  let closeButton = lightbox.addElement('div', 'lb-button lb-close-button').setIcon('close');
+  let prevButton = lightbox.addElement('div', 'lb-button lb-prev-button').setIcon('chevron-left');
+  let nextButton = lightbox.addElement('div', 'lb-button lb-next-button').setIcon('chevron-right');
 
   lightbox.preventDefault(['touchmove', 'mousewheel']);
 

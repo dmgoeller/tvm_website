@@ -532,14 +532,9 @@ article .lightbox {
   animation: fade-in .5s;
 }
 
-article .lb-container {
-  position: relative;
-}
-
 article .lb-viewport {
   overflow: hidden;
   display: flex;
-  background: var(--lightbox-viewport--background);
 }
 
 article .lb-pictures {
@@ -552,15 +547,29 @@ article .lb-pictures > picture > img {
   height: 100%;
   width: 100%;
   object-fit: scale-down;
-  background: var(--lightbox-viewport--background);
+  background: var(--lightbox--background);
 }
 
 article .lb-button {
   position: absolute;
-  height: 24px;
-  width: 24px;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--lightbox-button--color);
   transition: opacity .25s;
+}
+
+article .lb-button:hover:not(.disabled) {
+  background: var(--lightbox-button--hover--background);
+  cursor: pointer;
+}
+
+article .lb-button:active:not(.disabled) {
+  background: var(--lightbox-button--active--background);
+  cursor: pointer;
 }
 
 article .lb-button.disabled {
@@ -572,22 +581,14 @@ article .lb-close-button {
   right: 16px;
 }
 
-article .lb-button:not(.disabled):hover {
-  cursor: pointer;
-}
-
 @media (orientation: portrait) {
   article .lightbox {
     flex-direction: column;
   }
 
-  article .lb-container {
-    padding: 56px 0;
-  }
-
   article .lb-viewport,
   article .lb-pictures > picture {
-    height: calc(100vh - 112px);
+    height: calc(100vh - 136px);
     width: 100vw;
   }
 
@@ -607,14 +608,10 @@ article .lb-button:not(.disabled):hover {
     flex-direction: row;
   }
 
-  article .lb-container {
-    padding: 0 56px;
-  }
-
   article .lb-viewport,
   article .lb-pictures > picture {
     height: 100vh;
-    width: calc(100vw - 112px);
+    width: calc(100vw - 136px);
   }
 
   article .lb-prev-button {

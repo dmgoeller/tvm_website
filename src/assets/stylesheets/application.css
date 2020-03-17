@@ -48,8 +48,10 @@
   --contained-button--active--background: #934444; /* 20% white overlay transparency */
   --dialog--background: #fff;
   --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
-  --lightbox--background: #242424;
+  --lightbox--background: #121212;
   --lightbox-button--color: #e0e0e0;
+  --lightbox-button--hover--background: #ffffff10;
+  --lightbox-button--active--background: #ffffff20;
   --lightbox-viewport--background: #121212;
   --list-divider--color: #e0e0e0;
   --list-item--hover--background: #00000010;
