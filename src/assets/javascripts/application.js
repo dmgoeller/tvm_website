@@ -449,13 +449,15 @@ function showLightbox(gallery, initialPosition) {
   gallery = select(gallery);
 
   // elements
+  let body = select('body');
   let lightbox = select('article').addElement('div', 'lightbox');
   let viewport = lightbox.addElement('div', 'lb-viewport');
   let pictures = viewport.addElement('div', 'lb-pictures');
   let closeButton = lightbox.addElement('div', 'lb-button lb-close-button').setIcon('close');
-  let prevButton = lightbox.addElement('div', 'lb-button lb-prev-button').setIcon('chevron-left');
-  let nextButton = lightbox.addElement('div', 'lb-button lb-next-button').setIcon('chevron-right');
+  let prevButton = lightbox.addElement('div', 'lb-button lb-prev-button').setIcon('chevron-left', 32, 32);
+  let nextButton = lightbox.addElement('div', 'lb-button lb-next-button').setIcon('chevron-right', 32, 32);
 
+  body.classList.add('overflow-hidden'); // remove scrollbars if any
   lightbox.preventDefault(['touchmove', 'mousewheel']);
 
   // pictures
@@ -508,6 +510,7 @@ function showLightbox(gallery, initialPosition) {
     lightbox.remove();
     window.removeEventListener('keyup', onKeyup);
     window.removeEventListener('resize', onResize);
+    body.classList.remove('overflow-hidden');
   };
 
   // resize events

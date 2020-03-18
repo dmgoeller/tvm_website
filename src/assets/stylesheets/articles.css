@@ -527,30 +527,31 @@ article .lightbox {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-around;
-  background: var(--lightbox--background);
+  align-items: center;
+  justify-content: center;
+  background: var(--alternative--background);
   animation: fade-in .5s;
 }
 
-article .lb-viewport {
+article .lightbox .lb-viewport {
   overflow: hidden;
   display: flex;
 }
 
-article .lb-pictures {
+article .lightbox .lb-pictures {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 8px;
 }
 
-article .lb-pictures > picture > img {
+article .lightbox .lb-pictures img {
   height: 100%;
   width: 100%;
   object-fit: scale-down;
-  background: var(--lightbox--background);
+  background: var(--alternative--background);
 }
 
-article .lb-button {
+article .lightbox .lb-button {
   position: absolute;
   height: 36px;
   width: 36px;
@@ -558,70 +559,62 @@ article .lb-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--lightbox-button--color);
+  color: var(--color);
   transition: opacity .25s;
 }
 
-article .lb-button:hover:not(.disabled) {
-  background: var(--lightbox-button--hover--background);
+article .lightbox .lb-button:hover:not(.disabled) {
+  background: var(--text-button--hover--background);
   cursor: pointer;
 }
 
-article .lb-button:active:not(.disabled) {
-  background: var(--lightbox-button--active--background);
+article .lightbox .lb-button:active:not(.disabled) {
+  background: var(--text-button--active--background);
   cursor: pointer;
 }
 
-article .lb-button.disabled {
-  opacity: .25;
+article .lightbox .lb-button.disabled {
+  opacity: .33;
 }
 
-article .lb-close-button {
-  top: 16px;
-  right: 16px;
+article .lightbox .lb-close-button {
+  top: 10px;
+  right: 10px;
 }
 
 @media (orientation: portrait) {
-  article .lightbox {
-    flex-direction: column;
-  }
-
   article .lb-viewport,
   article .lb-pictures > picture {
-    height: calc(100vh - 136px);
+    height: calc(100vh - 112px);
     width: 100vw;
   }
 
   article .lb-prev-button {
-    bottom: 16px;
-    left: 16px;
+    bottom: 10px;
+    left: 10px;
   }
 
   article .lb-next-button {
-    bottom: 16px;
-    right: 16px;
+    bottom: 10px;
+    right: 10px;
   }
 }
 
 @media (orientation: landscape) {
-  article .lightbox {
-    flex-direction: row;
-  }
-
   article .lb-viewport,
   article .lb-pictures > picture {
     height: 100vh;
-    width: calc(100vw - 136px);
+    width: calc(100vw - 112px);
   }
 
   article .lb-prev-button {
-    bottom: 50%;
-    left: 16px;
+    top: calc(max(50% - 18px, 54px));
+    left: 10px;
   }
 
   article .lb-next-button {
-    bottom: 50%;
-    right: 16px;
+    top: calc(max(50% - 18px, 54px));
+    right: 10px;
   }
 }
 
