@@ -417,6 +417,19 @@ function imageLoaded(image) {
  * onload handlers
  **********************************************************************/
 
+function initDates() {
+  selectAll('ul.dates > li').forEach(function(date) {
+    let expiresAt = date.getAttribute('data-expires-at');
+
+    if (expiresAt && (new Date(expiresAt)) <= Date.now()) {
+      date.querySelectorAll('a.text-button').forEach(function(button) {
+        button.removeAttribute('href');
+        button.classList.add('disabled');
+      });
+    }
+  });
+}
+
 function initGalleries() {
   selectAll('.gallery').forEach(function(gallery) {
     let pictures = gallery.querySelectorAll('picture');

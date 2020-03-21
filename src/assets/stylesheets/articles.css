@@ -274,7 +274,7 @@ article ul.list {
     align-content: space-evenly;
   }
 
-  article ul.list.calendar {
+  article ul.list.dates {
     padding-left: 2rem;
   }
 }
@@ -341,9 +341,9 @@ article ul.list.menu > li > .title {
   color: var(--primary--color);
 }
 
-/* calendar items */
+/* dates */
 
-article ul.list.calendar > li {
+article ul.list.dates > li {
   grid-template-columns: auto 1fr;
   grid-template-areas:
     "icon title"
@@ -351,7 +351,7 @@ article ul.list.calendar > li {
     "actions actions";
 }
 
-/* contact list items */
+/* contacts */
 
 article ul.list.contacts > li {
   padding: 1rem 0;
@@ -639,8 +639,6 @@ article .tiles > * {
   align-items: center;
   color: var(--tile--color);
   background: var(--tile--background);
-  backdrop-filter: var(--backdrop-filter);
-  -webkit-backdrop-filter: var(--backdrop-filter);
   line-height: 1.5rem;
 }
 
@@ -650,6 +648,18 @@ article .tiles > *:hover {
 
 article .tiles > *:active {
   background: var(--tile--active--background);
+}
+
+@supports (backdrop-filter: var(--backdrop-filter)) {
+  article .tiles > * {
+    backdrop-filter: var(--backdrop-filter);
+  }
+}
+
+@supports (-webkit-backdrop-filter: var(--backdrop-filter)) {
+  article .tiles > * {
+    -webkit-backdrop-filter: var(--backdrop-filter);
+  }
 }
 
 /**********************************************************************

@@ -59,6 +59,7 @@
   --table-header--background: #e0e0e0;
   --text-button--hover--background: #00000010;
   --text-button--active--background: #00000020;
+  --text-button--disabled--color: #bdbdbd;
   --tile--color: #fff;
   --tile--background: #781515e0;
   --tile--hover--background: #852c2ce0;
@@ -95,6 +96,7 @@
     --table-header--background: #424242;
     --text-button--hover--background: #ffffff18;
     --text-button--active--background: #ffffff30;
+    --text-button--disabled--color: #747474;
   }
 }
 
@@ -590,11 +592,11 @@ body > footer.copyright p {
   box-shadow: var(--box-shadow-2dp);
 }
 
-.contained-button:hover {
+.contained-button:not(.disabled):hover {
   background: var(--contained-button--hover--background);
 }
 
-.contained-button:active {
+.contained-button:not(.disabled):active {
   background: var(--contained-button--active--background);
   box-shadow: none;
 }
@@ -607,11 +609,16 @@ body > footer.copyright p {
   font-weight: bold;
 }
 
-.text-button:hover {
+.text-button.disabled {
+  pointer-events: none;
+  color: var(--text-button--disabled--color);
+}
+
+.text-button:not(.disabled):hover {
   background: var(--text-button--hover--background);
 }
 
-.text-button:active {
+.text-button:not(.disabled):active {
   background: var(--text-button--active--background);
 }
 
