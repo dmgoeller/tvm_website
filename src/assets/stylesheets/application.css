@@ -34,6 +34,8 @@
   --app-menu--border-color: #00000028;
   --app-menu--hover--background: #00000010;
   --app-menu--active--background: #00000020;
+  --article-header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
+  --article-logo--color: #f5f5f5;
   --backdrop-filter: blur(8px);
   --background: #fff;
   --banner--background: #ad463c;
@@ -47,7 +49,6 @@
   --contained-button--hover--background: #852c2c; /* 10% white overlay transparency */
   --contained-button--active--background: #934444; /* 20% white overlay transparency */
   --dialog--background: #fff;
-  --header--background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
   --list-divider--color: #e0e0e0;
   --list-item--hover--background: #00000010;
   --list-item--active--background: #00000020;
@@ -78,6 +79,8 @@
     --app-footer-links--background: #2e2e2e;
     --app-footer-links--hover--background: #ffffff10;
     --app-footer-links--active--background: #ffffff20;
+    --article-header--background: linear-gradient(45deg, #555555, #373737);
+    --article-logo--color: #747474;
     --background: #121212;
     --banner--background: #480000;
     --banner--color: #e0e0e0;
@@ -85,7 +88,6 @@
     --contained-button--hover--background: #822626; /* 7.5% white overlay transparency */
     --contained-button--active--background: #8c3838; /* 15% white overlay transparency */
     --dialog--background: #373737;
-    --header--background: linear-gradient(45deg, #555555, #373737);
     --list-divider--color: #424242;
     --list-item--hover--background: #ffffff10;
     --list-item--active--background: #ffffff20;

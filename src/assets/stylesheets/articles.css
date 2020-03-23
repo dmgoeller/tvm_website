@@ -140,27 +140,23 @@ article > header > .background {
   z-index: -1;
   height: 100%;
   width: 100%;
-  background: var(--header--background);
+  background: var(--article-header--background);
 }
 
-article > header > .background > img.logo {
+article > header > .background > svg {
   position: absolute;
+  top: 1rem;
   right: 1rem;
-  bottom: -10%;
-  height: 120%;
-  opacity: .33;
+  height: 6rem;
+  width: 6rem;
+  color: var(--article-logo--color);
 }
+
 
 article > header > .background > picture {
   position: absolute;
   height: 100%;
   width: 100%;
-}
-
-@media (max-device-width: 767px) {
-  article > header > .background > img.logo {
-    filter: blur(2px);
-  }
 }
 
 @media (max-device-width: 767px) and (orientation: portrait) {
@@ -170,12 +166,6 @@ article > header > .background > picture {
 
   article > header > picture.background:not(.mobile-portrait) > img {
     transform: scale(1.25);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  article > header > .background > img.logo {
-    opacity: .15;
   }
 }
 
@@ -190,6 +180,7 @@ article > header > .foreground {
 
 article > header > .foreground > .container {
   margin-bottom: 1rem;
+  /*padding-right: 8rem;*/
   justify-content: flex-end;
 }
 
@@ -757,29 +748,8 @@ article#startpage .headline {
   display: grid;
 }
 
-article#startpage .headline .logo {
-  position: relative;
-  height: 4rem;
-  width: 4rem;
-}
-
-article#startpage .headline .logo > img,
-article#startpage .headline .logo .placeholder-image {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
-
-article#startpage .headline .logo .placeholder-image circle {
-  fill: var(--primary--color);
-}
-
-article#startpage .headline .logo > img[data-lazy-loading] {
-  opacity: 0;
-}
-
-article#startpage .headline .logo > img:not([data-lazy-loading]) ~ .placeholder-image {
-  display: none;
+article#startpage .headline svg {
+  color: var(--primary--color);
 }
 
 article#startpage .headline h1 {
@@ -811,16 +781,6 @@ article#startpage .headline subline {
     grid-column-gap: 1rem;
     justify-content: center;
     align-items: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  article#startpage .headline .logo > img {
-    filter: grayscale(1) brightness(10.55);
-  }
-
-  article#startpage .headline .logo .placeholder-image circle {
-    fill: var(--color);
   }
 }
 
