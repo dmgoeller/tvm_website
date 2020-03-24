@@ -91,10 +91,31 @@ article .text-over-picture {
 }
 
 /**********************************************************************
- * article header
+ * banners
  **********************************************************************/
 
-article > header {
+article > header.banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: var(--banner--color);
+  background: var(--banner--background);
+}
+
+article > header.banner > .container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+article > header.banner > .container > *:not(:first-child) {
+  margin-top: 1rem;
+}
+
+/**********************************************************************
+ * article headers
+ **********************************************************************/
+
+article > header:not(.banner) {
   position: relative;
   height: 8rem; /* 128px */
 }
@@ -220,11 +241,6 @@ article > main.accentuate_even_sections section:nth-child(even),
 article > main.accentuate_odd_sections section:nth-child(odd),
 article > footer > section:nth-child(odd) {
   background: var(--alternative--background);
-}
-
-article section.banner {
-  background: var(--banner--background) !important;
-  color: var(--banner--color);
 }
 
 /* containers */
