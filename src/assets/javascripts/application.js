@@ -203,6 +203,9 @@ function loadArticle(name, options) {
         let articleOnload = article.getAttribute('data-onload');
         if (articleOnload) execute(articleOnload);
 
+        let banner = article.querySelector('.banner');
+        if (banner) bannerController.register(article, banner);
+
         let title = article.getAttribute('data-title');
         document.title = applicationProperties['title'] + (title ? ' - ' + title : '');
 
@@ -215,7 +218,7 @@ function loadArticle(name, options) {
         if (canonicalTag) canonicalTag.setAttribute('href', getCanonicalURL(name));
 
         window.scrollTo(0, ypos);
-
+        
         buildImages(article);
         loadImages(Array.from(article.children));
       } else {
@@ -406,6 +409,28 @@ function imageLoaded(image) {
     loadedImages.push(src);
   }
 }
+
+/**********************************************************************
+ * banners
+ **********************************************************************/
+
+let bannerController = {
+  articles: {},
+
+  register: function(article, banner) {
+    let title = article.getAttribute('data-title');
+
+    if (!(title in this.articles)) {
+      let translateY = `translateY(-${banner.offsetHeight + 16}px`;
+
+      article.animate(
+        { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
+        { duration: 1500, easing: 'ease-out' }
+      );
+      this.articles[title] = 'visible';
+    }
+  }
+};
 
 /**********************************************************************
  * onload handlers
