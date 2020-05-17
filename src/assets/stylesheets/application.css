@@ -20,7 +20,7 @@
 :root {
   --alternative--background: #f5f5f5;
   --app-bar--background: #781515;
-  --app-bar--translucent-background: #781515e0;
+  --app-bar--translucent-background: #660101e0;
   --app-bar--color: #fff;
   --app-bar--border-color: #601010;
   --app-bar--hover--background: #ffffff18;
@@ -39,7 +39,8 @@
   --backdrop-filter: blur(8px);
   --background: #fff;
   --banner--background: #ad463c;
-  --banner--color: #fff;
+  --banner--color: #ffdede;
+  --banner-action--color: #fff;
   --box-shadow-2dp: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   --box-shadow-4dp: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
   --box-shadow-24dp: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
@@ -70,6 +71,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --alternative--background: #202020;
+    --app-bar--translucent-background: #871616e0;
     --app-menu--color: #fff;
     --app-menu--background: #272727;
     --app-menu--translucent-background: #272727e0;
@@ -83,7 +85,8 @@
     --article-logo--color: #747474;
     --background: #121212;
     --banner--background: #480000;
-    --banner--color: #e0e0e0;
+    --banner--color: #ca8a8b; 
+    --banner-action--color: #e0e0e0; 
     --color: #e0e0e0;
     --contained-button--hover--background: #822626; /* 7.5% white overlay transparency */
     --contained-button--active--background: #8c3838; /* 15% white overlay transparency */

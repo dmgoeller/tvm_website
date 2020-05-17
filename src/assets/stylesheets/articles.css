@@ -95,13 +95,55 @@ article .text-over-picture {
  **********************************************************************/
 
 article .banner {
-  padding: 16px;
+  padding: .5rem;
+  display: grid;
   color: var(--banner--color);
   background: var(--banner--background);
 }
 
-article .banner > *:not(:first-child) {
-  margin-top: 1rem;
+article .banner .icon {
+  grid-area: icon;
+  margin: .5rem 1rem .5rem .5rem;
+  align-self: center;
+}
+
+article .banner .text {
+  grid-area: text;
+  margin: .5rem;
+  line-height: 1.5rem;
+}
+
+article .banner .actions {
+  grid-area: actions;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+article .banner .actions .text-button {
+  color: var(--banner-action--color);
+}
+
+@media(max-width: 1023.99px) {
+  article .banner {
+    grid-template-areas:
+      "icon text"
+      "actions actions";
+    grid-template-columns: auto 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  article .banner {
+    grid-template-areas:
+      "icon text actions";
+    grid-template-columns: auto 1fr auto;
+  }
+
+  article .banner .actions {
+    margin-left: 5rem;
+  }
 }
 
 /**********************************************************************
