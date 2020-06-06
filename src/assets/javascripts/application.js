@@ -418,16 +418,19 @@ let bannerController = {
   articles: {},
 
   register: function(article, banner) {
-    let title = article.getAttribute('data-title');
+    // iOS Safari doesn't support Element.animate
+    if (typeof article.animate === 'function') {
+      let title = article.getAttribute('data-title');
 
-    if (!(title in this.articles)) {
-      let translateY = `translateY(-${banner.offsetHeight + 16}px`;
+      if (!(title in this.articles)) {
+        let translateY = `translateY(-${banner.offsetHeight + 16}px`;
 
-      article.animate(
-        { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
-        { duration: 1500, easing: 'ease-out' }
-      );
-      this.articles[title] = 'visible';
+        article.animate(
+          { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
+          { duration: 1500, easing: 'ease-out' }
+        );
+        this.articles[title] = 'visible';
+      }
     }
   }
 };

@@ -123,9 +123,20 @@ article .banner .actions {
 
 article .banner .actions .text-button {
   color: var(--banner-action--color);
+  text-align: right;
 }
 
-@media(max-width: 1023.99px) {
+@media (max-width: 479.99px) {
+  article .banner {
+    grid-template-areas:
+      "icon"
+      "text"
+      "actions";
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1023.99px) {
   article .banner {
     grid-template-areas:
       "icon text"

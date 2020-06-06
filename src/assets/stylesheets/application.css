@@ -85,7 +85,7 @@
     --article-logo--color: #747474;
     --background: #121212;
     --banner--background: #480000;
-    --banner--color: #ca8a8b; 
+    --banner--color: #bdbdbd; 
     --banner-action--color: #e0e0e0; 
     --color: #e0e0e0;
     --contained-button--hover--background: #822626; /* 7.5% white overlay transparency */
@@ -97,7 +97,7 @@
     --list-item-icon--color: #121212;
     --list-item-icon--background: #747474;
     --picture--background: #2e2e2e;
-    --primary--color: #ca8a8b;
+    --primary--color: #d4654a; /*#ff8a65;*/
     --table-header--background: #424242;
     --text-button--hover--background: #ffffff18;
     --text-button--active--background: #ffffff30;
