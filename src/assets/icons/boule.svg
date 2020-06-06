@@ -1,5 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 36 24">
-  <g style="fill:currentColor;stroke:none;">
+  <defs>
+    <style id="current-color-scheme" type="text/css">
+      .ColorScheme-Text { color:#c0c0c0; }
+    </style>
+  </defs>
+  <g class="ColorScheme-Text" style="fill:currentColor;stroke:none;">
     <circle cx="24" cy="12" r="12"/>
     <circle cx="4" cy="20" r="4"/>
   </g>
