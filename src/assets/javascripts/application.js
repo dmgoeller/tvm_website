@@ -204,7 +204,7 @@ function loadArticle(name, options) {
         if (articleOnload) execute(articleOnload);
 
         let banner = article.querySelector('.banner');
-        if (banner) bannerController.register(article, banner);
+        if (banner) bannerController.addBanner(article, banner);
 
         let title = article.getAttribute('data-title');
         document.title = applicationProperties['title'] + (title ? ' - ' + title : '');
@@ -415,23 +415,49 @@ function imageLoaded(image) {
  **********************************************************************/
 
 let bannerController = {
-  articles: {},
+  bannerStates: {},
 
-  register: function(article, banner) {
-    // iOS Safari doesn't support Element.animate
-    if (typeof article.animate === 'function') {
-      let title = article.getAttribute('data-title');
-
-      if (!(title in this.articles)) {
-        let translateY = `translateY(-${banner.offsetHeight + 16}px`;
-
-        article.animate(
-          { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
-          { duration: 1500, easing: 'ease-out' }
-        );
-        this.articles[title] = 'visible';
-      }
+  addBanner: function(article, banner) {
+    let key = article.getAttribute('data-title');
+    
+    switch(this.bannerStates[key] || 'initial') {
+      case 'initial':
+        // iOS Safari doesn't support Element.animate
+        if (typeof article.animate === 'function') {
+          let translateY = this.translateY(banner);
+          article.animate(
+            { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
+            { duration: 1500, easing: 'ease-out' }
+          );
+        }
+        this.bannerStates[key] = 'visible';
+        break;
+      case 'hidden': 
+        article.style.transform = this.translateY(banner);
     }
+  },
+
+  hideBanner: function() {
+    let article = select('article');
+    let key = article.getAttribute('data-title');
+
+    if (this.bannerStates[key] == 'visible') {
+      let banner = article.querySelector('.banner');
+      let translateY = this.translateY(banner);
+
+      if (typeof article.animate === 'function') {
+        article.animate(
+          { transform: ['translateY(0px)', translateY ] },
+          { duration: 500, easing: 'ease-out' }
+        );
+      }
+      article.style.transform = translateY;
+      this.bannerStates[key] = 'hidden';
+    }
+  },
+
+  translateY: function(banner) {
+    return `translateY(-${banner.offsetHeight + 16}px)`;
   }
 };
 
