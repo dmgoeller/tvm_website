@@ -907,6 +907,7 @@ article#contact .how-to-find-us {
 
 article#contact .how-to-find-us a.link {
   color: inherit;
+  font-weight: bold;
 }
 
 @media (min-device-width: 768px) and (max-device-width: 1024px) {

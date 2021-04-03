@@ -663,10 +663,6 @@ function alert(message) {
  * external links
  **********************************************************************/
 
-function openTeamLink(team_id, year) {
-  window.open(
-    'http://tvrp.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/teamPortrait' + 
-    '?team=' + team_id + 
-    '&championship=RL+' + year
-  );
+function openTeamLink(clubId, teamId) {
+  window.open(`https://www.rlp-tennis.de/liga/vereine/verein/mannschaften/mannschaft/v/${clubId}/m/${teamId}.html`);
 }
