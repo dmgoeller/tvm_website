@@ -113,6 +113,11 @@ article .banner .text {
   line-height: 1.5rem;
 }
 
+article .banner a.link {
+  color: var(--banner-link--color);
+  font-weight: bold;
+}
+
 article .banner .actions {
   grid-area: actions;
   display: flex;
@@ -818,6 +823,10 @@ article#startpage .logo-and-headline subline {
       "subline";
     grid-row-gap: 1rem;
     justify-items: center;
+  }
+  
+  article#startpage .logo-and-headline h1 {
+    text-align: center;
   }
 }
 
