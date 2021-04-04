@@ -420,11 +420,11 @@ let bannerController = {
   addBanner: function(article, banner) {
     let key = article.getAttribute('data-title');
     
-    switch(this.bannerStates[key] || 'initial') {
+    switch (this.bannerStates[key] || 'initial') {
       case 'initial':
         // iOS Safari doesn't support Element.animate
         if (typeof article.animate === 'function') {
-          let translateY = this.translateY(banner);
+          let translateY = `translateY(-${banner.offsetHeight + 16}px)`;
           article.animate(
             { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
             { duration: 1500, easing: 'ease-out' }
@@ -433,7 +433,7 @@ let bannerController = {
         this.bannerStates[key] = 'visible';
         break;
       case 'hidden': 
-        article.style.transform = this.translateY(banner);
+        banner.style.display = 'none';
     }
   },
 
@@ -442,22 +442,9 @@ let bannerController = {
     let key = article.getAttribute('data-title');
 
     if (this.bannerStates[key] == 'visible') {
-      let banner = article.querySelector('.banner');
-      let translateY = this.translateY(banner);
-
-      if (typeof article.animate === 'function') {
-        article.animate(
-          { transform: ['translateY(0px)', translateY ] },
-          { duration: 500, easing: 'ease-out' }
-        );
-      }
-      article.style.transform = translateY;
+      article.querySelector('.banner').style.display = 'none';
       this.bannerStates[key] = 'hidden';
     }
-  },
-
-  translateY: function(banner) {
-    return `translateY(-${banner.offsetHeight + 16}px)`;
   }
 };
 
