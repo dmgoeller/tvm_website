@@ -224,7 +224,7 @@ def build_htaccess(articles_dir, options = {})
     htaccess = "RewriteEngine On\n\n"
 
     htaccess << "\# Security Headers\n"
-    htaccess << "Header set Content-Security-Policy \"default-src 'self' img-src 'self' data:;"
+    htaccess << "Header set Content-Security-Policy \"default-src 'self'; img-src 'self' data:;"
     htaccess << "script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline';\"\n"
     htaccess << "Header set Referrer-Policy no-referrer\n"
     htaccess << "Header set X-Content-Type-Options nosniff\n"
