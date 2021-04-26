@@ -7,10 +7,11 @@
  * ===============  ===============  =======
  * background                             -1
  * page content           0dp - 2dp     0, 1
- * app bar and menu             4dp        2
- * lightboxes                              3
- * loading-indicator                       4
- * alerts                      24dp        5
+ * banners                                 2
+ * app bar and menu             4dp        3
+ * lightboxes                              4
+ * loading-indicator                       5
+ * alerts                      24dp        6
  */
 
 /**********************************************************************
@@ -87,8 +88,8 @@
     --background: #121212;
     --banner--background: #480000;
     --banner--color: #e8c3c7;
-    --banner-link--color: #e0e0e0; 
-    --banner-action--color: #e0e0e0; 
+    --banner-link--color: #e0e0e0;
+    --banner-action--color: #e0e0e0;
     --color: #e0e0e0;
     --contained-button--hover--background: #822626; /* 7.5% white overlay transparency */
     --contained-button--active--background: #8c3838; /* 15% white overlay transparency */
@@ -187,7 +188,7 @@ body {
 body > header {
   position: -webkit-sticky;
   position: sticky;
-  z-index: 2;
+  z-index: 3;
   top: 0;
 }
 
@@ -644,7 +645,7 @@ body > footer.copyright p {
 
 .dialog-scrim {
   position: fixed;
-  z-index: 5;
+  z-index: 6;
   left: 0;
   right: 0;
   top: 0;
@@ -684,7 +685,7 @@ body > footer.copyright p {
   height: 2.25rem;
   display: grid;
   grid-auto-flow: column;
-  grid-gap: .5rem; 
+  grid-gap: .5rem;
   align-items: stretch;
   justify-content: end;
 }
@@ -715,7 +716,7 @@ body > footer.copyright p {
 
  .article-loading-indicator {
   position: fixed;
-  z-index: 4;
+  z-index: 5;
   left: 0;
   right: 0;
   top: 0;
@@ -768,6 +769,10 @@ body > footer.copyright p {
 
 .flex-center-content {
   justify-content: center;
+}
+
+.hyphens-auto {
+  hyphens: auto 
 }
 
 .overflow-hidden {

@@ -55,7 +55,7 @@ Element.prototype.preventDefault = function(eventTypes) {
 }
 
 Element.prototype.setIcon = function(name, height = 24, width = 24) {
-  this.innerHTML = '<svg height="' + height + '" width="' + width + 
+  this.innerHTML = '<svg height="' + height + '" width="' + width +
                    '"><use href="#' + name + '-icon"/></svg>';
   return this;
 }
@@ -182,7 +182,7 @@ function loadArticle(name, options) {
       let article = null;
 
       header.classList.remove('app-menu-unfolded');
-      
+
       if (history.state != null) {
         let state = {'article': history.state['article'], 'ypos': window.pageYOffset};
         history.replaceState(state, null, getArticlePath(state['article']));
@@ -203,9 +203,9 @@ function loadArticle(name, options) {
         let articleOnload = article.getAttribute('data-onload');
         if (articleOnload) execute(articleOnload);
 
-        let banner = article.querySelector('.banner');
-        if (banner) bannerController.addBanner(article, banner);
-
+        article.querySelectorAll('.banner').forEach(function(element) {
+          bannerController.addBanner(element);
+        });
         let title = article.getAttribute('data-title');
         document.title = applicationProperties['title'] + (title ? ' - ' + title : '');
 
@@ -218,7 +218,7 @@ function loadArticle(name, options) {
         if (canonicalTag) canonicalTag.setAttribute('href', getCanonicalURL(name));
 
         window.scrollTo(0, ypos);
-        
+
         buildImages(article);
         loadImages(Array.from(article.children));
       } else {
@@ -417,33 +417,28 @@ function imageLoaded(image) {
 let bannerController = {
   bannerStates: {},
 
-  addBanner: function(article, banner) {
-    let key = article.getAttribute('data-title');
-    
-    switch (this.bannerStates[key] || 'initial') {
+  addBanner: function(banner) {
+    switch (this.bannerStates[banner.id] || 'initial') {
       case 'initial':
         // iOS Safari doesn't support Element.animate
-        if (typeof article.animate === 'function') {
+        if (typeof banner.animate === 'function') {
           let translateY = `translateY(-${banner.offsetHeight + 16}px)`;
-          article.animate(
+          banner.animate(
             { transform: [translateY, translateY, translateY, 'translateY(0px)'] },
             { duration: 1500, easing: 'ease-out' }
           );
         }
-        this.bannerStates[key] = 'visible';
+        this.bannerStates[banner.id] = 'visible';
         break;
-      case 'hidden': 
+      case 'hidden':
         banner.style.display = 'none';
     }
   },
 
-  hideBanner: function() {
-    let article = select('article');
-    let key = article.getAttribute('data-title');
-
-    if (this.bannerStates[key] == 'visible') {
-      article.querySelector('.banner').style.display = 'none';
-      this.bannerStates[key] = 'hidden';
+  hideBanner: function(bannerId) {
+    if (this.bannerStates[bannerId] == 'visible') {
+      select(`#${bannerId}`).style.display = 'none';
+      this.bannerStates[bannerId] = 'hidden';
     }
   }
 };
