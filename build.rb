@@ -220,43 +220,40 @@ end
 
 def build_htaccess(articles_dir, options = {})
   action "Build '.htaccess'" do
-    #htaccess = File.read('.htaccess')
-    htaccess = "RewriteEngine On\n\n"
+    redirect_http_to_https = <<~REDIRECT_HTTP_TO_HTTPS
+      # Redirect http to https
+      RewriteCond %{HTTPS} !=on
+      RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    REDIRECT_HTTP_TO_HTTPS
 
-    htaccess << "\# Security Headers\n"
-    htaccess << "Header set Content-Security-Policy \"default-src 'self'; img-src 'self' data:;"
-    htaccess << "script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline';\"\n"
-    htaccess << "Header set Referrer-Policy no-referrer\n"
-    htaccess << "Header set X-Content-Type-Options nosniff\n"
-    htaccess << "Header set X-Frame-Options deny\n\n"
+    htaccess = <<~HTACCESS
+      RewriteEngine On
 
-    htaccess << "\# MIME Types\n"
-    htaccess << "AddType text/calendar .ics\n\n"
+      # Security headers
+      Header set Content-Security-Policy "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline';"
+      Header set Referrer-Policy no-referrer
+      Header set X-Content-Type-Options nosniff
+      Header set X-Frame-Options deny
 
-    htaccess << "\# Caching\n"
-    htaccess << "<filesMatch \"\\.(jpg|png|ico|woff|woff2|ttf)$\">\n"
-    htaccess << "Header set Cache-Control \"max-age=2592000, public\"\n"
-    htaccess << "</filesMatch>\n\n"
+      # MIME types
+      AddType text/calendar .ics
 
-    if options[:redirect_http_to_https]
-      htaccess << "\# Redirect http to https\n"
-      htaccess << "RewriteCond %{HTTPS} !=on\n"
-      htaccess << "RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]\n\n"
+      # Caching
+      <filesMatch "\\.(jpg|png|ico|woff|woff2|ttf)$">
+      Header set Cache-Control "max-age=2592000, public"
+      </filesMatch>
 
-      #htaccess << "\# Redirect www to non-www\n"
-      #htaccess << "RewriteCond %{HTTP_HOST} ^www\\.(.*)$ [NC]\n"
-      #htaccess << "RewriteRule ^(.*)$ https://%1/a/$1 [L,R=301]\n\n"
-    end
-
-    htaccess << "\# Pages\n"
-    htaccess << "RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}\n"
-    htaccess << "RewriteRule ^index.php index.html [L,R=301]\n"
+      #{options[:redirect_http_to_https] ? redirect_http_to_https : ''}
+      # Pages
+      RewriteBase #{options[:base_path].empty? ? '/' : options[:base_path]}
+      RewriteRule ^index.php index.html [L,R=301]
+    HTACCESS
 
     article_names(articles_dir).each do |article_name|
       htaccess << "RewriteRule ^#{article_name}$ index.html [L]\n" unless article_name == options[:index_page]
     end
 
-    htaccess << "\n\# Error Pages\n"
+    htaccess << "\n\# Error pages\n"
     Dir.glob('*.html').grep(/\d{3}\.html/) { |filename|
       htaccess << "ErrorDocument #{filename[0, 3]} /#{filename}\n"
     }
