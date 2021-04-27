@@ -133,6 +133,7 @@ article .banner .actions {
 
 article .banner .actions .text-button {
   color: var(--banner-action--color);
+  line-height: initial;
   text-align: right;
 }
 
