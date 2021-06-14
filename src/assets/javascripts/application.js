@@ -2,7 +2,7 @@
 'use strict';
 
 /**********************************************************************
- * prototypes
+ * Prototypes
  **********************************************************************/
 
 Array.prototype.first = function() {
@@ -61,7 +61,7 @@ Element.prototype.setIcon = function(name, height = 24, width = 24) {
 }
 
 /**********************************************************************
- * date functions
+ * Date functions
  **********************************************************************/
 
 function midnight(date) {
@@ -79,7 +79,7 @@ function parseDate(s) {
 }
 
 /**********************************************************************
- * query selectors
+ * Query selectors
  **********************************************************************/
 
 function select(element) {
@@ -99,7 +99,7 @@ function selectAll(elements) {
 }
 
 /**********************************************************************
- * event listeners
+ * Event listeners
  **********************************************************************/
 
 var applicationProperties = {}; // base path, title etc.
@@ -152,7 +152,7 @@ window.addEventListener('load', function() {
 });
 
 /**********************************************************************
- * article loading
+ * Article loading
  **********************************************************************/
 
 function getArticlePath(name) {
@@ -292,7 +292,7 @@ function execute(expression) {
 }
 
 /**********************************************************************
- * lazy image loading
+ * Lazy image loading
  **********************************************************************/
 
 let loadedImages = []; // holds the images that have already been loaded
@@ -411,7 +411,7 @@ function imageLoaded(image) {
 }
 
 /**********************************************************************
- * banners
+ * Banners
  **********************************************************************/
 
 let bannerController = {
@@ -444,7 +444,7 @@ let bannerController = {
 };
 
 /**********************************************************************
- * onload handlers
+ * Onload handlers
  **********************************************************************/
 
 function initDates() {
@@ -485,7 +485,7 @@ function shuffleChildren(element) {
 }
 
 /**********************************************************************
- * lightboxes
+ * Lightboxes
  **********************************************************************/
 
 function showLightbox(gallery, initialPosition) {
@@ -614,7 +614,7 @@ function showLightbox(gallery, initialPosition) {
 }
 
 /**********************************************************************
- * alerts
+ * Alerts
  **********************************************************************/
 
 function alert(message) {
@@ -642,7 +642,7 @@ function alert(message) {
 }
 
 /**********************************************************************
- * external links
+ * External links
  **********************************************************************/
 
 function openTeamLink(clubId, teamId) {
