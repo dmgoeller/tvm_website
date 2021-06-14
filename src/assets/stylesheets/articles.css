@@ -527,7 +527,54 @@ article > main.accentuate_odd_sections section:nth-child(odd) td {
 }
 
 /**********************************************************************
- * galleries
+ * Grid tables
+ **********************************************************************/
+
+article .grid-table {
+  display: grid;
+  grid-auto-flow: row;
+  align-items: stretch;
+  justify-items: stretch;
+  grid-gap: .125rem;
+}
+
+article .grid-table .grid-th {
+  padding: .5rem;
+  background: var(--table-header--background);
+  font-weight: bold;
+}
+
+article .grid-table .grid-td {
+  padding: .5rem;
+  background: var(--alternative--background);
+}
+
+article > main.accentuate_even_sections section:nth-child(even) .grid-table .grid-td,
+article > main.accentuate_odd_sections section:nth-child(odd) .grid-table .grid-td {
+  background: var(--background);
+}
+
+@media (max-width: 767.99px) {
+  article .grid-table.small-3-columns {
+    grid-template-columns: auto auto auto;
+  }
+
+  article .grid-table.small-3-columns .grid-th:nth-child(4n+1),
+  article .grid-table.small-3-columns .grid-td:nth-child(4n+1) {
+    grid-column: 1 / 4;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+@media (min-width: 768px) {
+  article .grid-table.large-4-columns {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+
+/**********************************************************************
+ * Galleries
  **********************************************************************/
 
 article .gallery {
