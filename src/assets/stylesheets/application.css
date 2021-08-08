@@ -708,34 +708,6 @@ body > footer.copyright p {
  * Loading indicators
  **********************************************************************/
 
- @keyframes article-loading {
-  0%   { left: 0; width: 0; }
-  50%  { left: 0; width: 100%; }
-  100% { left: 100%; width: 0; }
-}
-
- .article-loading-indicator {
-  position: fixed;
-  z-index: 5;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
-.article-loading-indicator:after {
-  position: absolute;
-  top: 0;
-  height: 4px;
-  content: '';
-  background: var(--loading-indicator-background);
-  animation-name: article-loading;
-  animation-duration: 5s;
-  animation-delay: 0.3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
 .image-loading-indicator {
   animation-name: delayed-fade-in;
   animation-duration: 1.5s;

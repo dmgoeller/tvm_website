@@ -171,10 +171,8 @@ function getCanonicalURL(name) {
 function loadArticle(name, options) {
   options = options || {};
   let ypos = options['ypos'] || 0;
-
   let body = select('body');
   let header = body.querySelector('header');
-  let loadingIndicator = body.addElement('div', 'article-loading-indicator');
 
   fetchResource('articles/' + name + '.html', {timeout: 5000})
     .then(function(response) {
@@ -225,11 +223,9 @@ function loadArticle(name, options) {
         document.title = applicationProperties['title'];
         window.scrollTo(0, 0);
       }
-      loadingIndicator.remove();
     })
     .catch(function(error) {
       header.classList.remove('app-menu-unfolded');
-      loadingIndicator.remove();
       alert(error);
     });
 }
