@@ -165,7 +165,7 @@
  * Document
  **********************************************************************/
 
- html {
+html {
   height: 100%;
   -webkit-text-size-adjust: 100%; /* prevent font scaling in iOS Safari */
 }
