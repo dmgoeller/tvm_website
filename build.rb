@@ -42,7 +42,7 @@ def load_svg(filename)
 end
 
 def uri_escape(s)
-  URI.escape(s.gsub('(', '%28').gsub(')', '%29'))
+  URI::DEFAULT_PARSER.escape(s.gsub('(', '%28').gsub(')', '%29'))
 end
 
 def hex_to_rgba(hex)
@@ -64,7 +64,7 @@ def deep_merge(h1, h2)
 end
 
 def convert_images(src, dest, options)
-  FileUtils.mkdir_p(dest) unless File.exists?(dest)
+  FileUtils.mkdir_p(dest) unless File.exist?(dest)
 
   Dir.glob("#{src}/*") do |src_filename|
     dest_filename = "#{dest}/#{File.basename(src_filename)}"
