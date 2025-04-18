@@ -5,10 +5,10 @@ this.addEventListener('install', function(event) {
   event.waitUntil(Promise.all([
     caches.open('app').then(function(cache) {
       cache.addAll(['index.html', 'manifest.json']);
-    }),
+    }) /* ,
     caches.open('articles').then(function(cache) {
       cache.addAll(ARTICLES_TO_CACHE);
-    })
+    })*/
   ]));
 });
 
