@@ -32,6 +32,10 @@ article p {
   line-height: 1.5rem;
 }
 
+article p.space-before {
+  padding-top: 1rem;
+}
+
 article li {
   line-height: 1.5rem;
 }
@@ -45,6 +49,13 @@ article sup {
   font-size: 0.67rem;
 }
 
+article span.outlined {
+  border: 1px solid gray;
+  border-radius: .25rem;
+  font-weight: bold;
+  padding: .125rem .25rem;
+}
+
 /**********************************************************************
  * Pictures
  **********************************************************************/
@@ -54,6 +65,10 @@ article picture {
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+article picture.elevated {
+  box-shadow: var(--box-shadow-4dp);
 }
 
 article picture > img {
