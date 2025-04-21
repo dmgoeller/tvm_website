@@ -1,21 +1,19 @@
 
-var ARTICLES_TO_CACHE = ['articles/startseite.html'];
+this.addEventListener('fetch', event => {
+  const request = event.request;
 
-this.addEventListener('install', function(event) {
-  event.waitUntil(Promise.all([
-    caches.open('app').then(function(cache) {
-      cache.addAll(['index.html', 'manifest.json']);
-    }) /* ,
-    caches.open('articles').then(function(cache) {
-      cache.addAll(ARTICLES_TO_CACHE);
-    })*/
-  ]));
-});
+  if (request.url == 'manifest.json' || request.url.endsWith('.html')) {
+    console.log(`Fetching ${request.url}`);
 
-this.addEventListener('fetch', function(event) {
-  event.respondWith(fetch(event.request)
-    .catch(function() {
-      return caches.match(event.request);
-    })
-  );
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open('default');
+        try {
+          await cache.add(request);
+        } catch (error) {
+        }
+        return await cache.match(request);
+      })()
+    );
+  }
 });

@@ -239,8 +239,12 @@ def build_htaccess(articles_dir, options = {})
       AddType text/calendar .ics
 
       # Caching
+      <filesMatch "\.html$">
+      Header set Cache-Control "no-cache"
+      </filesMatch>
+
       <filesMatch "\\.(jpg|png|ico|woff|woff2|ttf)$">
-      Header set Cache-Control "max-age=2592000, public"
+      Header set Cache-Control "max-age=31536000, public"
       </filesMatch>
 
       #{options[:redirect_http_to_https] ? redirect_http_to_https : ''}
@@ -306,7 +310,7 @@ def build_app
       build_html('index.html', options.merge( { meta_robots: config['meta_robots'] } ))
       Dir.glob('*.html').grep(/\d{3}\.html/) { |filename| build_html(filename, options) }
       Dir.glob('articles/*.html') { |filename| build_html(filename, options) }
-      build_service_worker_js('articles', options)
+      # build_service_worker_js('articles', options)
       build_robots_txt(options)
       build_sitemap_xml('articles', options)
       build_htaccess('articles', options)
