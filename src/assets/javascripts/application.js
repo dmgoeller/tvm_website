@@ -10,7 +10,7 @@ Array.prototype.first = function() {
 }
 
 Array.prototype.swap = function(i, j) {
-  let element = this[i];
+  const element = this[i];
   this[i] = this[j];
   this[j] = element;
   return this;
@@ -24,13 +24,13 @@ Array.prototype.shuffle = function() {
 }
 
 Element.prototype.addElement = function(name, classes) {
-  let element = document.createElement(name);
+  const element = document.createElement(name);
   element.className = classes;
   return this.appendChild(element);
 }
 
 Element.prototype.addText = function(text) {
-  let textNode = document.createTextNode(text);
+  const textNode = document.createTextNode(text);
   return this.appendChild(textNode);
 }
 
@@ -45,18 +45,18 @@ Element.prototype.getComputedStyle = function() {
 }
 
 Element.prototype.preventDefault = function(eventTypes) {
-  let element = this;
-
-  eventTypes.forEach(function(eventType) {
-    element.addEventListener(eventType, function(event) {
+  eventTypes.forEach(eventType => {
+    this.addEventListener(eventType, event => {
       event.preventDefault();
     }, {passive: false});
   });
 }
 
 Element.prototype.setIcon = function(name, height = 24, width = 24) {
-  this.innerHTML = '<svg height="' + height + '" width="' + width +
-                   '"><use href="#' + name + '-icon"/></svg>';
+  this.innerHTML =
+    `<svg height="${height}" width="${width}">` +
+    `<use href="#${name}-icon"/>` +
+    '</svg>';
   return this;
 }
 
@@ -65,7 +65,7 @@ Element.prototype.setIcon = function(name, height = 24, width = 24) {
  **********************************************************************/
 
 function midnight(date) {
-  let midnight = new Date(date.valueOf());
+  const midnight = new Date(date.valueOf());
   midnight.setHours(0, 0, 0, 0);
   return midnight;
 }
@@ -102,17 +102,17 @@ function selectAll(elements) {
  * Event listeners
  **********************************************************************/
 
-var applicationProperties = {}; // base path, title etc.
+let applicationProperties = {}; // base path, title etc.
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   // read application properties
-  Array.from(select('html').attributes).forEach(function(attribute) {
+  Array.from(select('html').attributes).forEach(attribute => {
     if (attribute.name.startsWith('data-app-')) {
       applicationProperties[attribute.name.slice(9)] = attribute.value;
     }
   });
   // set copyright year
-  let copyrightYear = select('#copyright-year');
+  const copyrightYear = select('#copyright-year');
 
   if (copyrightYear) {
     copyrightYear.addText((new Date()).getFullYear());
@@ -132,9 +132,9 @@ document.addEventListener('DOMContentLoaded', function() {
   loadArticle(path);
 });
 
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
   // browser history
-  window.addEventListener('popstate', function(event) {
+  window.addEventListener('popstate', event => {
     if (event.state) {
       loadArticle(event.state['article'], {'ypos': event.state['ypos']});
     }
@@ -142,10 +142,10 @@ window.addEventListener('load', function() {
   // register service worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
-      .then(function(registration) {
+      .then(registration => {
         console.log('Service worker registered for ', registration.scope);
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log('Service worker registration failed:', error);
     });
   }
@@ -175,7 +175,7 @@ function loadArticle(name, options) {
   let header = body.querySelector('header');
 
   fetchResource('articles/' + name + '.html', {timeout: 5000})
-    .then(function(response) {
+    .then(response => {
       let main = body.querySelector('main');
       let article = null;
 
@@ -201,7 +201,7 @@ function loadArticle(name, options) {
         let articleOnload = article.getAttribute('data-onload');
         if (articleOnload) execute(articleOnload);
 
-        article.querySelectorAll('.banner').forEach(function(element) {
+        article.querySelectorAll('.banner').forEach(element => {
           bannerController.addBanner(element);
         });
         let title = article.getAttribute('data-title');
@@ -224,7 +224,7 @@ function loadArticle(name, options) {
         window.scrollTo(0, 0);
       }
     })
-    .catch(function(error) {
+    .catch(error => {
       header.classList.remove('app-menu-unfolded');
       alert(error);
     });
@@ -233,12 +233,12 @@ function loadArticle(name, options) {
 function fetchResource(url, options) {
   options = options || {};
 
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     let request = new XMLHttpRequest();
     request.open('GET', url);
     request.timeout = options.timeout || 0;
 
-    request.onreadystatechange = function() {
+    request.onreadystatechange = () => {
       if (request.readyState == 4 /*DONE*/) {
         if (request.status == 200) {
           resolve(request.responseText);
@@ -294,26 +294,28 @@ function execute(expression) {
 let loadedImages = []; // holds the images that have already been loaded
 
 function buildImages(container) {
-  container.querySelectorAll('[data-image]').forEach(function(element) {
-    let src = element.getAttribute('data-image');
+  container.querySelectorAll('[data-image]').forEach(element => {
+    const src = element.getAttribute('data-image');
 
     // create nested source tags for full HD images
     if (element.tagName.toLowerCase() == 'picture' && src.endsWith('-1920x1080.jpg')) {
       // large devices
       let source = element.addElement('source');
-      source.setAttribute('media', '(min-device-width: 768px)');
       source.setAttribute('srcset', src);
+      source.setAttribute('type', 'image/jpeg');
+      source.setAttribute('media', '(min-device-width: 768px)');
 
       // small devices
       source = element.addElement('source');
       source.setAttribute('media', '(max-device-width: 767px)');
+      source.setAttribute('type', 'image/jpeg');
       source.setAttribute('srcset', src.slice(0, -14) + '-960x540.jpg');
 
       // Note: Firefox ignores the image tag's 'src' attribute if at least one source tag is
       // present. Thus, the source for large devices must also be defined by a source tag.
     }
     // create a nested image tag
-    let image = element.addElement('img');
+    const image = element.addElement('img');
     image.setAttribute('data-src', src);
     image.setAttribute('alt', element.getAttribute('data-alt') || '');
 
@@ -348,8 +350,8 @@ function loadImages(containers) {
     if (images.length > 0) {
       let counter = 0;
 
-      images.forEach(function(image) {
-        image.onload = function() {
+      images.forEach(image => {
+        image.onload = () => {
           if (container.hasAttribute('data-display-images-immediately')) {
             imageLoaded(image);
           }
@@ -444,11 +446,11 @@ let bannerController = {
  **********************************************************************/
 
 function initDates() {
-  selectAll('ul.dates > li').forEach(function(date) {
+  selectAll('ul.dates > li').forEach(date => {
     let expiresAt = date.getAttribute('data-expires-at');
 
     if (expiresAt && (new Date(expiresAt)) <= Date.now()) {
-      date.querySelectorAll('a.text-button').forEach(function(button) {
+      date.querySelectorAll('a.text-button').forEach(button => {
         button.removeAttribute('href');
         button.classList.add('disabled');
       });
@@ -457,7 +459,7 @@ function initDates() {
 }
 
 function initGalleries() {
-  selectAll('.gallery').forEach(function(gallery) {
+  selectAll('.gallery').forEach(gallery => {
     let pictures = gallery.querySelectorAll('picture');
 
     for (let i = 0; i < pictures.length; i++) {
@@ -475,7 +477,7 @@ function shuffleChildren(element) {
 
   element.removeChildren();
 
-  children.forEach(function(child) {
+  children.forEach(child => {
     element.appendChild(child);
   });
 }
@@ -503,10 +505,10 @@ function showLightbox(gallery, initialPosition) {
   let pictureCount = 0;
   let position = null;
 
-  gallery.querySelectorAll('picture').forEach(function(original) {
+  gallery.querySelectorAll('picture').forEach(original => {
     let copy = pictures.addElement('picture');
 
-    Array.from(original.children).forEach(function(child) {
+    Array.from(original.children).forEach(child => {
       let nodeName = child.nodeName.toLowerCase();
 
       if (nodeName == 'source' || nodeName == 'img') {
@@ -576,7 +578,7 @@ function showLightbox(gallery, initialPosition) {
   // touch events
   let touchStartX = null;
 
-  pictures.addEventListener('touchstart', function(event) {
+  pictures.addEventListener('touchstart', event => {
     if (event.touches.length == 1) {
       touchStartX = event.touches[0].clientX;
       pictures.style.transition = 'none';
@@ -584,7 +586,7 @@ function showLightbox(gallery, initialPosition) {
     event.preventDefault();
   }, {passive: false});
 
-  pictures.addEventListener('touchmove', function(event) {
+  pictures.addEventListener('touchmove', event => {
     if (touchStartX) {
       let touchDeltaX = event.touches[0].clientX - touchStartX;
       if (touchDeltaX > 0 || position < pictureCount - 1) {
@@ -594,7 +596,7 @@ function showLightbox(gallery, initialPosition) {
     event.preventDefault();
   }, {passive: false});
 
-  pictures.addEventListener('touchend', function(event) {
+  pictures.addEventListener('touchend', event => {
     if (touchStartX) {
       let touchDeltaX = event.changedTouches[0].clientX - touchStartX;
       pictures.style.transition = '.5s';
@@ -614,27 +616,27 @@ function showLightbox(gallery, initialPosition) {
  **********************************************************************/
 
 function alert(message) {
-  let scrim = select('body').addElement('div', 'dialog-scrim');
-  let dialog = scrim.addElement('div', 'dialog-container');
+  const scrim = select('body').addElement('div', 'dialog-scrim');
+  const dialog = scrim.addElement('div', 'dialog-container');
 
   if (typeof message == 'object') {
     if (message.message) {
       dialog.addElement('div', 'title').addText(message.message);
     }
     if (message.details) {
-      let text = dialog.addElement('div', 'text');
+      const text = dialog.addElement('div', 'text');
 
-      message.details.forEach(function(detail) {
+      message.details.forEach(detail => {
         text.addElement('p').addText(detail);
       });
     }
   } else {
     dialog.addElement('div', 'text').addElement('p').addText(message);
   }
-  let actions = dialog.addElement('div', 'actions');
-  let closeButton = actions.addElement('div', 'text-button');
+  const actions = dialog.addElement('div', 'actions');
+  const closeButton = actions.addElement('div', 'text-button');
   closeButton.addText('Ok');
-  closeButton.addEventListener('click', function() { scrim.remove(); });
+  closeButton.addEventListener('click', () => { scrim.remove(); });
 }
 
 /**********************************************************************
