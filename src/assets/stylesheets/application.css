@@ -760,3 +760,7 @@ body > footer.copyright p {
 .text-align-right {
   text-align: right;
 }
+
+.white-space-nowrap {
+  white-space: nowrap;
+}
