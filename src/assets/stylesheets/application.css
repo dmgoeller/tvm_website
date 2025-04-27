@@ -235,12 +235,14 @@ body > header li {
     align-items: center;
   }
 
-  .app-bar li:hover {
-    background: var(--app-bar--hover--background);
-  }
+  @media (hover: hover) {
+    .app-bar li:hover {
+      background: var(--app-bar--hover--background);
+    }
 
-  .app-bar li:active {
-    background: var(--app-bar--active--background);
+    .app-bar li:active {
+      background: var(--app-bar--active--background);
+    }
   }
 
   /* buttons */
@@ -307,12 +309,14 @@ body > header li {
     border-bottom: 1px solid var(--app-menu--border-color);
   }
 
-  .app-menu li:hover {
-    background: var(--app-menu--hover--background);
-  }
+  @media (hover: hover) {
+    .app-menu li:hover {
+      background: var(--app-menu--hover--background);
+    }
 
-  .app-menu li:active {
-    background: var(--app-menu--active--background);
+    .app-menu li:active {
+      background: var(--app-menu--active--background);
+    }
   }
 
   .app-menu svg {
@@ -386,12 +390,14 @@ body > header li {
     line-height: 1rem;
   }
 
-  body > header li:hover {
-    background: var(--app-bar--hover--background);
-  }
+  @media (hover: hover) {
+    body > header li:hover {
+      background: var(--app-bar--hover--background);
+    }
 
-  body > header li:active {
-    background: var(--app-bar--active--background);
+    body > header li:active {
+      background: var(--app-bar--active--background);
+    }
   }
 
   @supports (backdrop-filter: var(--backdrop-filter)) {
@@ -442,12 +448,14 @@ body > footer.links .container {
   display: grid;
 }
 
-body > footer.links .link:hover {
-  background: var(--app-footer-links--hover--background);
-}
+@media (hover: hover) {
+  body > footer.links .link:hover {
+    background: var(--app-footer-links--hover--background);
+  }
 
-body > footer.links .link:active {
-  background: var(--app-footer-links--active--background);
+  body > footer.links .link:active {
+    background: var(--app-footer-links--active--background);
+  }
 }
 
 body > footer.copyright {
@@ -602,13 +610,15 @@ body > footer.copyright p {
   box-shadow: var(--box-shadow-2dp);
 }
 
-.contained-button:not(.disabled):hover {
-  background: var(--contained-button--hover--background);
-}
+@media (hover: hover) {
+  .contained-button:not(.disabled):hover {
+    background: var(--contained-button--hover--background);
+  }
 
-.contained-button:not(.disabled):active {
-  background: var(--contained-button--active--background);
-  box-shadow: none;
+  .contained-button:not(.disabled):active {
+    background: var(--contained-button--active--background);
+    box-shadow: none;
+  }
 }
 
 .text-button {
@@ -624,12 +634,14 @@ body > footer.copyright p {
   color: var(--text-button--disabled--color);
 }
 
-.text-button:not(.disabled):hover {
-  background: var(--text-button--hover--background);
-}
+@media (hover: hover) {
+  .text-button:not(.disabled):hover {
+    background: var(--text-button--hover--background);
+  }
 
-.text-button:not(.disabled):active {
-  background: var(--text-button--active--background);
+  .text-button:not(.disabled):active {
+    background: var(--text-button--active--background);
+  }
 }
 
 .button-with-icon {
