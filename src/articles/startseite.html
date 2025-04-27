@@ -14,13 +14,19 @@
   </div>
   -->
   <header>
-    <picture class="mobile-portrait"
-             data-image="media/tv-melsbach-startbild-hochkant-450x800.jpg"
-             data-placeholder-image>
+    <picture class="mobile" data-image="media/tv-melsbach-start-mobile-540p.jpg" data-placeholder-image>
+      <!--
+      <source srcset="media/tv-melsbach-start-mobile-1080p.webp" height="1080" width="1920" type="image/webp"/>
+      <source srcset="media/tv-melsbach-start-mobile-1080p.jpg" height="1080" width="1920" type="image/jpeg"/>
+      <source srcset="media/tv-melsbach-start-mobile-810p.webp" height="810" width="1440" type="image/webp"/>
+      <source srcset="media/tv-melsbach-start-mobile-810p.jpg" height="810" width="1440" type="image/jpeg"/>
+      -->
+      <source srcset="media/tv-melsbach-start-mobile-540p.webp" height="540" width="960" type="image/webp"/>
+      <source srcset="media/tv-melsbach-start-mobile-540p.jpg" height="540" width="960" type="image/jpeg"/>
     </picture>
-    <picture class="mobile-landscape tablet desktop"
-             data-image="media/tv-melsbach-startbild-querkant-1920x1080.jpg"
-             data-placeholder-image>
+    <picture class="desktop tablet" data-image="media/tv-melsbach-start-desktop-1080p.jpg" data-placeholder-image>
+      <source srcset="media/tv-melsbach-start-desktop-1080p.webp" type="image/webp"/>
+      <source srcset="media/tv-melsbach-start-desktop-1080p.jpg" type="image/jpeg"/>
     </picture>
     <nav>
       <div class="tile" onclick="loadArticle('tennis');">

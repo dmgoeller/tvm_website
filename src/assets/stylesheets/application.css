@@ -535,21 +535,22 @@ body > footer.copyright p {
 
 @media (max-device-width: 767px) and (orientation: landscape) {
   .mobile-portrait:not(.mobile-landscape),
-  .tablet:not(.mobile-landscape),
-  .desktop:not(.mobile-landscape) {
+  .tablet:not(.mobile):not(.mobile-landscape),
+  .desktop:not(.mobile):not(.mobile-landscape) {
     display: none;
   }
 }
 
 @media (max-device-width: 767px) and (orientation: portrait) {
   .mobile-landscape:not(.mobile-portrait),
-  .tablet:not(.mobile-portrait),
-  .desktop:not(.mobile-portrait) {
+  .tablet:not(.mobile):not(.mobile-portrait),
+  .desktop:not(.mobile):not(.mobile-portrait) {
     display: none;
   }
 }
 
 @media (min-device-width: 768px) and (max-device-width: 1024px) {
+  .mobile:not(.tablet),
   .mobile-landscape:not(.tablet),
   .mobile-portrait:not(.tablet),
   .desktop:not(.tablet) {
@@ -558,6 +559,7 @@ body > footer.copyright p {
 }
 
 @media (min-device-width: 1025px) {
+  .mobile:not(.desktop),
   .mobile-landscape:not(.desktop),
   .mobile-portrait:not(.desktop),
   .tablet:not(.desktop) {
