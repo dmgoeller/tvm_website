@@ -42,7 +42,7 @@ article li {
 
 article a.link {
   color: var(--primary--color);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 article sup {
@@ -236,13 +236,12 @@ article > header > .background {
   background: var(--article-header--background);
 }
 
-article > header > .background > svg {
+article > header > .background > .logo {
   position: absolute;
   top: 1rem;
   right: 1rem;
   height: 6rem;
   width: 6rem;
-  color: var(--article-logo--color);
 }
 
 
@@ -818,46 +817,54 @@ article#startpage > header > picture {
 
 article#startpage .logo-and-headline {
   display: grid;
+  grid-gap: 1rem;
 }
 
-article#startpage .logo-and-headline svg {
+article#startpage .logo-and-headline img {
   grid-area: logo;
+  height: 128px;
+  width: 128px;
   color: var(--primary--color);
 }
 
-article#startpage .logo-and-headline h1 {
+article#startpage .logo-and-headline .headline {
   grid-area: headline;
+  display: grid;
+  grid-gap: .5rem;
   color: var(--primary--color);
+}
+
+article#startpage .logo-and-headline .headline h1 {
   font-size: 1.5rem;
 }
 
-article#startpage .logo-and-headline subline {
-  grid-area: subline;
-  font-size: 1.5rem;
+article#startpage .logo-and-headline .headline subline {
+  font-size: 1.25rem;
 }
 
-@media not all and (min-width: 480px) {
+@media not all and (min-width: 512px) {
   article#startpage .logo-and-headline {
     grid-template-areas:
       "logo"
-      "headline"
-      "subline";
-    grid-row-gap: 1rem;
+      "headline";
     justify-items: center;
   }
 
-  article#startpage .logo-and-headline h1 {
+  article#startpage .logo-and-headline .headline h1,
+  article#startpage .logo-and-headline .headline subline {
     text-align: center;
   }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 512px) {
   article#startpage .logo-and-headline {
     grid-template-areas:
-      "logo headline"
-      "logo subline";
-    grid-column-gap: 1rem;
+      "logo headline";
     justify-content: center;
+  }
+
+  article#startpage .logo-and-headline .headline h1 {
+    align-self: end;
   }
 }
 

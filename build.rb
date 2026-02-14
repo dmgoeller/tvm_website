@@ -249,7 +249,7 @@ def build_htaccess(articles_dir, options = {})
       Header set Cache-Control "no-cache"
       </filesMatch>
 
-      <filesMatch "\\.(jpg|png|ico|webp|woff|woff2|ttf)$">
+      <filesMatch "\\.(jpg|png|ico|webp|woff|woff2|svg|ttf)$">
       Header set Cache-Control "max-age=31536000, public"
       </filesMatch>
 

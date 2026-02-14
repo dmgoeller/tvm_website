@@ -18,12 +18,25 @@
  * Colors and shadows
  **********************************************************************/
 
+/*
+ *  50  #f6f8ef
+ * 100  #f6f8ef
+ * 200  #d8e3bd
+ * 300  #cad7a5
+ * 400  #becf93
+ * 500  #b4c682
+ * 600  #a4b678
+ * 700  #90a16d
+ * 800  #7e8d64 <- Logo
+ * 900  #606a55 <- Primary
+ */
+
 :root {
   --alternative--background: #f5f5f5;
-  --app-bar--background: #781515;
-  --app-bar--translucent-background: #660101e0;
-  --app-bar--color: #fff;
-  --app-bar--border-color: #601010;
+  --app-bar--background: #47503f; /* 900 - 25% black overlay transparency */
+  --app-bar--translucent-background: #47503fe0;
+  --app-bar--color: #f6f8ef; /* 200 */
+  --app-bar--border-color: #47503f; /* 900 - 25% black overlay transparency */
   --app-bar--hover--background: #ffffff18;
   --app-bar--active--background: #ffffff30;
   --app-footer-links--background: #e0e0e0;
@@ -39,18 +52,18 @@
   --article-logo--color: #f5f5f5;
   --backdrop-filter: blur(8px);
   --background: #fff;
-  --banner--background: #ad463c;
-  --banner--color: #f5e7e9;
+  --banner--background: #90a16d;
+  --banner--color: #f6f8ef;
   --banner-link--color: #fff;
   --banner-action--color: #fff;
   --box-shadow-2dp: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   --box-shadow-4dp: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
   --box-shadow-24dp: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
   --color: #616161;
-  --contained-button--color: #fff;
-  --contained-button--background: #781515;
-  --contained-button--hover--background: #852c2c; /* 10% white overlay transparency */
-  --contained-button--active--background: #934444; /* 20% white overlay transparency */
+  --contained-button--color: #f6f8ef;
+  --contained-button--background: #606a55;
+  --contained-button--hover--background: #717a68; /* 10% white overlay transparency */
+  --contained-button--active--background: #828a7b; /* 20% white overlay transparency */
   --dialog--background: #fff;
   --list-divider--color: #e0e0e0;
   --list-item--hover--background: #00000010;
@@ -59,21 +72,20 @@
   --list-item-icon--background: #bdbdbd;
   --loading-indicator-background: #ffffff80;
   --picture--background: #eeeeee;
-  --primary--color: #781515;
+  --primary--color: #606a55;
   --table-header--background: #e0e0e0;
   --text-button--hover--background: #00000010;
   --text-button--active--background: #00000020;
   --text-button--disabled--color: #bdbdbd;
-  --tile--color: #fff;
-  --tile--background: #781515e0;
-  --tile--hover--background: #852c2ce0;
-  --tile--active--background: #934444e0;
+  --tile--color: #495141; /* 25% black overlay transparency */
+  --tile--background: #e7eed6c0;
+  --tile--hover--background: #e7eed6c0;
+  --tile--active--background: #e7eed6c0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --alternative--background: #202020;
-    --app-bar--translucent-background: #871616e0;
     --app-menu--color: #fff;
     --app-menu--background: #272727;
     --app-menu--translucent-background: #272727e0;
@@ -87,12 +99,10 @@
     --article-logo--color: #747474;
     --background: #121212;
     --banner--background: #480000;
-    --banner--color: #e8c3c7;
+    --banner--color: #d8e3bd;
     --banner-link--color: #e0e0e0;
     --banner-action--color: #e0e0e0;
     --color: #e0e0e0;
-    --contained-button--hover--background: #822626; /* 7.5% white overlay transparency */
-    --contained-button--active--background: #8c3838; /* 15% white overlay transparency */
     --dialog--background: #373737;
     --list-divider--color: #424242;
     --list-item--hover--background: #ffffff10;
@@ -100,7 +110,7 @@
     --list-item-icon--color: #121212;
     --list-item-icon--background: #747474;
     --picture--background: #2e2e2e;
-    --primary--color: #d4654a; /*#ff8a65;*/
+    --primary--color: #cad7a5;
     --table-header--background: #424242;
     --text-button--hover--background: #ffffff18;
     --text-button--active--background: #ffffff30;
